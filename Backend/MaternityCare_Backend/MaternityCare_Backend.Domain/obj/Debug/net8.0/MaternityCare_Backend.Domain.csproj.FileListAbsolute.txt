@@ -1,0 +1,12 @@
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\bin\Debug\net8.0\MaternityCare_Backend.Domain.deps.json
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\bin\Debug\net8.0\MaternityCare_Backend.Domain.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\bin\Debug\net8.0\MaternityCare_Backend.Domain.pdb
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.AssemblyInfoInputs.cache
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.AssemblyInfo.cs
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.csproj.CoreCompileInputs.cache
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.sourcelink.json
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\refint\MaternityCare_Backend.Domain.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\MaternityCare_Backend.Domain.pdb
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Domain\obj\Debug\net8.0\ref\MaternityCare_Backend.Domain.dll

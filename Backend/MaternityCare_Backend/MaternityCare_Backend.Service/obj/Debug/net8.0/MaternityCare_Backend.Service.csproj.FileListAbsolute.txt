@@ -1,0 +1,16 @@
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\bin\Debug\net8.0\MaternityCare_Backend.Service.deps.json
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\bin\Debug\net8.0\MaternityCare_Backend.Service.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\bin\Debug\net8.0\MaternityCare_Backend.Service.pdb
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\bin\Debug\net8.0\MaternityCare_Backend.Domain.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\bin\Debug\net8.0\MaternityCare_Backend.Domain.pdb
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.csproj.AssemblyReference.cache
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.AssemblyInfoInputs.cache
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.AssemblyInfo.cs
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.csproj.CoreCompileInputs.cache
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.sourcelink.json
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\Maternit.3BB31E4A.Up2Date
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\refint\MaternityCare_Backend.Service.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\MaternityCare_Backend.Service.pdb
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Service\obj\Debug\net8.0\ref\MaternityCare_Backend.Service.dll
