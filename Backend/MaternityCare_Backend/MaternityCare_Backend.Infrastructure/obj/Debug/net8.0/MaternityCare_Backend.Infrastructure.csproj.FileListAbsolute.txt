@@ -14,3 +14,5 @@ C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCa
 C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Infrastructure\obj\Debug\net8.0\refint\MaternityCare_Backend.Infrastructure.dll
 C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Infrastructure\obj\Debug\net8.0\MaternityCare_Backend.Infrastructure.pdb
 C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Infrastructure\obj\Debug\net8.0\ref\MaternityCare_Backend.Infrastructure.dll
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Infrastructure\bin\Debug\net8.0\MaternityCare_Backend.Infrastructure.runtimeconfig.json
+C:\Users\tanng\OneDrive\Computer\SWP391\MaternityCare_SWP391\Backend\MaternityCare_Backend\MaternityCare_Backend.Infrastructure\obj\Debug\net8.0\MaternityCare_Backend.Infrastructure.genruntimeconfig.cache
