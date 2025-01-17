@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaternityCare_Backend.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b01815a453b7477588b485e91c7959f2f4e26164")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e49e8db7ed50784a4c2ee19e2417cdbdf5f305e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaternityCare_Backend.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaternityCare_Backend.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

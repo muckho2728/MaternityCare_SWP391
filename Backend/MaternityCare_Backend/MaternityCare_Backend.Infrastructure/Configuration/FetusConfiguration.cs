@@ -14,7 +14,10 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.ConceptionDate).IsRequired();
 			builder.Property(x => x.BloodType).HasConversion<string>().IsRequired().HasMaxLength(15);
 			builder.Property(x => x.UserId).IsRequired();
-			builder.Property(x => x.IsActive).IsRequired().HasDefaultValue(true);
+			builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+			builder.Property(x => x.CreatedAt).IsRequired().HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.UpdatedAt).IsRequired(false);
+			builder.Property(x => x.DeletedAt).IsRequired(false);
 			builder.HasOne(x => x.User).WithMany(x => x.Fetus).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.FetusHealths).WithOne(x => x.Fetus).HasForeignKey(x => x.FetusId).OnDelete(DeleteBehavior.NoAction);
 		}

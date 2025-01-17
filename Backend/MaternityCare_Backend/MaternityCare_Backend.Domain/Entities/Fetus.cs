@@ -9,7 +9,10 @@ namespace MaternityCare_Backend.Domain.Entities
 		public DateOnly DueDate { get; set; }
 		public DateOnly ConceptionDate { get; set; }
 		public BloodType BloodType { get; set; }
-		public bool IsActive { get; set; }
+		public bool IsDeleted { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+		public DateTime? DeletedAt { get; set; }
 
 		// Navigation properties
 		public User User { get; set; }

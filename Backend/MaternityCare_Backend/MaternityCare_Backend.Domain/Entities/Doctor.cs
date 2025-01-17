@@ -9,7 +9,10 @@
 		public string PhoneNumber { get; set; }
 		public string Specialization { get; set; }
 		public double YearsOfExperience { get; set; }
-		public bool IsActive { get; set; }
+		public bool IsDeleted { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+		public DateTime? DeletedAt { get; set; }
 
 		// Navigation properties
 		public ICollection<Slot> Slots { get; set; }
