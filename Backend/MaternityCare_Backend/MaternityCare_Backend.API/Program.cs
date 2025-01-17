@@ -1,4 +1,5 @@
 using MaternityCare_Backend.API.Extensions;
+using MaternityCare_Backend.Service.Extensions;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +12,12 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureSwaggerForAuthentication();
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureCors();
+builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.ConfigureAutomapper();
 
 var app = builder.Build();
 
@@ -25,6 +29,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
