@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\MaternityCare_Backend.API.props" />
-</Project>
