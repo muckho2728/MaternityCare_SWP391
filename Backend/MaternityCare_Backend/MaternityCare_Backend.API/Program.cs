@@ -18,6 +18,9 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureAutomapper();
+builder.Services.ConfigureManager();
+builder.Services.ConfigureGlobalException();
+builder.Services.ConfigureBlobService(builder.Configuration);
 
 var app = builder.Build();
 
@@ -27,6 +30,7 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseExceptionHandler(opt => { });
 
 app.UseHttpsRedirection();
 

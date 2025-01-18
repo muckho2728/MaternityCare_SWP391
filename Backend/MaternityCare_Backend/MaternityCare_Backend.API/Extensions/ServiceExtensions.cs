@@ -1,4 +1,9 @@
-﻿using MaternityCare_Backend.Infrastructure.Persistence;
+﻿using Azure.Storage.Blobs;
+using MaternityCare_Backend.Domain.Repositories;
+using MaternityCare_Backend.Infrastructure.Persistence;
+using MaternityCare_Backend.Infrastructure.Repositories;
+using MaternityCare_Backend.Service.IServices;
+using MaternityCare_Backend.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +28,18 @@ namespace MaternityCare_Backend.API.Extensions
 				.AllowAnyHeader()
 				.WithExposedHeaders("X-Pagination"));
 		});
+
+		public static void ConfigureManager(this IServiceCollection services)
+		{
+			services.AddScoped<IRepositoryManager, RepositoryManager>();
+			services.AddScoped<IServiceManager, ServiceManager>();
+		}
+
+		public static void ConfigureGlobalException(this IServiceCollection services)
+		{
+			services.AddProblemDetails();
+			services.AddExceptionHandler<GlobalExceptionHandler>();
+		}
 
 		public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
 		{
@@ -84,6 +101,12 @@ namespace MaternityCare_Backend.API.Extensions
 					}
 				});
 			});
+		}
+
+		public static void ConfigureBlobService(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSingleton(u => new BlobServiceClient(configuration.GetConnectionString("StorageAccount")));
+			services.AddSingleton<IBlobService, BlobService>();
 		}
 	}
 }
