@@ -9,11 +9,12 @@
 		public DateTime CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
 		public Guid UserId { get; set; }
+		public Guid TagId { get; set; }
 
 		// Navigation properties
 		public User User { get; set; }
 		public ICollection<Comment> Comments { get; set; }
 		public ICollection<Like> Likes { get; set; }
-		public ICollection<Tag> Tags { get; set; }
+		public Tag Tag { get; set; }
 	}
 }

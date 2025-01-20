@@ -9,6 +9,7 @@
 		public string Password { get; set; }
 		public string DateOfBirth { get; set; }
 		public string Avatar { get; set; }
+		public string CCCD { get; set; }
 		public bool IsEmailConfirmed { get; set; }
 		public Guid RoleId { get; set; }
 		public bool IsActive { get; set; }

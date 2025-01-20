@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaternityCare_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20250117091439_FirstMigration")]
+    [Migration("20250120020511_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -25,21 +25,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BlogTag", b =>
-                {
-                    b.Property<Guid>("BlogsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BlogsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("BlogTag");
-                });
-
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -49,7 +34,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 17, 16, 14, 39, 327, DateTimeKind.Local).AddTicks(4004));
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 634, DateTimeKind.Local).AddTicks(6995));
 
                     b.Property<Guid>("SlotId")
                         .HasColumnType("uniqueidentifier");
@@ -78,13 +63,15 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 635, DateTimeKind.Local).AddTicks(278));
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("TagId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -98,6 +85,8 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TagId");
 
                     b.HasIndex("UserId");
 
@@ -120,7 +109,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 17, 16, 14, 39, 328, DateTimeKind.Local).AddTicks(514));
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 635, DateTimeKind.Local).AddTicks(7159));
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -147,6 +136,14 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(167));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -157,8 +154,10 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -169,6 +168,9 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("YearsOfExperience")
                         .HasColumnType("float");
@@ -189,7 +191,9 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(1940));
 
                     b.Property<double>("Score")
                         .HasColumnType("float");
@@ -210,21 +214,19 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BloodType")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
                     b.Property<DateOnly>("ConceptionDate")
                         .HasColumnType("date");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(3740));
 
                     b.Property<DateOnly>("DueDate")
                         .HasColumnType("date");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -291,7 +293,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 17, 16, 14, 39, 328, DateTimeKind.Local).AddTicks(9286));
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(7374));
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -311,6 +313,14 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 637, DateTimeKind.Local).AddTicks(153));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("Duration")
                         .HasColumnType("float");
 
@@ -319,6 +329,11 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -326,6 +341,9 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -392,9 +410,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsBooked")
                         .HasColumnType("bit");
@@ -481,11 +496,9 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Tag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -509,7 +522,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 17, 16, 14, 39, 330, DateTimeKind.Local).AddTicks(76));
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 637, DateTimeKind.Local).AddTicks(9331));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -545,10 +558,15 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CCCD")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 17, 16, 14, 39, 330, DateTimeKind.Local).AddTicks(2572));
+                        .HasDefaultValue(new DateTime(2025, 1, 20, 9, 5, 11, 638, DateTimeKind.Local).AddTicks(2068));
 
                     b.Property<string>("DateOfBirth")
                         .IsRequired()
@@ -596,27 +614,12 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BlogTag", b =>
-                {
-                    b.HasOne("MaternityCare_Backend.Domain.Entities.Blog", null)
-                        .WithMany()
-                        .HasForeignKey("BlogsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MaternityCare_Backend.Domain.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("MaternityCare_Backend.Domain.Entities.Slot", "Slot")
                         .WithOne("Appointment")
                         .HasForeignKey("MaternityCare_Backend.Domain.Entities.Appointment", "SlotId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MaternityCare_Backend.Domain.Entities.User", "User")
@@ -632,11 +635,19 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Blog", b =>
                 {
+                    b.HasOne("MaternityCare_Backend.Domain.Entities.Tag", "Tag")
+                        .WithMany("Blogs")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("MaternityCare_Backend.Domain.Entities.User", "User")
                         .WithMany("Blogs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Tag");
 
                     b.Navigation("User");
                 });
@@ -805,6 +816,11 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 {
                     b.Navigation("Transaction")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Tag", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.User", b =>

@@ -16,6 +16,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.Password).IsRequired();
 			builder.Property(x => x.DateOfBirth).IsRequired();
 			builder.Property(x => x.Avatar).IsRequired();
+			builder.Property(x => x.CCCD).IsRequired().HasMaxLength(12);
 			builder.Property(x => x.IsEmailConfirmed).HasDefaultValue(false);
 			builder.Property(x => x.RoleId).IsRequired();
 			builder.Property(x => x.IsActive).HasDefaultValue(true);

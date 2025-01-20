@@ -11,7 +11,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-			builder.HasMany(x => x.Blogs).WithMany(x => x.Tags);
+			builder.HasMany(x => x.Blogs).WithOne(x => x.Tag).HasForeignKey(c => c.TagId).OnDelete(DeleteBehavior.NoAction);
 		}
 	}
 }

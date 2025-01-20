@@ -24,7 +24,10 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Specialization = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     YearsOfExperience = table.Column<double>(type: "float", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(167)),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,7 +42,11 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Feature = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Duration = table.Column<double>(type: "float", nullable: false)
+                    Duration = table.Column<double>(type: "float", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 637, DateTimeKind.Local).AddTicks(153)),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,8 +102,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -113,7 +119,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
                     StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
                     EndTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsBooked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -137,10 +142,11 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CCCD = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     IsEmailConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 17, 16, 14, 39, 330, DateTimeKind.Local).AddTicks(2572)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 638, DateTimeKind.Local).AddTicks(2068)),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -160,7 +166,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SlotId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 17, 16, 14, 39, 327, DateTimeKind.Local).AddTicks(4004))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 634, DateTimeKind.Local).AddTicks(6995))
                 },
                 constraints: table =>
                 {
@@ -169,7 +175,8 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         name: "FK_Appointments_Slots_SlotId",
                         column: x => x.SlotId,
                         principalTable: "Slots",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Appointments_Users_UserId",
                         column: x => x.UserId,
@@ -185,14 +192,19 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 635, DateTimeKind.Local).AddTicks(278)),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blogs_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Blogs_Users_UserId",
                         column: x => x.UserId,
@@ -208,7 +220,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Score = table.Column<double>(type: "float", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(1940))
                 },
                 constraints: table =>
                 {
@@ -228,8 +240,8 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DueDate = table.Column<DateOnly>(type: "date", nullable: false),
                     ConceptionDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    BloodType = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(3740)),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -268,36 +280,12 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogTag",
-                columns: table => new
-                {
-                    BlogsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TagsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BlogTag", x => new { x.BlogsId, x.TagsId });
-                    table.ForeignKey(
-                        name: "FK_BlogTag_Blogs_BlogsId",
-                        column: x => x.BlogsId,
-                        principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BlogTag_Tags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 17, 16, 14, 39, 328, DateTimeKind.Local).AddTicks(514)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 635, DateTimeKind.Local).AddTicks(7159)),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -324,7 +312,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 17, 16, 14, 39, 328, DateTimeKind.Local).AddTicks(9286))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 636, DateTimeKind.Local).AddTicks(7374))
                 },
                 constraints: table =>
                 {
@@ -374,7 +362,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 17, 16, 14, 39, 330, DateTimeKind.Local).AddTicks(76)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2025, 1, 20, 9, 5, 11, 637, DateTimeKind.Local).AddTicks(9331)),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubscriptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -415,14 +403,14 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Blogs_TagId",
+                table: "Blogs",
+                column: "TagId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Blogs_UserId",
                 table: "Blogs",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BlogTag_TagsId",
-                table: "BlogTag",
-                column: "TagsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_BlogId",
@@ -498,9 +486,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "BlogTag");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -525,9 +510,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                 name: "Slots");
 
             migrationBuilder.DropTable(
-                name: "Tags");
-
-            migrationBuilder.DropTable(
                 name: "Fetuses");
 
             migrationBuilder.DropTable(
@@ -538,6 +520,9 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Packages");

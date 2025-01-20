@@ -19,7 +19,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasOne(x => x.User).WithMany(x => x.Blogs).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Comments).WithOne(x => x.Blog).HasForeignKey(x => x.BlogId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Likes).WithOne(x => x.Blog).HasForeignKey(x => x.BlogId).OnDelete(DeleteBehavior.NoAction);
-			builder.HasMany(x => x.Tags).WithMany(x => x.Blogs);
+			builder.HasOne(x => x.Tag).WithMany(x => x.Blogs).HasForeignKey(x => x.TagId).OnDelete(DeleteBehavior.NoAction);
 		}
 	}
 }
