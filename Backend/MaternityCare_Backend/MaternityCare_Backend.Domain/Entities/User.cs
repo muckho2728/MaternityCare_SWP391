@@ -10,11 +10,16 @@
 		public string DateOfBirth { get; set; }
 		public string Avatar { get; set; }
 		public string CCCD { get; set; }
-		public bool IsEmailConfirmed { get; set; }
 		public Guid RoleId { get; set; }
 		public bool IsActive { get; set; }
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
 		public DateTime? UpdatedAt { get; set; }
+		public bool IsEmailConfirmed { get; set; }
+		public string? EmailConfirmationToken { get; set; }
+		public string? PasswordResetToken { get; set; }
+		public DateTime? PasswordResetTokenExpiryTime { get; set; }
+		public string? RefreshToken { get; set; }
+		public DateTime? RefreshTokenExpiryTime { get; set; }
 
 		//Navigation properties
 		public ICollection<Blog> Blogs { get; set; }

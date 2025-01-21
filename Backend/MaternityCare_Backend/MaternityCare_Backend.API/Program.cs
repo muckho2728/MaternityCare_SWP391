@@ -1,8 +1,12 @@
 using MaternityCare_Backend.API.Extensions;
+using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Service.Extensions;
+using Microsoft.AspNetCore.Identity;
+using OfficeOpenXml;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Add services to the container.
 
@@ -21,6 +25,7 @@ builder.Services.ConfigureAutomapper();
 builder.Services.ConfigureManager();
 builder.Services.ConfigureGlobalException();
 builder.Services.ConfigureBlobService(builder.Configuration);
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
 

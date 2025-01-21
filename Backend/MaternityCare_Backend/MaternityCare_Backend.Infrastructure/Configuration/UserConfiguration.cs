@@ -22,6 +22,11 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.IsActive).HasDefaultValue(true);
 			builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.Now);
 			builder.Property(x => x.UpdatedAt);
+			builder.Property(x => x.EmailConfirmationToken);
+			builder.Property(x => x.PasswordResetToken);
+			builder.Property(x => x.PasswordResetTokenExpiryTime);
+			builder.Property(x => x.RefreshToken);
+			builder.Property(x => x.RefreshTokenExpiryTime);
 			builder.HasOne(x => x.Role).WithMany(x => x.Users).HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Blogs).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Comments).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
