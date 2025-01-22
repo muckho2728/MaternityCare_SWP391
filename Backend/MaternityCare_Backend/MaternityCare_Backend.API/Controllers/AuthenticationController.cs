@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/authentication")]
+	[Route("api/authentications")]
 	[ApiController]
 	public class AuthenticationController : ControllerBase
 	{

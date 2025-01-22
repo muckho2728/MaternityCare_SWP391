@@ -1,4 +1,5 @@
-﻿using MaternityCare_Backend.Service.UserServices.DTOs;
+﻿using MaternityCare_Backend.Domain.RequestFeatures;
+using MaternityCare_Backend.Service.UserServices.DTOs;
 
 namespace MaternityCare_Backend.Service.UserServices
 {
@@ -10,5 +11,6 @@ namespace MaternityCare_Backend.Service.UserServices
 		Task<TokenDto> RefreshToken(TokenDto tokenDto);
 		Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange);
 		Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange);
+		Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange);
 	}
 }

@@ -2,6 +2,7 @@
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.UserServices.DTOs;
 using Microsoft.AspNetCore.Identity;
@@ -190,7 +191,7 @@ namespace MaternityCare_Backend.Service.UserServices
 		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange)
 		{
 			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, trackChange);
-			if (userEntity == null) throw new UserNotFoundException(userId);
+			if (userEntity == null) throw new UserNotFoundException();
 
 			return mapper.Map<UserForReturnDto>(userEntity);
 		}
@@ -201,6 +202,13 @@ namespace MaternityCare_Backend.Service.UserServices
 			var token = handler.ReadJwtToken(jwt);
 			var userId = Guid.Parse(token.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
 			return GetUserById(userId, trackChange);
+		}
+
+		public async Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange)
+		{
+			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, trackChange);
+			var userDto = mapper.Map<IEnumerable<UserForReturnDto>>(usersWithMetaData);
+			return (userDto, usersWithMetaData.MetaData);
 		}
 	}
 }
