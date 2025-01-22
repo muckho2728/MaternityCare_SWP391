@@ -25,5 +25,20 @@ namespace MaternityCare_Backend.API.Controllers
 			await serviceManager.UserService.CreateUser(userForCreationDto);
 			return StatusCode(201);
 		}
+
+		[HttpPost("login")]
+		public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuth)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			if (await serviceManager.UserService.ValidateUser(userForAuth))
+			{
+				var token = await serviceManager.UserService.CreateToken(true);
+				return Ok(token);
+			}
+			return Unauthorized();
+		}
 	}
 }

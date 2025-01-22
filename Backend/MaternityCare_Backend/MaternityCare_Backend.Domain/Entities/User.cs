@@ -12,7 +12,7 @@
 		public string CCCD { get; set; }
 		public Guid RoleId { get; set; }
 		public bool IsActive { get; set; }
-		public DateTime CreatedAt { get; set; } = DateTime.Now;
+		public DateTime CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
 		public bool IsEmailConfirmed { get; set; }
 		public string? EmailConfirmationToken { get; set; }
