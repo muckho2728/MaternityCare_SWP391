@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuth)
+		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -39,6 +39,14 @@ namespace MaternityCare_Backend.API.Controllers
 				return Ok(token);
 			}
 			return Unauthorized();
+		}
+
+		[HttpGet("current-user")]
+		public async Task<IActionResult> GetCurrentUser()
+		{
+			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+			var user = await serviceManager.UserService.GetUserByToken(token, false);
+			return Ok(user);
 		}
 	}
 }

@@ -186,5 +186,21 @@ namespace MaternityCare_Backend.Service.UserServices
 			user = currentUser;
 			return await CreateToken(populateExp: false);
 		}
+
+		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange)
+		{
+			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, trackChange);
+			if (userEntity == null) throw new UserNotFoundException(userId);
+
+			return mapper.Map<UserForReturnDto>(userEntity);
+		}
+
+		public Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange)
+		{
+			var handler = new JwtSecurityTokenHandler();
+			var token = handler.ReadJwtToken(jwt);
+			var userId = Guid.Parse(token.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+			return GetUserById(userId, trackChange);
+		}
 	}
 }
