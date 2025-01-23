@@ -4,6 +4,7 @@
 	{
 		IUserRepository UserRepository { get; }
 		IRoleRepository RoleRepository { get; }
+		IFeedbackRepository FeedbackRepository { get; }
 		Task SaveAsync();
 	}
 }

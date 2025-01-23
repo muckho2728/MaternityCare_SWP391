@@ -7,7 +7,8 @@ namespace MaternityCare_Backend.Service.UserServices.DTOs
 	{
 		public UserProfile()
 		{
-			CreateMap<UserForCreationDto, User>().ForSourceMember(c => c.Password, opt => opt.DoNotValidate());
+			CreateMap<UserForCreationDto, User>().ForMember(c => c.Password, opt => opt.Ignore());
+			CreateMap<UserForUpdateDto, User>().ForMember(c => c.Avatar, opt => opt.Ignore());
 			CreateMap<User, UserForReturnDto>();
 		}
 	}

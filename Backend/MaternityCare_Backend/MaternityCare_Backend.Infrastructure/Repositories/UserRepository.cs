@@ -2,6 +2,7 @@
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
+using MaternityCare_Backend.Infrastructure.Extensions;
 using MaternityCare_Backend.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,18 +17,13 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public async Task<PagedList<User>> GetUsers(UserParameters userParameters, bool trackChange)
 		{
-			var userEntities = await FindByCondition(u => u.Role.Name != Roles.Admin.ToString(), trackChange)
-				.Where(u => u.IsActive == userParameters.IsActive)
-				.Skip((userParameters.PageNumber - 1) * userParameters.PageSize)
-				.Take(userParameters.PageSize)
-				.Include(u => u.Role)
-				.ToListAsync();
+			var userEntities = FindByCondition(u => u.Role.Name != Roles.Admin.ToString(), trackChange)
+				.Filter(userParameters.IsActive)
+				.Search(userParameters.SearchName)
+				.OrderByDescending(c => c.CreatedAt)
+				.Include(u => u.Role);
 
-			var count = await FindByCondition(u => u.Role.Name != Roles.Admin.ToString(), trackChange)
-				.Where(u => u.IsActive == userParameters.IsActive)
-				.CountAsync();
-
-			return PagedList<User>.ToPagedList(userEntities, count, userParameters.PageNumber, userParameters.PageSize);
+			return await PagedList<User>.ToPagedList(userEntities, userParameters.PageNumber, userParameters.PageSize);
 		}
 
 		public async Task<User?> GetUserByCccd(string cccd, bool trackChange) => await FindByCondition(u => u.CCCD == cccd, trackChange).Include(u => u.Role).SingleOrDefaultAsync();

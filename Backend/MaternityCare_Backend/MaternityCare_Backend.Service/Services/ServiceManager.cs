@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Repositories;
+using MaternityCare_Backend.Service.FeedbackServices;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.UserServices;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,15 @@ namespace MaternityCare_Backend.Service.Services
 	public sealed class ServiceManager : IServiceManager
 	{
 		private readonly Lazy<IUserService> userService;
+		private readonly Lazy<IFeedbackService> feedbackService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher));
+			feedbackService = new Lazy<IFeedbackService>(() => new FeedbackService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
+
+		public IFeedbackService FeedbackService => feedbackService.Value;
 	}
 }

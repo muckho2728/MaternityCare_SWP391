@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MaternityCare_Backend.Domain.Constants;
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
@@ -50,6 +51,13 @@ namespace MaternityCare_Backend.Service.UserServices
 			{
 				throw new UserBadRequestException("CCCD already existed");
 			}
+		}
+
+		private async Task<User?> CheckUserExistById(Guid userId, bool trackChange)
+		{
+			var user = await repositoryManager.UserRepository.GetUserById(userId, trackChange);
+			if (user == null) throw new UserNotFoundException();
+			return user;
 		}
 
 		public async Task CreateUser(UserForCreationDto userForCreationDto)
@@ -190,9 +198,7 @@ namespace MaternityCare_Backend.Service.UserServices
 
 		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange)
 		{
-			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, trackChange);
-			if (userEntity == null) throw new UserNotFoundException();
-
+			var userEntity = await CheckUserExistById(userId, trackChange);
 			return mapper.Map<UserForReturnDto>(userEntity);
 		}
 
@@ -209,6 +215,29 @@ namespace MaternityCare_Backend.Service.UserServices
 			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, trackChange);
 			var userDto = mapper.Map<IEnumerable<UserForReturnDto>>(usersWithMetaData);
 			return (userDto, usersWithMetaData.MetaData);
+		}
+
+		public async Task ChangeActiveStatus(Guid userId)
+		{
+			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, true);
+			if (userEntity == null) throw new UserNotFoundException();
+
+			userEntity.IsActive = !userEntity.IsActive;
+			await repositoryManager.SaveAsync();
+		}
+
+		public async Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange)
+		{
+			var userEntity = await CheckUserExistById(userId, trackChange);
+			mapper.Map(userForUpdateDto, userEntity);
+			if (userForUpdateDto.Avatar is not null && userForUpdateDto.Avatar.Length > 0)
+			{
+				await blobService.DeleteBlob(userEntity.Avatar.Split('/').Last(), StorageContainer.STORAGE_CONTAINER);
+				string filename = $"{Guid.NewGuid()}{Path.GetExtension(userForUpdateDto.Avatar.FileName)}";
+				userEntity.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, userForUpdateDto.Avatar);
+			}
+			userEntity.UpdatedAt = DateTime.Now;
+			await repositoryManager.SaveAsync();
 		}
 	}
 }

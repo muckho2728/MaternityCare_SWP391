@@ -1,5 +1,6 @@
 ﻿using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
+using MaternityCare_Backend.Service.UserServices.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -25,10 +26,24 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetUser(Guid id)
+		public async Task<IActionResult> GetUser([FromRoute] Guid id)
 		{
 			var user = await serviceManager.UserService.GetUserById(id, false);
 			return Ok(user);
+		}
+
+		[HttpPut("{id:guid}")]
+		public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromForm] UserForUpdateDto userForUpdateDto)
+		{
+			await serviceManager.UserService.UpdateUser(id, userForUpdateDto, true);
+			return NoContent();
+		}
+
+		[HttpPut("{id:guid}/activation")]
+		public async Task<IActionResult> ChangeActiveStatus(Guid id)
+		{
+			await serviceManager.UserService.ChangeActiveStatus(id);
+			return NoContent();
 		}
 	}
 }

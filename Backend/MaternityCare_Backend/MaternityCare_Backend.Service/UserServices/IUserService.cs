@@ -12,5 +12,7 @@ namespace MaternityCare_Backend.Service.UserServices
 		Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange);
 		Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange);
 		Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange);
+		Task ChangeActiveStatus(Guid userId);
+		Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange);
 	}
 }

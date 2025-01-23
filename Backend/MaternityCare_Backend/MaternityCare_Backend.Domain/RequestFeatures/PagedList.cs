@@ -1,4 +1,6 @@
-﻿namespace MaternityCare_Backend.Domain.RequestFeatures
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace MaternityCare_Backend.Domain.RequestFeatures
 {
 	public class PagedList<T> : List<T>
 	{
@@ -14,9 +16,13 @@
 			};
 			AddRange(items);
 		}
-		public static PagedList<T> ToPagedList(IEnumerable<T> source, int count, int pageNumber, int pageSize)
+		public async static Task<PagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
 		{
-			var items = source.ToList();
+			var count = await source.CountAsync();
+			var items = await source
+				.Skip((pageNumber - 1) * pageSize)
+				.Take(pageSize)
+				.ToListAsync();
 			return new PagedList<T>(items, count, pageNumber, pageSize);
 		}
 	}
