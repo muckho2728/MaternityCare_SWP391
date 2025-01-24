@@ -1,5 +1,7 @@
+using Azure.Identity;
 using MaternityCare_Backend.API.Extensions;
 using MaternityCare_Backend.Domain.Entities;
+using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.Extensions;
 using Microsoft.AspNetCore.Identity;
 using OfficeOpenXml;
@@ -26,15 +28,20 @@ builder.Services.ConfigureManager();
 builder.Services.ConfigureGlobalException();
 builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddHttpContextAccessor();
+
+//Azure Key Vault
+var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!);
+var azureCredential = new DefaultAzureCredential();
+builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseExceptionHandler(opt => { });
 
 app.UseHttpsRedirection();

@@ -11,10 +11,14 @@ namespace MaternityCare_Backend.API.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IServiceManager serviceManager;
+		private readonly IConfiguration configuration;
+		private readonly IHttpContextAccessor httpContextAccessor;
 
-		public UsersController(IServiceManager serviceManager)
+		public UsersController(IServiceManager serviceManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			this.serviceManager = serviceManager;
+			this.configuration = configuration;
+			this.httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpGet]

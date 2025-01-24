@@ -4,9 +4,13 @@ using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
+using MaternityCare_Backend.Service.EmailServices;
+using MaternityCare_Backend.Service.EmailServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.UserServices.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,15 +27,19 @@ namespace MaternityCare_Backend.Service.UserServices
 		private readonly IConfiguration configuration;
 		private readonly IBlobService blobService;
 		private readonly IPasswordHasher<User> passwordHasher;
+		private readonly IEmailSender emailSender;
+		private readonly IHttpContextAccessor httpContextAccessor;
 		private User? user;
 
-		public UserService(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IBlobService blobService, IPasswordHasher<User> passwordHasher)
+		public UserService(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IBlobService blobService, IPasswordHasher<User> passwordHasher, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
 		{
 			this.repositoryManager = repositoryManager;
 			this.mapper = mapper;
 			this.configuration = configuration;
 			this.blobService = blobService;
 			this.passwordHasher = passwordHasher;
+			this.emailSender = emailSender;
+			this.httpContextAccessor = httpContextAccessor;
 		}
 
 		private async Task CheckUserExistWhenRegister(string username, string email, string cccd)
@@ -69,9 +77,21 @@ namespace MaternityCare_Backend.Service.UserServices
 			userEntity.RoleId = await repositoryManager.RoleRepository.GetIdByRoleName(Domain.Constants.Roles.Member, false);
 			userEntity.IsActive = true;
 			userEntity.CreatedAt = DateTime.Now;
+			userEntity.EmailConfirmationToken = GenerateToken();
 
 			repositoryManager.UserRepository.CreateUser(userEntity);
 			await repositoryManager.SaveAsync();
+
+			var param = new Dictionary<string, string>
+			{
+				{ "token", userEntity.EmailConfirmationToken },
+				{ "email", userEntity.Email }
+			};
+			var request = httpContextAccessor.HttpContext?.Request;
+			var uri = $"{request?.Scheme}://{request?.Host}/api/users/email-verification";
+			var callback = QueryHelpers.AddQueryString(uri, param);
+			var mail = new Mail(userEntity.Email, "Email verification", $"<h1>Email verification</h1><p>Please click <a href='{callback}'>here</a> to verify your email</p>");
+			emailSender.SendEmail(mail);
 		}
 
 		public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
@@ -94,7 +114,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			var claims = await GetClaims();
 			var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
-			var refreshToken = GenerateRefreshToken();
+			var refreshToken = GenerateToken();
 
 			user.RefreshToken = refreshToken;
 
@@ -144,7 +164,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			return tokenOptions;
 		}
 
-		private string GenerateRefreshToken()
+		private string GenerateToken()
 		{
 			var randomNumber = new byte[32];
 			using (var rng = RandomNumberGenerator.Create())
