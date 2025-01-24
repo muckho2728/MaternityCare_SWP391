@@ -49,5 +49,26 @@ namespace MaternityCare_Backend.API.Controllers
 			await serviceManager.UserService.ChangeActiveStatus(id);
 			return NoContent();
 		}
+
+		[HttpGet("email-verification")]
+		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email)
+		{
+			await serviceManager.UserService.ConfirmEmail(token, email);
+			return Ok();
+		}
+
+		[HttpPost("reset-password")]
+		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email)
+		{
+			await serviceManager.UserService.SendResetPasswordToken(email);
+			return Ok();
+		}
+
+		[HttpPut("reset-password")]
+		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto)
+		{
+			await serviceManager.UserService.ResetPassword(userForResetPasswordDto);
+			return Ok();
+		}
 	}
 }

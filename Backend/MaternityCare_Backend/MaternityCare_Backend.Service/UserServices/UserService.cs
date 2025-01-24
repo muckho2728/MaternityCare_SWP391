@@ -90,7 +90,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			var request = httpContextAccessor.HttpContext?.Request;
 			var uri = $"{request?.Scheme}://{request?.Host}/api/users/email-verification";
 			var callback = QueryHelpers.AddQueryString(uri, param);
-			var mail = new Mail(userEntity.Email, "Email verification", $"<h1>Email verification</h1><p>Please click <a href='{callback}'>here</a> to verify your email</p>");
+			var mail = new Mail(userEntity.Email, "Email verification", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>");
 			emailSender.SendEmail(mail);
 		}
 
@@ -257,6 +257,42 @@ namespace MaternityCare_Backend.Service.UserServices
 				userEntity.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, userForUpdateDto.Avatar);
 			}
 			userEntity.UpdatedAt = DateTime.Now;
+			await repositoryManager.SaveAsync();
+		}
+
+		public async Task ConfirmEmail(string token, string email)
+		{
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true);
+			if (userEntity is null || userEntity.EmailConfirmationToken != token) throw new RequestTokenBadRequest();
+			userEntity.IsEmailConfirmed = true;
+			userEntity.EmailConfirmationToken = null;
+			await repositoryManager.SaveAsync();
+		}
+
+		public async Task SendResetPasswordToken(string email)
+		{
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true);
+			if (userEntity is null) throw new UserNotFoundException();
+
+			userEntity.PasswordResetToken = GenerateToken();
+			userEntity.PasswordResetTokenExpiryTime = DateTime.Now.AddHours(1);
+			await repositoryManager.SaveAsync();
+
+			var mail = new Mail(userEntity.Email, "Reset password token", $"<p>Your reset password token is: <i>{userEntity.PasswordResetToken}</i></p>");
+			emailSender.SendEmail(mail);
+		}
+
+		public async Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto)
+		{
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(userForResetPasswordDto.Email, true);
+			if (userEntity is null || userEntity.PasswordResetToken != userForResetPasswordDto.Token || userEntity.PasswordResetTokenExpiryTime <= DateTime.Now)
+			{
+				throw new RequestTokenBadRequest();
+			}
+
+			userEntity.Password = passwordHasher.HashPassword(userEntity, userForResetPasswordDto.Password);
+			userEntity.PasswordResetToken = null;
+			userEntity.PasswordResetTokenExpiryTime = null;
 			await repositoryManager.SaveAsync();
 		}
 	}

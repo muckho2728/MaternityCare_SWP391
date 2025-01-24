@@ -2,7 +2,7 @@
 {
 	public sealed class RequestTokenBadRequest : BadRequestException
 	{
-		public RequestTokenBadRequest() : base("Invalid client request. The token has some invalid values.")
+		public RequestTokenBadRequest() : base("Invalid request. The token has some invalid values.")
 		{
 		}
 	}

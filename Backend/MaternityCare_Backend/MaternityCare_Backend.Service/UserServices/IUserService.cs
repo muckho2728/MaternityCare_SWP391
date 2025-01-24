@@ -14,5 +14,8 @@ namespace MaternityCare_Backend.Service.UserServices
 		Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange);
 		Task ChangeActiveStatus(Guid userId);
 		Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange);
+		Task ConfirmEmail(string token, string email);
+		Task SendResetPasswordToken(string email);
+		Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto);
 	}
 }
