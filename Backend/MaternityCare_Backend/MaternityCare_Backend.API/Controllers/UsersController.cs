@@ -11,14 +11,10 @@ namespace MaternityCare_Backend.API.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IServiceManager serviceManager;
-		private readonly IConfiguration configuration;
-		private readonly IHttpContextAccessor httpContextAccessor;
 
-		public UsersController(IServiceManager serviceManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public UsersController(IServiceManager serviceManager)
 		{
 			this.serviceManager = serviceManager;
-			this.configuration = configuration;
-			this.httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpGet]
@@ -44,31 +40,17 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPut("{id:guid}/activation")]
-		public async Task<IActionResult> ChangeActiveStatus(Guid id)
+		public async Task<IActionResult> ChangeActiveStatus([FromRoute] Guid id)
 		{
 			await serviceManager.UserService.ChangeActiveStatus(id);
 			return NoContent();
 		}
 
-		[HttpGet("email-verification")]
-		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email)
+		[HttpPut("{id:guid}/password")]
+		public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto)
 		{
-			await serviceManager.UserService.ConfirmEmail(token, email);
-			return Ok();
-		}
-
-		[HttpPost("reset-password")]
-		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email)
-		{
-			await serviceManager.UserService.SendResetPasswordToken(email);
-			return Ok();
-		}
-
-		[HttpPut("reset-password")]
-		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto)
-		{
-			await serviceManager.UserService.ResetPassword(userForResetPasswordDto);
-			return Ok();
+			await serviceManager.UserService.UpdatePassword(id, userForUpdatePasswordDto);
+			return NoContent();
 		}
 	}
 }

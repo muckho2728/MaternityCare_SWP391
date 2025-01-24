@@ -17,5 +17,6 @@ namespace MaternityCare_Backend.Service.UserServices
 		Task ConfirmEmail(string token, string email);
 		Task SendResetPasswordToken(string email);
 		Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto);
+		Task UpdatePassword(Guid userId, UserForUpdatePasswordDto userForUpdatePasswordDto);
 	}
 }

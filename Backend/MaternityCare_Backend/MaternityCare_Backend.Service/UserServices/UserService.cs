@@ -88,7 +88,7 @@ namespace MaternityCare_Backend.Service.UserServices
 				{ "email", userEntity.Email }
 			};
 			var request = httpContextAccessor.HttpContext?.Request;
-			var uri = $"{request?.Scheme}://{request?.Host}/api/users/email-verification";
+			var uri = $"{request?.Scheme}://{request?.Host}/api/authentications/email-verification";
 			var callback = QueryHelpers.AddQueryString(uri, param);
 			var mail = new Mail(userEntity.Email, "Email verification", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>");
 			emailSender.SendEmail(mail);
@@ -293,6 +293,17 @@ namespace MaternityCare_Backend.Service.UserServices
 			userEntity.Password = passwordHasher.HashPassword(userEntity, userForResetPasswordDto.Password);
 			userEntity.PasswordResetToken = null;
 			userEntity.PasswordResetTokenExpiryTime = null;
+			await repositoryManager.SaveAsync();
+		}
+
+		public async Task UpdatePassword(Guid userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		{
+			var userEntity = await CheckUserExistById(userId, true);
+			if (passwordHasher.VerifyHashedPassword(userEntity, userEntity.Password, userForUpdatePasswordDto.CurrentPassword) == PasswordVerificationResult.Failed)
+			{
+				throw new UserBadRequestException("Old password is incorrect");
+			}
+			userEntity.Password = passwordHasher.HashPassword(userEntity, userForUpdatePasswordDto.NewPassword);
 			await repositoryManager.SaveAsync();
 		}
 	}

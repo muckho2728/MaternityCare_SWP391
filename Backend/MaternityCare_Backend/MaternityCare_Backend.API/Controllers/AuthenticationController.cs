@@ -29,10 +29,6 @@ namespace MaternityCare_Backend.API.Controllers
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth)
 		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
 			if (await serviceManager.UserService.ValidateUser(userForAuth))
 			{
 				var token = await serviceManager.UserService.CreateToken(true);
@@ -47,6 +43,27 @@ namespace MaternityCare_Backend.API.Controllers
 			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
 			var user = await serviceManager.UserService.GetUserByToken(token, false);
 			return Ok(user);
+		}
+
+		[HttpGet("email-verification")]
+		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email)
+		{
+			await serviceManager.UserService.ConfirmEmail(token, email);
+			return Ok();
+		}
+
+		[HttpPost("password-forgeting")]
+		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email)
+		{
+			await serviceManager.UserService.SendResetPasswordToken(email);
+			return Ok();
+		}
+
+		[HttpPut("password-forgeting")]
+		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto)
+		{
+			await serviceManager.UserService.ResetPassword(userForResetPasswordDto);
+			return Ok();
 		}
 	}
 }
