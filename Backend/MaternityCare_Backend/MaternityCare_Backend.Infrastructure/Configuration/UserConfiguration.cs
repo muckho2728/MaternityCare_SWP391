@@ -17,10 +17,10 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.DateOfBirth).IsRequired();
 			builder.Property(x => x.Avatar).IsRequired();
 			builder.Property(x => x.CCCD).IsRequired().HasMaxLength(12);
-			builder.Property(x => x.IsEmailConfirmed).HasDefaultValue(false);
+			builder.Property(x => x.IsEmailConfirmed);
 			builder.Property(x => x.RoleId).IsRequired();
-			builder.Property(x => x.IsActive).HasDefaultValue(true);
-			builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.IsActive);
+			builder.Property(x => x.CreatedAt);
 			builder.Property(x => x.UpdatedAt);
 			builder.Property(x => x.EmailConfirmationToken);
 			builder.Property(x => x.PasswordResetToken);

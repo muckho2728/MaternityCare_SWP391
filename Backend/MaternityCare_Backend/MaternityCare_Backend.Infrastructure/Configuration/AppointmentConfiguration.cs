@@ -12,7 +12,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.UserId).IsRequired();
 			builder.Property(x => x.SlotId).IsRequired();
-			builder.Property(x => x.CreatedAt).IsRequired().HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.CreatedAt).IsRequired();
 			builder.HasOne(x => x.User).WithMany(x => x.Appointments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasOne(x => x.Slot).WithOne(x => x.Appointment).HasForeignKey<Appointment>(x => x.SlotId).OnDelete(DeleteBehavior.NoAction);
 		}

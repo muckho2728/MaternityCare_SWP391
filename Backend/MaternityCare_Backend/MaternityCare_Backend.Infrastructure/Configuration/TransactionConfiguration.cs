@@ -12,7 +12,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Amount).IsRequired();
 			builder.Property(x => x.Description).IsRequired();
-			builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.CreatedAt);
 			builder.Property(x => x.Status).HasConversion<string>().IsRequired();
 			builder.Property(x => x.SubscriptionId).IsRequired();
 			builder.HasOne(x => x.Subscription).WithOne(x => x.Transaction).HasForeignKey<Transaction>(x => x.SubscriptionId).OnDelete(DeleteBehavior.NoAction);

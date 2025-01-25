@@ -10,7 +10,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 		{
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
-			builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.CreatedAt);
 			builder.HasOne(x => x.Blog).WithMany(x => x.Likes).HasForeignKey(x => x.BlogId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasOne(x => x.User).WithMany(x => x.Likes).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 		}

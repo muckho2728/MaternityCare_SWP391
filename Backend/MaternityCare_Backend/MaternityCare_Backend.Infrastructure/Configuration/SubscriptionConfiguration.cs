@@ -12,8 +12,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.UserId).IsRequired();
 			builder.Property(x => x.PackageId).IsRequired();
-			builder.Property(x => x.StartDate).IsRequired();
-			builder.Property(x => x.EndDate).IsRequired();
+			builder.Property(x => x.StartDate);
+			builder.Property(x => x.EndDate);
 			builder.HasOne(x => x.User).WithMany(x => x.Subscriptions).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasOne(x => x.Package).WithMany(x => x.Subscriptions).HasForeignKey(x => x.PackageId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasOne(x => x.Transaction).WithOne(x => x.Subscription).HasForeignKey<Transaction>(x => x.SubscriptionId).OnDelete(DeleteBehavior.NoAction);

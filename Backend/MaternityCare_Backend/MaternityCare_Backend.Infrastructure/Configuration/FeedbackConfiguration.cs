@@ -13,7 +13,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.UserId).IsRequired();
 			builder.Property(x => x.Score).IsRequired();
 			builder.Property(x => x.Content).IsRequired();
-			builder.Property(x => x.CreatedAt).IsRequired().HasDefaultValue(DateTime.Now);
+			builder.Property(x => x.CreatedAt).IsRequired();
 			builder.HasOne(x => x.User).WithMany(x => x.Feedbacks).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 		}
 	}
