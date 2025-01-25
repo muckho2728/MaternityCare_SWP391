@@ -1,6 +1,4 @@
-﻿using MaternityCare_Backend.Domain.Constants;
-
-namespace MaternityCare_Backend.Domain.Entities
+﻿namespace MaternityCare_Backend.Domain.Entities
 {
 	public class Subscription
 	{
@@ -9,7 +7,6 @@ namespace MaternityCare_Backend.Domain.Entities
 		public Guid PackageId { get; set; }
 		public DateOnly StartDate { get; set; }
 		public DateOnly EndDate { get; set; }
-		public SubscriptionStatus Status { get; set; }
 
 		// Navigation properties
 		public User User { get; set; }

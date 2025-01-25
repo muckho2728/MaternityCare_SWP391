@@ -20,7 +20,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			var userEntities = FindByCondition(u => u.Role.Name != Roles.Admin.ToString(), trackChange)
 				.Filter(userParameters.IsActive)
 				.Search(userParameters.SearchName)
-				.OrderByDescending(c => c.CreatedAt)
+				.Sort()
 				.Include(u => u.Role);
 
 			return await PagedList<User>.ToPagedList(userEntities, userParameters.PageNumber, userParameters.PageSize);
