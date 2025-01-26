@@ -3,6 +3,7 @@ using MaternityCare_Backend.API.Extensions;
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.Extensions;
+using MaternityCare_Backend.Service.TransactionServices;
 using Microsoft.AspNetCore.Identity;
 using OfficeOpenXml;
 using System.Text.Json.Serialization;
@@ -30,6 +31,7 @@ builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Utils>();
 
 //Azure Key Vault
 var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!);

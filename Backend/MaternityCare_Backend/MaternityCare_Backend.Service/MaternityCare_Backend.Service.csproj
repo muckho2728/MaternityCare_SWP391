@@ -18,4 +18,11 @@
     <ProjectReference Include="..\MaternityCare_Backend.Domain\MaternityCare_Backend.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AppointmentServices\DTOs\" />
+    <Folder Include="LikeServices\DTOs\" />
+    <Folder Include="SlotServices\DTOs\" />
+    <Folder Include="TransactionServices\DTOs\" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,10 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		private readonly Lazy<IFeedbackRepository> feedbackRepository;
 		private readonly Lazy<ISubscriptionRepository> subscriptionRepository;
 		private readonly Lazy<IPackageRepository> packageRepository;
+		private readonly Lazy<IAppointmentRepository> appointmentRepository;
+		private readonly Lazy<ITransactionRepository> transactionRepository;
+		private readonly Lazy<ISlotRepository> slotRepository;
+		private readonly Lazy<ILikeRepository> likeRepository;
 
 		public RepositoryManager(RepositoryContext repositoryContext)
 		{
@@ -20,6 +24,10 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			this.feedbackRepository = new Lazy<IFeedbackRepository>(() => new FeedbackRepository(repositoryContext));
 			this.subscriptionRepository = new Lazy<ISubscriptionRepository>(() => new SubscriptionRepository(repositoryContext));
 			this.packageRepository = new Lazy<IPackageRepository>(() => new PackageRepository(repositoryContext));
+			this.appointmentRepository = new Lazy<IAppointmentRepository>(() => new AppointmentRepository(repositoryContext));
+			this.transactionRepository = new Lazy<ITransactionRepository>(() => new TransactionRepository(repositoryContext));
+			this.slotRepository = new Lazy<ISlotRepository>(() => new SlotRepository(repositoryContext));
+			this.likeRepository = new Lazy<ILikeRepository>(() => new LikeRepository(repositoryContext));
 		}
 
 		public IUserRepository UserRepository => userRepository.Value;
@@ -31,6 +39,14 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public ISubscriptionRepository SubscriptionRepository => subscriptionRepository.Value;
 
 		public IPackageRepository PackageRepository => packageRepository.Value;
+
+		public IAppointmentRepository AppointmentRepository => appointmentRepository.Value;
+
+		public ITransactionRepository TransactionRepository => transactionRepository.Value;
+
+		public ISlotRepository SlotRepository => slotRepository.Value;
+
+		public ILikeRepository LikeRepository => likeRepository.Value;
 
 		public Task SaveAsync() => repositoryContext.SaveChangesAsync();
 	}

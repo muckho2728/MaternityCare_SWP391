@@ -7,6 +7,10 @@
 		IFeedbackRepository FeedbackRepository { get; }
 		ISubscriptionRepository SubscriptionRepository { get; }
 		IPackageRepository PackageRepository { get; }
+		IAppointmentRepository AppointmentRepository { get; }
+		ITransactionRepository TransactionRepository { get; }
+		ISlotRepository SlotRepository { get; }
+		ILikeRepository LikeRepository { get; }
 		Task SaveAsync();
 	}
 }
