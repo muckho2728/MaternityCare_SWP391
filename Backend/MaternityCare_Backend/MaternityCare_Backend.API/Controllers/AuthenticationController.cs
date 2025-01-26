@@ -49,7 +49,7 @@ namespace MaternityCare_Backend.API.Controllers
 		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email)
 		{
 			await serviceManager.UserService.ConfirmEmail(token, email);
-			return Ok();
+			return Ok("Email verified successfully");
 		}
 
 		[HttpPost("password-forgeting")]

@@ -5,9 +5,9 @@ namespace MaternityCare_Backend.Domain.Repositories
 {
 	public interface IPackageRepository
 	{
-		public void CreatePackage(Package package);
-		public Task<PagedList<Package>> GetPackages(PackageParameters packageParameters, bool trackChange);
-		public Task<PagedList<Package>> GetActivePackages(PackageParameters packageParameters, bool trackChange);
-		public Task<Package?> GetPackageById(Guid id, bool trackChange);
+		void CreatePackage(Package package);
+		Task<PagedList<Package>> GetPackages(PackageParameters packageParameters, bool trackChange);
+		Task<PagedList<Package>> GetActivePackages(PackageParameters packageParameters, bool trackChange);
+		Task<Package?> GetPackageById(Guid id, bool trackChange);
 	}
 }
