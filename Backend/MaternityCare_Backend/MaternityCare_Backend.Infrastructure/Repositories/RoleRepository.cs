@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public class RoleRepository : RepositoryBase<Role>, IRoleRepository
+	internal sealed class RoleRepository : RepositoryBase<Role>, IRoleRepository
 	{
 		public RoleRepository(RepositoryContext context) : base(context)
 		{

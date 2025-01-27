@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public class FeedbackRepository : RepositoryBase<Feedback>, IFeedbackRepository
+	internal sealed class FeedbackRepository : RepositoryBase<Feedback>, IFeedbackRepository
 	{
 		public FeedbackRepository(RepositoryContext repositoryContext) : base(repositoryContext)
 		{

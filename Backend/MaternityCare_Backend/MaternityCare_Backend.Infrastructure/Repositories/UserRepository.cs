@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public class UserRepository : RepositoryBase<User>, IUserRepository
+	internal sealed class UserRepository : RepositoryBase<User>, IUserRepository
 	{
 		public UserRepository(RepositoryContext context) : base(context)
 		{

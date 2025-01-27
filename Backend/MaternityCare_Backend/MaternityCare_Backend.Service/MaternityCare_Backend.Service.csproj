@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="AppointmentServices\DTOs\" />
-    <Folder Include="LikeServices\DTOs\" />
     <Folder Include="SlotServices\DTOs\" />
     <Folder Include="TransactionServices\DTOs\" />
   </ItemGroup>

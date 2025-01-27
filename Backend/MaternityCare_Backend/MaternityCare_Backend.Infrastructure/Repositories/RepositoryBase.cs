@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+	internal abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 	{
 		protected RepositoryContext RepositoryContext;
 		public RepositoryBase(RepositoryContext repositoryContext)

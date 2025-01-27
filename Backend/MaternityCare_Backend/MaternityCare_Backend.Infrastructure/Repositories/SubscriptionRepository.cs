@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public class SubscriptionRepository : RepositoryBase<Subscription>, ISubscriptionRepository
+	internal sealed class SubscriptionRepository : RepositoryBase<Subscription>, ISubscriptionRepository
 	{
 		public SubscriptionRepository(RepositoryContext repositoryContext) : base(repositoryContext)
 		{

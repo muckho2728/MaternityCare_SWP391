@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
-	public class PackageRepository : RepositoryBase<Package>, IPackageRepository
+	internal sealed class PackageRepository : RepositoryBase<Package>, IPackageRepository
 	{
 		public PackageRepository(RepositoryContext repositoryContext) : base(repositoryContext)
 		{
