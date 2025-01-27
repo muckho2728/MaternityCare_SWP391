@@ -43,8 +43,8 @@ namespace MaternityCare_Backend.API.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateSubscription([FromForm] SubscriptionForCreationDto subscriptionForCreationDto)
 		{
-			var subscription = await serviceManager.SubscriptionService.CreateSubscription(subscriptionForCreationDto);
-			return CreatedAtAction(nameof(GetSubscriptionById), new { id = subscription.Id }, subscription);
+			var paymentUrl = await serviceManager.SubscriptionService.CreateSubscription(subscriptionForCreationDto);
+			return Ok(paymentUrl);
 		}
 	}
 }

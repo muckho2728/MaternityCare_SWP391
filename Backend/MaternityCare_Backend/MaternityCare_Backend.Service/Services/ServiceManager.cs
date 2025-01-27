@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.Service.Services
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
 			feedbackService = new Lazy<IFeedbackService>(() => new FeedbackService(repositoryManager, mapper));
 			packageService = new Lazy<IPackageService>(() => new PackageService(repositoryManager, mapper));
-			subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repositoryManager, mapper));
+			subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repositoryManager, mapper, configuration, utils));
 			appointmentService = new Lazy<IAppointmentService>(() => new AppointmentService(repositoryManager, mapper));
 			slotService = new Lazy<ISlotService>(() => new SlotService(repositoryManager, mapper));
 			transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, utils, configuration));

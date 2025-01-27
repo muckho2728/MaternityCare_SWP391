@@ -15,7 +15,9 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateSubscription(Subscription subscription) => Create(subscription);
 
-		public async Task<Subscription?> GetSubscription(Guid id, bool trackChange) => await FindByCondition(s => s.Id == id, trackChange).SingleOrDefaultAsync();
+		public async Task<Subscription?> GetSubscription(Guid id, bool trackChange) => await FindByCondition(s => s.Id == id, trackChange)
+			.Include(s => s.Package)
+			.SingleOrDefaultAsync();
 
 		public async Task<PagedList<Subscription>> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange)
 		{

@@ -2,7 +2,7 @@
 {
 	public class SubscriptionParameters : RequestParameters
 	{
-		public DateOnly StartDate { get; init; }
-		public DateOnly EndDate { get; init; }
+		public DateOnly StartDate { get; set; } = DateOnly.MinValue;
+		public DateOnly EndDate { get; set; } = DateOnly.MaxValue;
 	}
 }
