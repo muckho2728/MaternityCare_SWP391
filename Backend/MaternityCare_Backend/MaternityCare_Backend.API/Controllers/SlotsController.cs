@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetSlots(SlotParameters slotParameters)
+		public async Task<IActionResult> GetSlots([FromQuery] SlotParameters slotParameters)
 		{
 			var pagedResult = await serviceManager.SlotService.GetSlots(slotParameters, false);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -26,7 +26,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetSlot(Guid id)
+		public async Task<IActionResult> GetSlot([FromRoute] Guid id)
 		{
 			var slot = await serviceManager.SlotService.GetSlot(id, false);
 			return Ok(slot);
@@ -40,7 +40,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{id:guid}")]
-		public async Task<IActionResult> DeleteSlot(Guid id)
+		public async Task<IActionResult> DeleteSlot([FromRoute] Guid id)
 		{
 			await serviceManager.SlotService.DeleteSlot(id);
 			return NoContent();

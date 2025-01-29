@@ -22,7 +22,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<PagedList<Slot>> GetSlots(SlotParameters slotParameters, bool trackChange)
 		{
 			var slotEntities = FindAll(trackChange)
-				.Filter(slotParameters.DoctorId, slotParameters.Date);
+				.Filter(slotParameters.DoctorId, slotParameters.Date)
+				.Sort();
 			return await PagedList<Slot>.ToPagedList(slotEntities, slotParameters.PageNumber, slotParameters.PageSize);
 		}
 
