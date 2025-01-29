@@ -30,6 +30,10 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 			var appointmentEntity = mapper.Map<Appointment>(appointmentForCreationDto);
 			appointmentEntity.CreatedAt = DateTime.Now;
 			repositoryManager.AppointmentRepository.CreateAppointment(appointmentEntity);
+
+			var slot = await repositoryManager.SlotRepository.GetSlot(appointmentEntity.SlotId, true);
+			slot.IsBooked = true;
+
 			await repositoryManager.SaveAsync();
 		}
 
@@ -38,6 +42,10 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 			var appointment = await CheckAppointmentExist(appointmentId, trackChange);
 			if (appointment.Slot.Date <= DateOnly.FromDateTime(DateTime.Now)) throw new AppointmentConflictException("You cannot cancel appointments that occur today or before");
 			repositoryManager.AppointmentRepository.DeleteAppointment(appointment);
+
+			var slot = await repositoryManager.SlotRepository.GetSlot(appointment.SlotId, true);
+			slot.IsBooked = false;
+
 			await repositoryManager.SaveAsync();
 		}
 

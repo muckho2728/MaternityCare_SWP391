@@ -62,6 +62,8 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			var amount = long.Parse(vnpay.GetResponseData("vnp_Amount")) / 100;
 			var responseCode = vnpay.GetResponseData("vnp_ResponseCode");
 			var transaction = await repositoryManager.TransactionRepository.GetTransaction(transactionId, true);
+			var subscription = await repositoryManager.SubscriptionRepository.GetSubscription(transaction.SubscriptionId, true);
+			var package = await repositoryManager.PackageRepository.GetPackageById(subscription.PackageId, false);
 
 			if (transaction == null)
 			{
@@ -71,6 +73,8 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			// Update transaction status based on response code
 			if (responseCode == "00")
 			{
+				subscription.StartDate = DateOnly.FromDateTime(DateTime.Now);
+				subscription.EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(Convert.ToInt32(package.Duration)));
 				transaction.Status = TransactionStatus.Success;
 			}
 			else

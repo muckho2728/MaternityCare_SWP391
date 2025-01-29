@@ -1,5 +1,6 @@
 ﻿using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.UserServices.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaternityCare_Backend.API.Controllers
@@ -38,6 +39,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("current-user")]
+		[Authorize]
 		public async Task<IActionResult> GetCurrentUser()
 		{
 			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
