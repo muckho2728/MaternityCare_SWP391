@@ -23,17 +23,26 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{blogId:guid}/{userId:guid}")]
-		public async Task<IActionResult> DeleteLike(Guid blogId, Guid userId)
+		public async Task<IActionResult> DeleteLike([FromRoute] Guid blogId, [FromRoute] Guid userId)
 		{
 			await serviceManager.LikeService.DeleteLike(blogId, userId, false);
-			return StatusCode(204);
+			return NoContent();
 		}
 
 		[HttpGet("{blogId:guid}")]
-		public async Task<IActionResult> GetLikes(Guid blogId)
+		public async Task<IActionResult> GetLikesByBlogId([FromRoute] Guid blogId)
 		{
 			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, false);
 			return Ok(likes);
 		}
+
+		[HttpGet("{blogId:guid}/number-of-likes")]
+		public async Task<IActionResult> GetNumberOfLikesByBlogId([FromRoute] Guid blogId)
+		{
+			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, false);
+			return Ok(numberOfLikes);
+		}
+
+
 	}
 }

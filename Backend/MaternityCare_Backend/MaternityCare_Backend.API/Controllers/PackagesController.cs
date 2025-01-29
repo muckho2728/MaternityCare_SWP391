@@ -33,10 +33,10 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.packages);
 		}
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetPackageById([FromRoute] Guid id)
+		[HttpGet("{packageId:guid}")]
+		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId)
 		{
-			var package = await serviceManager.PackageService.GetPackageById(id, false);
+			var package = await serviceManager.PackageService.GetPackageById(packageId, false);
 			return Ok(package);
 		}
 
@@ -47,17 +47,17 @@ namespace MaternityCare_Backend.API.Controllers
 			return CreatedAtAction(nameof(GetPackageById), new { id = package.Id }, package);
 		}
 
-		[HttpPut("{id:guid}")]
-		public async Task<IActionResult> UpdatePackage([FromRoute] Guid id, [FromForm] PackageForUpdateDto packageForUpdateDto)
+		[HttpPut("{packageId:guid}")]
+		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto)
 		{
-			await serviceManager.PackageService.UpdatePackage(id, packageForUpdateDto, true);
+			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true);
 			return NoContent();
 		}
 
-		[HttpDelete("{id:guid}")]
-		public async Task<IActionResult> DeletePackage([FromRoute] Guid id)
+		[HttpDelete("{packageId:guid}")]
+		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId)
 		{
-			await serviceManager.PackageService.DeletePackage(id, true);
+			await serviceManager.PackageService.DeletePackage(packageId, true);
 			return NoContent();
 		}
 	}

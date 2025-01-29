@@ -25,31 +25,31 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.users);
 		}
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetUser([FromRoute] Guid id)
+		[HttpGet("{userId:guid}")]
+		public async Task<IActionResult> GetUser([FromRoute] Guid userId)
 		{
-			var user = await serviceManager.UserService.GetUserById(id, false);
+			var user = await serviceManager.UserService.GetUserById(userId, false);
 			return Ok(user);
 		}
 
-		[HttpPut("{id:guid}")]
-		public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromForm] UserForUpdateDto userForUpdateDto)
+		[HttpPut("{userId:guid}")]
+		public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromForm] UserForUpdateDto userForUpdateDto)
 		{
-			await serviceManager.UserService.UpdateUser(id, userForUpdateDto, true);
+			await serviceManager.UserService.UpdateUser(userId, userForUpdateDto, true);
 			return NoContent();
 		}
 
-		[HttpPut("{id:guid}/activation")]
-		public async Task<IActionResult> ChangeActiveStatus([FromRoute] Guid id)
+		[HttpPut("{userId:guid}/activation")]
+		public async Task<IActionResult> ChangeActiveStatus([FromRoute] Guid userId)
 		{
-			await serviceManager.UserService.ChangeActiveStatus(id);
+			await serviceManager.UserService.ChangeActiveStatus(userId);
 			return NoContent();
 		}
 
-		[HttpPut("{id:guid}/password")]
-		public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto)
+		[HttpPut("{userId:guid}/password")]
+		public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto)
 		{
-			await serviceManager.UserService.UpdatePassword(id, userForUpdatePasswordDto);
+			await serviceManager.UserService.UpdatePassword(userId, userForUpdatePasswordDto);
 			return NoContent();
 		}
 	}

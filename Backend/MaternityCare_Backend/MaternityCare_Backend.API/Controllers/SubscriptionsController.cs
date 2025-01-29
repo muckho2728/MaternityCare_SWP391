@@ -33,10 +33,10 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.subscriptions);
 		}
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetSubscriptionById(Guid id)
+		[HttpGet("{subscriptionId:guid}")]
+		public async Task<IActionResult> GetSubscriptionById(Guid subscriptionId)
 		{
-			var subscription = await serviceManager.SubscriptionService.GetSubscription(id, false);
+			var subscription = await serviceManager.SubscriptionService.GetSubscription(subscriptionId, false);
 			return Ok(subscription);
 		}
 

@@ -33,19 +33,19 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 		public async Task<string> CreateSubscription(SubscriptionForCreationDto subscriptionForCreationDto)
 		{
 			var subscriptionEntity = mapper.Map<Subscription>(subscriptionForCreationDto);
+			subscriptionEntity.Id = Guid.NewGuid();
 			repositoryManager.SubscriptionRepository.CreateSubscription(subscriptionEntity);
-			await repositoryManager.SaveAsync();
 
-			var subscription = await repositoryManager.SubscriptionRepository.GetSubscription(subscriptionEntity.Id, false);
+			var package = await repositoryManager.PackageRepository.GetPackageById(subscriptionEntity.PackageId, false);
 
 			var transactionEntity = new Transaction
 			{
 				Id = Guid.NewGuid(),
-				Amount = subscription.Package.Price,
-				Description = $"Payment for {subscription.Package.Type} package",
+				Amount = package.Price,
+				Description = $"Payment for {package.Type} package",
 				CreatedAt = DateTime.Now,
 				Status = TransactionStatus.Pending,
-				SubscriptionId = subscription.Id
+				SubscriptionId = subscriptionEntity.Id
 			};
 			repositoryManager.TransactionRepository.CreateTransaction(transactionEntity);
 			await repositoryManager.SaveAsync();
@@ -61,7 +61,7 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 			vnpay.AddRequestData("vnp_Locale", "vn");
 			vnpay.AddRequestData("vnp_OrderType", "other");
 			vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transactionEntity.Id}");
-			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrlMobile").Value);
+			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrl").Value);
 			vnpay.AddRequestData("vnp_TxnRef", transactionEntity.Id.ToString());
 			var paymentUrl = vnpay.CreateRequestUrl(configuration.GetSection("VNPay").GetSection("Url").Value, configuration.GetSection("VNPay").GetSection("HashSecret").Value);
 			return paymentUrl;

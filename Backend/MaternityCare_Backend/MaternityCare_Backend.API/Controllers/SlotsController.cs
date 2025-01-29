@@ -25,10 +25,10 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.slots);
 		}
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetSlot([FromRoute] Guid id)
+		[HttpGet("{slotId:guid}")]
+		public async Task<IActionResult> GetSlot([FromRoute] Guid slotId)
 		{
-			var slot = await serviceManager.SlotService.GetSlot(id, false);
+			var slot = await serviceManager.SlotService.GetSlot(slotId, false);
 			return Ok(slot);
 		}
 
@@ -39,10 +39,10 @@ namespace MaternityCare_Backend.API.Controllers
 			return StatusCode(201);
 		}
 
-		[HttpDelete("{id:guid}")]
-		public async Task<IActionResult> DeleteSlot([FromRoute] Guid id)
+		[HttpDelete("{slotId:guid}")]
+		public async Task<IActionResult> DeleteSlot([FromRoute] Guid slotId)
 		{
-			await serviceManager.SlotService.DeleteSlot(id);
+			await serviceManager.SlotService.DeleteSlot(slotId);
 			return NoContent();
 		}
 	}

@@ -7,5 +7,6 @@ namespace MaternityCare_Backend.Service.LikeServices
 		Task CreateLike(LikeForCreationDto likeForCreationDto);
 		Task DeleteLike(Guid blogId, Guid userId, bool trackChange);
 		Task<IEnumerable<LikeForReturnDto>> GetLikesByBlogId(Guid blogId, bool trackChange);
+		Task<int> GetNumberOfLikesByBlogId(Guid blogId, bool trackChange);
 	}
 }

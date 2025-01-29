@@ -25,10 +25,10 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.feedbacks);
 		}
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetFeedbackById(Guid id)
+		[HttpGet("{feedbackId:guid}")]
+		public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
 		{
-			var feedback = await serviceManager.FeedbackService.GetFeedbackById(id, false);
+			var feedback = await serviceManager.FeedbackService.GetFeedbackById(feedbackId, false);
 			return Ok(feedback);
 		}
 
