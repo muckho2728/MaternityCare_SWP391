@@ -25,5 +25,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 				.Filter(slotParameters.DoctorId, slotParameters.Date);
 			return await PagedList<Slot>.ToPagedList(slotEntities, slotParameters.PageNumber, slotParameters.PageSize);
 		}
+
+		public IQueryable<Slot> GetSlotsByDoctorId(Guid doctorId) => FindByCondition(s => s.DoctorId.Equals(doctorId), false);
 	}
 }

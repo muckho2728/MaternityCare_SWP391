@@ -19,6 +19,7 @@ namespace MaternityCare_Backend.API
 				NotFoundException => StatusCodes.Status404NotFound,
 				BadRequestException => StatusCodes.Status400BadRequest,
 				NotAuthenticatedException => StatusCodes.Status401Unauthorized,
+				ConflictException => StatusCodes.Status409Conflict,
 				_ => StatusCodes.Status500InternalServerError
 			};
 			var result = await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
