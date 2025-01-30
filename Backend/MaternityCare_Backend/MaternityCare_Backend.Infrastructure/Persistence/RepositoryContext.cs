@@ -1,13 +1,17 @@
 ﻿using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Persistence
 {
 	public class RepositoryContext : DbContext
 	{
-		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
+		private readonly IPasswordHasher<User> passwordHasher;
+
+		public RepositoryContext(DbContextOptions<RepositoryContext> options, IPasswordHasher<User> passwordHasher) : base(options)
 		{
+			this.passwordHasher = passwordHasher;
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -29,7 +33,7 @@ namespace MaternityCare_Backend.Infrastructure.Persistence
 			modelBuilder.ApplyConfiguration(new SubscriptionConfiguration());
 			modelBuilder.ApplyConfiguration(new TagConfiguration());
 			modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-			modelBuilder.ApplyConfiguration(new UserConfiguration());
+			modelBuilder.ApplyConfiguration(new UserConfiguration(passwordHasher));
 		}
 
 		public DbSet<Appointment> Appointments { get; set; }

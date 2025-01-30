@@ -1,4 +1,5 @@
 ﻿using MaternityCare_Backend.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -6,6 +7,12 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 {
 	public class UserConfiguration : IEntityTypeConfiguration<User>
 	{
+		private readonly IPasswordHasher<User> passwordHasher;
+
+		public UserConfiguration(IPasswordHasher<User> passwordHasher)
+		{
+			this.passwordHasher = passwordHasher;
+		}
 		public void Configure(EntityTypeBuilder<User> builder)
 		{
 			builder.HasKey(x => x.Id);
@@ -35,6 +42,23 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasMany(x => x.Fetus).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Appointments).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Subscriptions).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
+
+			var admin = new User
+			{
+				Id = Guid.Parse("6a0c434f-b4b8-4342-a991-b343f2b0ee3d"),
+				FullName = "Admin",
+				Email = "admin@gmail.com",
+				Username = "admin",
+				DateOfBirth = new DateOnly(2002, 1, 23),
+				Avatar = "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=",
+				CCCD = "123456789012",
+				RoleId = Guid.Parse("825fe2a6-c543-49cb-9d84-1f8cf2864047"),
+				IsActive = true,
+				CreatedAt = DateTime.Now,
+				IsEmailConfirmed = true
+			};
+			admin.Password = passwordHasher.HashPassword(admin, "admin");
+			builder.HasData(admin);
 		}
 	}
 }
