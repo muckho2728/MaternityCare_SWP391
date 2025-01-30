@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/transactions")]
 	[ApiController]
 	public class TransactionsController : ControllerBase
 	{
