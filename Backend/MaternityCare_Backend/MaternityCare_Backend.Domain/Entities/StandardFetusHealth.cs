@@ -4,13 +4,13 @@
 	{
 		public Guid Id { get; set; }
 		public int Week { get; set; }
-		public double HeadCircumference { get; set; }
-		public double AmnioticFluidLevel { get; set; }
-		public double CrownRumpLength { get; set; }
-		public double BiparietalDiameter { get; set; }
-		public double FemurLength { get; set; }
-		public double EstimatedFetalWeight { get; set; }
-		public double AbdominalCircumference { get; set; }
-		public double GestationalSacDiameter { get; set; }
+		public string? HeadCircumference { get; set; }
+		public string? AmnioticFluidLevel { get; set; }
+		public string? CrownRumpLength { get; set; }
+		public string? BiparietalDiameter { get; set; }
+		public string? FemurLength { get; set; }
+		public string? EstimatedFetalWeight { get; set; }
+		public string? AbdominalCircumference { get; set; }
+		public string? GestationalSacDiameter { get; set; }
 	}
 }

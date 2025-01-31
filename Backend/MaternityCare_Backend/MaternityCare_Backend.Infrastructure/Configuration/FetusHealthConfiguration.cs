@@ -11,14 +11,14 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Week).IsRequired();
-			builder.Property(x => x.HeadCircumference).IsRequired();
-			builder.Property(x => x.AmnioticFluidLevel).IsRequired();
-			builder.Property(x => x.CrownRumpLength).IsRequired();
-			builder.Property(x => x.BiparietalDiameter).IsRequired();
-			builder.Property(x => x.FemurLength).IsRequired();
-			builder.Property(x => x.EstimatedFetalWeight).IsRequired();
-			builder.Property(x => x.AbdominalCircumference).IsRequired();
-			builder.Property(x => x.GestationalSacDiameter).IsRequired();
+			builder.Property(x => x.HeadCircumference);
+			builder.Property(x => x.AmnioticFluidLevel);
+			builder.Property(x => x.CrownRumpLength);
+			builder.Property(x => x.BiparietalDiameter);
+			builder.Property(x => x.FemurLength);
+			builder.Property(x => x.EstimatedFetalWeight);
+			builder.Property(x => x.AbdominalCircumference);
+			builder.Property(x => x.GestationalSacDiameter);
 			builder.HasOne(x => x.Fetus).WithMany(x => x.FetusHealths).HasForeignKey(x => x.FetusId).OnDelete(DeleteBehavior.NoAction);
 		}
 	}
