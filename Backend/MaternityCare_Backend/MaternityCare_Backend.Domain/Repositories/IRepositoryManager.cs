@@ -11,6 +11,7 @@
 		ITransactionRepository TransactionRepository { get; }
 		ISlotRepository SlotRepository { get; }
 		ILikeRepository LikeRepository { get; }
+		IDoctorRepository DoctorRepository { get; }
 		Task SaveAsync();
 	}
 }

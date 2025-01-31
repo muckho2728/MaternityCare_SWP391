@@ -2,6 +2,7 @@
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.FeedbackServices;
 using MaternityCare_Backend.Service.IServices;
@@ -27,6 +28,7 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<ISlotService> slotService;
 		private readonly Lazy<ITransactionService> transactionService;
 		private readonly Lazy<ILikeService> likeService;
+		private readonly Lazy<IDoctorService> doctorService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -37,6 +39,7 @@ namespace MaternityCare_Backend.Service.Services
 			slotService = new Lazy<ISlotService>(() => new SlotService(repositoryManager, mapper));
 			transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, utils, configuration));
 			likeService = new Lazy<ILikeService>(() => new LikeService(repositoryManager, mapper));
+			doctorService = new Lazy<IDoctorService>(() => new DoctorService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -54,5 +57,7 @@ namespace MaternityCare_Backend.Service.Services
 		public ITransactionService TransactionService => transactionService.Value;
 
 		public ILikeService LikeService => likeService.Value;
+
+		public IDoctorService DoctorService => doctorService.Value;
 	}
 }

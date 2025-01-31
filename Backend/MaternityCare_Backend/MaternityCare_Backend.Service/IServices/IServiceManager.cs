@@ -1,4 +1,5 @@
 ﻿using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.FeedbackServices;
 using MaternityCare_Backend.Service.LikeServices;
 using MaternityCare_Backend.Service.PackageServices;
@@ -19,5 +20,6 @@ namespace MaternityCare_Backend.Service.IServices
 		ISlotService SlotService { get; }
 		ITransactionService TransactionService { get; }
 		ILikeService LikeService { get; }
+		IDoctorService DoctorService { get; }
 	}
 }

@@ -15,6 +15,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		private readonly Lazy<ITransactionRepository> transactionRepository;
 		private readonly Lazy<ISlotRepository> slotRepository;
 		private readonly Lazy<ILikeRepository> likeRepository;
+		private readonly Lazy<IDoctorRepository> doctorRepository;
 
 		public RepositoryManager(RepositoryContext repositoryContext)
 		{
@@ -28,6 +29,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			this.transactionRepository = new Lazy<ITransactionRepository>(() => new TransactionRepository(repositoryContext));
 			this.slotRepository = new Lazy<ISlotRepository>(() => new SlotRepository(repositoryContext));
 			this.likeRepository = new Lazy<ILikeRepository>(() => new LikeRepository(repositoryContext));
+			this.doctorRepository = new Lazy<IDoctorRepository>(() => new DoctorRepository(repositoryContext));
 		}
 
 		public IUserRepository UserRepository => userRepository.Value;
@@ -47,6 +49,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public ISlotRepository SlotRepository => slotRepository.Value;
 
 		public ILikeRepository LikeRepository => likeRepository.Value;
+
+		public IDoctorRepository DoctorRepository => doctorRepository.Value;
 
 		public Task SaveAsync() => repositoryContext.SaveChangesAsync();
 	}
