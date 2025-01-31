@@ -26,5 +26,10 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 				.Include(a => a.Slot);
 			return await PagedList<Appointment>.ToPagedList(appointmentEntities, appointmentParameters.PageNumber, appointmentParameters.PageSize);
 		}
+
+		public async Task<IEnumerable<Appointment>> GetAppointmentsByDoctorIdAndDate(Guid doctorId, DateOnly date, bool trackChanges) => await FindAll(trackChanges)
+			.AsSplitQuery().Include(a => a.Slot).Where(a => a.Slot.DoctorId.Equals(doctorId) && a.Slot.Date == date)
+			.AsSplitQuery().Include(a => a.User)
+			.ToListAsync();
 	}
 }

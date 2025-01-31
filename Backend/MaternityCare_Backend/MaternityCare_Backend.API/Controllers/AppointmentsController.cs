@@ -45,5 +45,12 @@ namespace MaternityCare_Backend.API.Controllers
 			await serviceManager.AppointmentService.DeleteAppointment(appointmentId, false);
 			return NoContent();
 		}
+
+		[HttpGet("excel-generating")]
+		public async Task<IActionResult> GenerateExcel([FromQuery] DateOnly date)
+		{
+			var fileContents = await serviceManager.AppointmentService.GenerateExcel(date);
+			return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{DateOnly.FromDateTime(DateTime.Now)}.xlsx");
+		}
 	}
 }

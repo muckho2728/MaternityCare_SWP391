@@ -9,6 +9,7 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 		Task DeleteAppointment(Guid appointmentId, bool trackChange);
 		Task<(IEnumerable<AppointmentForReturnDto> appointments, MetaData metaData)> GetAppointments(AppointmentParameters appointmentParameters, bool trackChange);
 		Task<AppointmentForReturnDto?> GetAppointment(Guid appointmentId, bool trackChange);
+		Task<byte[]> GenerateExcel(DateOnly date);
 
 	}
 }

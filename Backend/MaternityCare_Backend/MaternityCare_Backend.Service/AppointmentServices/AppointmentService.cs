@@ -4,6 +4,7 @@ using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.AppointmentServices.DTOs;
+using OfficeOpenXml;
 
 namespace MaternityCare_Backend.Service.AppointmentServices
 {
@@ -60,6 +61,35 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 			var appointmentsWithMetaData = await repositoryManager.AppointmentRepository.GetAppointments(appointmentParameters, trackChange);
 			var appointmentsDto = mapper.Map<IEnumerable<AppointmentForReturnDto>>(appointmentsWithMetaData);
 			return (appointmentsDto, appointmentsWithMetaData.MetaData);
+		}
+
+		public async Task<byte[]> GenerateExcel(DateOnly date)
+		{
+			var doctors = await repositoryManager.DoctorRepository.GetDoctors(false);
+			using (var package = new ExcelPackage())
+			{
+				foreach (var doctor in doctors)
+				{
+					var worksheet = package.Workbook.Worksheets.Add(doctor.FullName);
+					var appointments = await repositoryManager.AppointmentRepository.GetAppointmentsByDoctorIdAndDate(doctor.Id, date, false);
+
+					worksheet.Cells[1, 1].Value = "PatientName";
+					worksheet.Cells[1, 2].Value = "CCCD";
+					worksheet.Cells[1, 3].Value = "StartTime";
+					worksheet.Cells[1, 4].Value = "EndTime";
+
+					for (int i = 0; i < appointments.Count(); i++)
+					{
+						worksheet.Cells[i + 2, 1].Value = appointments.ElementAt(i).User.FullName;
+						worksheet.Cells[i + 2, 2].Value = appointments.ElementAt(i).User.CCCD;
+						worksheet.Cells[i + 2, 3].Value = appointments.ElementAt(i).Slot.StartTime.ToString();
+						worksheet.Cells[i + 2, 4].Value = appointments.ElementAt(i).Slot.EndTime.ToString();
+					}
+
+					worksheet.Cells.AutoFitColumns();
+				}
+				return package.GetAsByteArray();
+			}
 		}
 	}
 }
