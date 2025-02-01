@@ -10,8 +10,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 		{
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
-			builder.Property(x => x.Title).IsRequired().HasMaxLength(200);
-			builder.Property(x => x.Content).IsRequired();
+			builder.Property(x => x.Title).IsRequired().HasMaxLength(200).HasColumnType("NVARCHAR(MAX)");
+			builder.Property(x => x.Content).IsRequired().HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.Image).IsRequired(false);
 			builder.Property(x => x.CreatedAt).IsRequired();
 			builder.Property(x => x.UpdatedAt).IsRequired(false);
