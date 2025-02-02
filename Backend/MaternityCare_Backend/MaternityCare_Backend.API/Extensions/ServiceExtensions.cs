@@ -17,7 +17,7 @@ namespace MaternityCare_Backend.API.Extensions
 		public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddDbContext<RepositoryContext>(options =>
-				options.UseSqlServer(configuration.GetConnectionString("DbString")));
+				options.UseSqlServer(configuration.GetSection("DbString").Value));
 		}
 
 		public static void ConfigureCors(this IServiceCollection services) => services.AddCors(options =>
