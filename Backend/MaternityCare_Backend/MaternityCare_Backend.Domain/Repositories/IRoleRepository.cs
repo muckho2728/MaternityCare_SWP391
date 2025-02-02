@@ -4,6 +4,6 @@ namespace MaternityCare_Backend.Domain.Repositories
 {
 	public interface IRoleRepository
 	{
-		Task<Guid> GetIdByRoleName(Roles roleName, bool trackChange);
+		Task<Guid> GetIdByRoleName(Roles roleName, bool trackChange, CancellationToken ct = default);
 	}
 }

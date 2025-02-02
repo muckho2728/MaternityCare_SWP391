@@ -15,18 +15,18 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateTransaction(Transaction transaction) => Create(transaction);
 
-		public async Task<Transaction?> GetTransaction(Guid transactionId, bool trackChange) => await FindByCondition(t => t.Id == transactionId, trackChange).SingleOrDefaultAsync();
+		public async Task<Transaction?> GetTransaction(Guid transactionId, bool trackChange, CancellationToken ct = default) => await FindByCondition(t => t.Id == transactionId, trackChange).SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
+		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var transactionEntities = FindAll(trackChange)
 				.Filter(transactionParameters.Status)
 				.Sort();
 
-			return await PagedList<Transaction>.ToPagedList(transactionEntities, transactionParameters.PageNumber, transactionParameters.PageSize);
+			return await PagedList<Transaction>.ToPagedList(transactionEntities, transactionParameters.PageNumber, transactionParameters.PageSize, ct);
 		}
 
-		public async Task<PagedList<Transaction>> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange)
+		public async Task<PagedList<Transaction>> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var transactionEntities = FindAll(trackChange)
 				.Include(t => t.Subscription)
@@ -34,7 +34,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 				.Filter(transactionParameters.Status)
 				.Sort();
 
-			return await PagedList<Transaction>.ToPagedList(transactionEntities, transactionParameters.PageNumber, transactionParameters.PageSize);
+			return await PagedList<Transaction>.ToPagedList(transactionEntities, transactionParameters.PageNumber, transactionParameters.PageSize, ct);
 		}
 	}
 }

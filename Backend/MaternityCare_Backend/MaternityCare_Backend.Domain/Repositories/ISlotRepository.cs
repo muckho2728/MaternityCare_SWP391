@@ -7,8 +7,8 @@ namespace MaternityCare_Backend.Domain.Repositories
 	{
 		void CreateSlot(Slot slot);
 		void DeleteSlot(Slot slot);
-		Task<PagedList<Slot>> GetSlots(SlotParameters slotParameters, bool trackChange);
+		Task<PagedList<Slot>> GetSlots(SlotParameters slotParameters, bool trackChange, CancellationToken ct = default);
 		IQueryable<Slot> GetSlotsByDoctorId(Guid doctorId);
-		Task<Slot?> GetSlot(Guid slotId, bool trackChange);
+		Task<Slot?> GetSlot(Guid slotId, bool trackChange, CancellationToken ct = default);
 	}
 }

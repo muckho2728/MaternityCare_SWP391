@@ -15,19 +15,19 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreatePackage(Package package) => Create(package);
 
-		public Task<PagedList<Package>> GetActivePackages(PackageParameters packageParameters, bool trackChange)
+		public async Task<PagedList<Package>> GetActivePackages(PackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var packageEntities = FindByCondition(p => !p.IsDeleted, trackChange);
-			return PagedList<Package>.ToPagedList(packageEntities, packageParameters.PageNumber, packageParameters.PageSize);
+			return await PagedList<Package>.ToPagedList(packageEntities, packageParameters.PageNumber, packageParameters.PageSize, ct);
 		}
 
-		public Task<Package?> GetPackageById(Guid id, bool trackChange) => FindByCondition(p => p.Id == id, trackChange).SingleOrDefaultAsync();
+		public Task<Package?> GetPackageById(Guid id, bool trackChange, CancellationToken ct = default) => FindByCondition(p => p.Id == id, trackChange).SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Package>> GetPackages(PackageParameters packageParameters, bool trackChange)
+		public async Task<PagedList<Package>> GetPackages(PackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var packageEntities = FindAll(trackChange)
 				.Filter(packageParameters.IsDeleted);
-			return await PagedList<Package>.ToPagedList(packageEntities, packageParameters.PageNumber, packageParameters.PageSize);
+			return await PagedList<Package>.ToPagedList(packageEntities, packageParameters.PageNumber, packageParameters.PageSize, ct);
 		}
 	}
 }

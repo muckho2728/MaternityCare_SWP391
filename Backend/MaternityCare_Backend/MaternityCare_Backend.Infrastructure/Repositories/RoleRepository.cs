@@ -11,6 +11,6 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public RoleRepository(RepositoryContext context) : base(context)
 		{
 		}
-		public async Task<Guid> GetIdByRoleName(Roles roleName, bool trackChange) => await FindByCondition(r => r.Name == roleName.ToString(), trackChange).Select(r => r.Id).SingleOrDefaultAsync();
+		public async Task<Guid> GetIdByRoleName(Roles roleName, bool trackChange, CancellationToken ct = default) => await FindByCondition(r => r.Name == roleName.ToString(), trackChange).Select(r => r.Id).SingleOrDefaultAsync(ct);
 	}
 }

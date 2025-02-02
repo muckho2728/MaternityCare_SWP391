@@ -52,6 +52,6 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public IDoctorRepository DoctorRepository => doctorRepository.Value;
 
-		public Task SaveAsync() => repositoryContext.SaveChangesAsync();
+		public Task SaveAsync(CancellationToken ct = default) => repositoryContext.SaveChangesAsync(ct);
 	}
 }

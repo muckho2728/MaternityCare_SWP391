@@ -17,14 +17,14 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void DeleteSlot(Slot slot) => Delete(slot);
 
-		public Task<Slot?> GetSlot(Guid slotId, bool trackChange) => FindByCondition(s => s.Id.Equals(slotId), trackChange).SingleOrDefaultAsync();
+		public Task<Slot?> GetSlot(Guid slotId, bool trackChange, CancellationToken ct = default) => FindByCondition(s => s.Id.Equals(slotId), trackChange).SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Slot>> GetSlots(SlotParameters slotParameters, bool trackChange)
+		public async Task<PagedList<Slot>> GetSlots(SlotParameters slotParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var slotEntities = FindAll(trackChange)
 				.Filter(slotParameters.DoctorId, slotParameters.Date)
 				.Sort();
-			return await PagedList<Slot>.ToPagedList(slotEntities, slotParameters.PageNumber, slotParameters.PageSize);
+			return await PagedList<Slot>.ToPagedList(slotEntities, slotParameters.PageNumber, slotParameters.PageSize, ct);
 		}
 
 		public IQueryable<Slot> GetSlotsByDoctorId(Guid doctorId) => FindByCondition(s => s.DoctorId.Equals(doctorId), false);

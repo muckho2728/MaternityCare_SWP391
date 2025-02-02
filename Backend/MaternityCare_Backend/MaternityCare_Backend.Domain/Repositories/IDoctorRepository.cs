@@ -5,7 +5,7 @@ namespace MaternityCare_Backend.Domain.Repositories
 {
 	public interface IDoctorRepository
 	{
-		Task<PagedList<Doctor>> GetDoctors(DoctorParameters doctorParameters, bool trackChange);
-		Task<IEnumerable<Doctor>> GetDoctors(bool trackChange);
+		Task<PagedList<Doctor>> GetDoctors(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default);
+		Task<IEnumerable<Doctor>> GetDoctors(bool trackChange, CancellationToken ct = default);
 	}
 }

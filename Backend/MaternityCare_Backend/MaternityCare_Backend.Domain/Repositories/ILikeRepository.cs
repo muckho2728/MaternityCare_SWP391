@@ -6,7 +6,7 @@ namespace MaternityCare_Backend.Domain.Repositories
 	{
 		void CreateLike(Like like);
 		void DeleteLike(Like like);
-		Task<IEnumerable<Like>> GetLikesByBlogId(Guid blogId, bool trackChange);
-		Task<Like?> GetLikeByBlogIdAndUserId(Guid blogId, Guid userId, bool trackChange);
+		Task<IEnumerable<Like>> GetLikesByBlogId(Guid blogId, bool trackChange, CancellationToken ct = default);
+		Task<Like?> GetLikeByBlogIdAndUserId(Guid blogId, Guid userId, bool trackChange, CancellationToken ct = default);
 	}
 }

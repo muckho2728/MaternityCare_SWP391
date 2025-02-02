@@ -13,13 +13,13 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		{
 		}
 
-		public async Task<PagedList<Doctor>> GetDoctors(DoctorParameters doctorParameters, bool trackChange)
+		public async Task<PagedList<Doctor>> GetDoctors(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var doctors = FindAll(trackChange)
 				.Sort();
-			return await PagedList<Doctor>.ToPagedList(doctors, doctorParameters.PageNumber, doctorParameters.PageSize);
+			return await PagedList<Doctor>.ToPagedList(doctors, doctorParameters.PageNumber, doctorParameters.PageSize, ct);
 		}
 
-		public async Task<IEnumerable<Doctor>> GetDoctors(bool trackChange) => await FindAll(trackChange).ToListAsync();
+		public async Task<IEnumerable<Doctor>> GetDoctors(bool trackChange, CancellationToken ct = default) => await FindAll(trackChange).ToListAsync(ct);
 	}
 }

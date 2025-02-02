@@ -17,19 +17,19 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void DeleteAppointment(Appointment appointment) => Delete(appointment);
 
-		public async Task<Appointment?> GetAppointment(Guid appointmentId, bool trackChanges) => await FindByCondition(a => a.Id.Equals(appointmentId), trackChanges).Include(a => a.Slot).SingleOrDefaultAsync();
+		public async Task<Appointment?> GetAppointment(Guid appointmentId, bool trackChanges, CancellationToken ct = default) => await FindByCondition(a => a.Id.Equals(appointmentId), trackChanges).Include(a => a.Slot).SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Appointment>> GetAppointments(AppointmentParameters appointmentParameters, bool trackChanges)
+		public async Task<PagedList<Appointment>> GetAppointments(AppointmentParameters appointmentParameters, bool trackChanges, CancellationToken ct = default)
 		{
 			var appointmentEntities = FindAll(trackChanges)
 				.Sort()
 				.Include(a => a.Slot);
-			return await PagedList<Appointment>.ToPagedList(appointmentEntities, appointmentParameters.PageNumber, appointmentParameters.PageSize);
+			return await PagedList<Appointment>.ToPagedList(appointmentEntities, appointmentParameters.PageNumber, appointmentParameters.PageSize, ct);
 		}
 
-		public async Task<IEnumerable<Appointment>> GetAppointmentsByDoctorIdAndDate(Guid doctorId, DateOnly date, bool trackChanges) => await FindAll(trackChanges)
+		public async Task<IEnumerable<Appointment>> GetAppointmentsByDoctorIdAndDate(Guid doctorId, DateOnly date, bool trackChanges, CancellationToken ct = default) => await FindAll(trackChanges)
 			.AsSplitQuery().Include(a => a.Slot).Where(a => a.Slot.DoctorId.Equals(doctorId) && a.Slot.Date == date)
 			.AsSplitQuery().Include(a => a.User)
-			.ToListAsync();
+			.ToListAsync(ct);
 	}
 }

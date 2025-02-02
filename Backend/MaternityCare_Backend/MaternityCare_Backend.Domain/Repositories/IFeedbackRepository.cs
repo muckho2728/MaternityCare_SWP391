@@ -5,8 +5,8 @@ namespace MaternityCare_Backend.Domain.Repositories
 {
 	public interface IFeedbackRepository
 	{
-		Task<PagedList<Feedback>> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange);
-		Task<Feedback?> GetFeedbackById(Guid id, bool trackChange);
+		Task<PagedList<Feedback>> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange, CancellationToken ct = default);
+		Task<Feedback?> GetFeedbackById(Guid id, bool trackChange, CancellationToken ct = default);
 		void CreateFeedback(Feedback feedback);
 	}
 }

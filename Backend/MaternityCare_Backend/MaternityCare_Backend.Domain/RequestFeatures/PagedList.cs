@@ -16,13 +16,13 @@ namespace MaternityCare_Backend.Domain.RequestFeatures
 			};
 			AddRange(items);
 		}
-		public async static Task<PagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
+		public async static Task<PagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken ct = default)
 		{
 			var count = await source.CountAsync();
 			var items = await source
 				.Skip((pageNumber - 1) * pageSize)
 				.Take(pageSize)
-				.ToListAsync();
+				.ToListAsync(ct);
 			return new PagedList<T>(items, count, pageNumber, pageSize);
 		}
 	}

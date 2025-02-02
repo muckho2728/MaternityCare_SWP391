@@ -15,28 +15,28 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateSubscription(Subscription subscription) => Create(subscription);
 
-		public async Task<Subscription?> GetSubscription(Guid id, bool trackChange) => await FindByCondition(s => s.Id == id, trackChange)
+		public async Task<Subscription?> GetSubscription(Guid id, bool trackChange, CancellationToken ct = default) => await FindByCondition(s => s.Id == id, trackChange)
 			.Include(s => s.Package)
-			.SingleOrDefaultAsync();
+			.SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Subscription>> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange)
+		public async Task<PagedList<Subscription>> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var subscriptionEntities = FindAll(trackChange)
 				.Filter(subscriptionParameters.StartDate, subscriptionParameters.EndDate)
 				.Sort()
 				.Include(s => s.Package);
 
-			return await PagedList<Subscription>.ToPagedList(subscriptionEntities, subscriptionParameters.PageNumber, subscriptionParameters.PageSize);
+			return await PagedList<Subscription>.ToPagedList(subscriptionEntities, subscriptionParameters.PageNumber, subscriptionParameters.PageSize, ct);
 		}
 
-		public async Task<PagedList<Subscription>> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange)
+		public async Task<PagedList<Subscription>> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange, CancellationToken ct = default)
 		{
 			var subscriptionEntities = FindByCondition(s => s.UserId == userId, trackChange)
 				.Filter(subscriptionParameters.StartDate, subscriptionParameters.EndDate)
 				.Sort()
 				.Include(s => s.Package);
 
-			return await PagedList<Subscription>.ToPagedList(subscriptionEntities, subscriptionParameters.PageNumber, subscriptionParameters.PageSize);
+			return await PagedList<Subscription>.ToPagedList(subscriptionEntities, subscriptionParameters.PageNumber, subscriptionParameters.PageSize, ct);
 		}
 	}
 }

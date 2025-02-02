@@ -12,6 +12,6 @@
 		ISlotRepository SlotRepository { get; }
 		ILikeRepository LikeRepository { get; }
 		IDoctorRepository DoctorRepository { get; }
-		Task SaveAsync();
+		Task SaveAsync(CancellationToken ct = default);
 	}
 }
