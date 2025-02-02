@@ -18,46 +18,46 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters)
+		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
 		{
-			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, false);
+			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.packages);
 		}
 
 		[HttpGet("active")]
-		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters)
+		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
 		{
-			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, false);
+			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.packages);
 		}
 
 		[HttpGet("{packageId:guid}")]
-		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId)
+		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId, CancellationToken ct = default)
 		{
-			var package = await serviceManager.PackageService.GetPackageById(packageId, false);
+			var package = await serviceManager.PackageService.GetPackageById(packageId, false, ct);
 			return Ok(package);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto)
+		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto, CancellationToken ct = default)
 		{
-			var package = await serviceManager.PackageService.CreatePackage(packageForCreationDto);
-			return CreatedAtAction(nameof(GetPackageById), new { id = package.Id }, package);
+			await serviceManager.PackageService.CreatePackage(packageForCreationDto, ct);
+			return StatusCode(201);
 		}
 
 		[HttpPut("{packageId:guid}")]
-		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto)
+		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct = default)
 		{
-			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true);
+			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true, ct);
 			return NoContent();
 		}
 
 		[HttpDelete("{packageId:guid}")]
-		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId)
+		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId, CancellationToken ct = default)
 		{
-			await serviceManager.PackageService.DeletePackage(packageId, true);
+			await serviceManager.PackageService.DeletePackage(packageId, true, ct);
 			return NoContent();
 		}
 	}

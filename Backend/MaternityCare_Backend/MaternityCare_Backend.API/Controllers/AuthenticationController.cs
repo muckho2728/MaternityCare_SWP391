@@ -17,20 +17,20 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromForm] UserForCreationDto userForCreationDto)
+		public async Task<IActionResult> Register([FromForm] UserForCreationDto userForCreationDto, CancellationToken ct = default)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
-			await serviceManager.UserService.CreateUser(userForCreationDto);
+			await serviceManager.UserService.CreateUser(userForCreationDto, ct);
 			return StatusCode(201);
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth)
+		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth, CancellationToken ct = default)
 		{
-			if (await serviceManager.UserService.ValidateUser(userForAuth))
+			if (await serviceManager.UserService.ValidateUser(userForAuth, ct))
 			{
 				var token = await serviceManager.UserService.CreateToken(true);
 				return Ok(token);
@@ -40,31 +40,31 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("current-user")]
 		[Authorize]
-		public async Task<IActionResult> GetCurrentUser()
+		public async Task<IActionResult> GetCurrentUser(CancellationToken ct = default)
 		{
 			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
-			var user = await serviceManager.UserService.GetUserByToken(token, false);
+			var user = await serviceManager.UserService.GetUserByToken(token, false, ct);
 			return Ok(user);
 		}
 
 		[HttpGet("email-verification")]
-		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email)
+		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email, CancellationToken ct = default)
 		{
-			await serviceManager.UserService.ConfirmEmail(token, email);
+			await serviceManager.UserService.ConfirmEmail(token, email, ct);
 			return Ok("Email verified successfully");
 		}
 
 		[HttpPost("password-forgeting")]
-		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email)
+		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email, CancellationToken ct = default)
 		{
-			await serviceManager.UserService.SendResetPasswordToken(email);
+			await serviceManager.UserService.SendResetPasswordToken(email, ct);
 			return Ok();
 		}
 
 		[HttpPut("password-forgeting")]
-		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto)
+		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto, CancellationToken ct = default)
 		{
-			await serviceManager.UserService.ResetPassword(userForResetPasswordDto);
+			await serviceManager.UserService.ResetPassword(userForResetPasswordDto, ct);
 			return Ok();
 		}
 	}

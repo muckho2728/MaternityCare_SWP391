@@ -16,30 +16,30 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddLike([FromForm] LikeForCreationDto likeDto)
+		public async Task<IActionResult> AddLike([FromForm] LikeForCreationDto likeDto, CancellationToken ct = default)
 		{
-			await serviceManager.LikeService.CreateLike(likeDto);
+			await serviceManager.LikeService.CreateLike(likeDto, ct);
 			return StatusCode(201);
 		}
 
 		[HttpDelete("{blogId:guid}/{userId:guid}")]
-		public async Task<IActionResult> DeleteLike([FromRoute] Guid blogId, [FromRoute] Guid userId)
+		public async Task<IActionResult> DeleteLike([FromRoute] Guid blogId, [FromRoute] Guid userId, CancellationToken ct = default)
 		{
-			await serviceManager.LikeService.DeleteLike(blogId, userId, false);
+			await serviceManager.LikeService.DeleteLike(blogId, userId, false, ct);
 			return NoContent();
 		}
 
 		[HttpGet("{blogId:guid}")]
-		public async Task<IActionResult> GetLikesByBlogId([FromRoute] Guid blogId)
+		public async Task<IActionResult> GetLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct = default)
 		{
-			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, false);
+			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, false, ct);
 			return Ok(likes);
 		}
 
 		[HttpGet("{blogId:guid}/number-of-likes")]
-		public async Task<IActionResult> GetNumberOfLikesByBlogId([FromRoute] Guid blogId)
+		public async Task<IActionResult> GetNumberOfLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct = default)
 		{
-			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, false);
+			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, false, ct);
 			return Ok(numberOfLikes);
 		}
 

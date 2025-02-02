@@ -18,38 +18,38 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAppointments([FromQuery] AppointmentParameters appointmentParameters)
+		public async Task<IActionResult> GetAppointments([FromQuery] AppointmentParameters appointmentParameters, CancellationToken ct = default)
 		{
-			var pagedResult = await serviceManager.AppointmentService.GetAppointments(appointmentParameters, false);
+			var pagedResult = await serviceManager.AppointmentService.GetAppointments(appointmentParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.appointments);
 		}
 
 		[HttpGet("{appointmentId:guid}")]
-		public async Task<IActionResult> GetAppointment([FromRoute] Guid appointmentId)
+		public async Task<IActionResult> GetAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
 		{
-			var appointment = await serviceManager.AppointmentService.GetAppointment(appointmentId, false);
+			var appointment = await serviceManager.AppointmentService.GetAppointment(appointmentId, false, ct);
 			return Ok(appointment);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto)
+		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct = default)
 		{
-			await serviceManager.AppointmentService.CreateAppointment(appointmentForCreationDto);
+			await serviceManager.AppointmentService.CreateAppointment(appointmentForCreationDto, ct);
 			return StatusCode(201);
 		}
 
 		[HttpDelete("{appointmentId:guid}")]
-		public async Task<IActionResult> DeleteAppointment([FromRoute] Guid appointmentId)
+		public async Task<IActionResult> DeleteAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
 		{
-			await serviceManager.AppointmentService.DeleteAppointment(appointmentId, false);
+			await serviceManager.AppointmentService.DeleteAppointment(appointmentId, false, ct);
 			return NoContent();
 		}
 
 		[HttpGet("excel-generating")]
-		public async Task<IActionResult> GenerateExcel([FromQuery] DateOnly date)
+		public async Task<IActionResult> GenerateExcel([FromQuery] DateOnly date, CancellationToken ct = default)
 		{
-			var fileContents = await serviceManager.AppointmentService.GenerateExcel(date);
+			var fileContents = await serviceManager.AppointmentService.GenerateExcel(date, ct);
 			return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{DateOnly.FromDateTime(DateTime.Now)}.xlsx");
 		}
 	}

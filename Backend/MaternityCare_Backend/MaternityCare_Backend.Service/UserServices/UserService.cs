@@ -105,6 +105,10 @@ namespace MaternityCare_Backend.Service.UserServices
 			{
 				throw new NotAuthenticatedException("User is deactivated");
 			}
+			if (!user.IsEmailConfirmed)
+			{
+				throw new NotAuthenticatedException("Your email has not been confirmed yet");
+			}
 			return true;
 		}
 
