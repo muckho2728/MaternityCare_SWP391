@@ -19,53 +19,53 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 			this.mapper = mapper;
 		}
 
-		private async Task<Appointment> CheckAppointmentExist(Guid appointmentId, bool trackChange)
+		private async Task<Appointment> CheckAppointmentExist(Guid appointmentId, bool trackChange, CancellationToken ct = default)
 		{
-			var appointment = await repositoryManager.AppointmentRepository.GetAppointment(appointmentId, trackChange);
+			var appointment = await repositoryManager.AppointmentRepository.GetAppointment(appointmentId, trackChange, ct);
 			if (appointment == null) throw new AppointmentNotFoundException();
 			return appointment;
 		}
 
-		public async Task CreateAppointment(AppointmentForCreationDto appointmentForCreationDto)
+		public async Task CreateAppointment(AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct = default)
 		{
 			var appointmentEntity = mapper.Map<Appointment>(appointmentForCreationDto);
 			appointmentEntity.CreatedAt = DateTime.Now;
 			repositoryManager.AppointmentRepository.CreateAppointment(appointmentEntity);
 
-			var slot = await repositoryManager.SlotRepository.GetSlot(appointmentEntity.SlotId, true);
+			var slot = await repositoryManager.SlotRepository.GetSlot(appointmentEntity.SlotId, true, ct);
 			slot.IsBooked = true;
 
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteAppointment(Guid appointmentId, bool trackChange)
+		public async Task DeleteAppointment(Guid appointmentId, bool trackChange, CancellationToken ct = default)
 		{
-			var appointment = await CheckAppointmentExist(appointmentId, trackChange);
+			var appointment = await CheckAppointmentExist(appointmentId, trackChange, ct);
 			if (appointment.Slot.Date <= DateOnly.FromDateTime(DateTime.Now)) throw new AppointmentConflictException("You cannot cancel appointments that occur today or before");
 			repositoryManager.AppointmentRepository.DeleteAppointment(appointment);
 
-			var slot = await repositoryManager.SlotRepository.GetSlot(appointment.SlotId, true);
+			var slot = await repositoryManager.SlotRepository.GetSlot(appointment.SlotId, true, ct);
 			slot.IsBooked = false;
 
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<AppointmentForReturnDto?> GetAppointment(Guid appointmentId, bool trackChange)
+		public async Task<AppointmentForReturnDto?> GetAppointment(Guid appointmentId, bool trackChange, CancellationToken ct = default)
 		{
-			var appointmentEntity = await CheckAppointmentExist(appointmentId, trackChange);
+			var appointmentEntity = await CheckAppointmentExist(appointmentId, trackChange, ct);
 			return mapper.Map<AppointmentForReturnDto>(appointmentEntity);
 		}
 
-		public async Task<(IEnumerable<AppointmentForReturnDto> appointments, MetaData metaData)> GetAppointments(AppointmentParameters appointmentParameters, bool trackChange)
+		public async Task<(IEnumerable<AppointmentForReturnDto> appointments, MetaData metaData)> GetAppointments(AppointmentParameters appointmentParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var appointmentsWithMetaData = await repositoryManager.AppointmentRepository.GetAppointments(appointmentParameters, trackChange);
+			var appointmentsWithMetaData = await repositoryManager.AppointmentRepository.GetAppointments(appointmentParameters, trackChange, ct);
 			var appointmentsDto = mapper.Map<IEnumerable<AppointmentForReturnDto>>(appointmentsWithMetaData);
 			return (appointmentsDto, appointmentsWithMetaData.MetaData);
 		}
 
-		public async Task<byte[]> GenerateExcel(DateOnly date)
+		public async Task<byte[]> GenerateExcel(DateOnly date, CancellationToken ct = default)
 		{
-			var doctors = await repositoryManager.DoctorRepository.GetDoctors(false);
+			var doctors = await repositoryManager.DoctorRepository.GetDoctors(false, ct);
 			using (var package = new ExcelPackage())
 			{
 				foreach (var doctor in doctors)

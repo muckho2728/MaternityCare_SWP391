@@ -24,19 +24,19 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 			this.configuration = configuration;
 			this.utils = utils;
 		}
-		private async Task<Subscription?> CheckSubscriptionExist(Guid subscriptionId, bool trackChange)
+		private async Task<Subscription?> CheckSubscriptionExist(Guid subscriptionId, bool trackChange, CancellationToken ct = default)
 		{
 			var subscriptionEntity = await repositoryManager.SubscriptionRepository.GetSubscription(subscriptionId, trackChange);
 			if (subscriptionEntity == null) throw new SubscriptionNotFoundException();
 			return subscriptionEntity;
 		}
-		public async Task<string> CreateSubscription(SubscriptionForCreationDto subscriptionForCreationDto)
+		public async Task<string> CreateSubscription(SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct = default)
 		{
 			var subscriptionEntity = mapper.Map<Subscription>(subscriptionForCreationDto);
 			subscriptionEntity.Id = Guid.NewGuid();
 			repositoryManager.SubscriptionRepository.CreateSubscription(subscriptionEntity);
 
-			var package = await repositoryManager.PackageRepository.GetPackageById(subscriptionEntity.PackageId, false);
+			var package = await repositoryManager.PackageRepository.GetPackageById(subscriptionEntity.PackageId, false, ct);
 
 			var transactionEntity = new Transaction
 			{
@@ -48,7 +48,7 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 				SubscriptionId = subscriptionEntity.Id
 			};
 			repositoryManager.TransactionRepository.CreateTransaction(transactionEntity);
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 
 			var vnpay = new VnPayLibrary();
 			vnpay.AddRequestData("vnp_Version", "2.1.0");
@@ -68,22 +68,22 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 
 		}
 
-		public async Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, bool trackChange)
+		public async Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, bool trackChange, CancellationToken ct = default)
 		{
-			var subscriptionEntity = await CheckSubscriptionExist(subscriptionId, trackChange);
+			var subscriptionEntity = await CheckSubscriptionExist(subscriptionId, trackChange, ct);
 			return mapper.Map<SubscriptionForReturnDto>(subscriptionEntity);
 		}
 
-		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange)
+		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptions(subscriptionParameters, trackChange);
+			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptions(subscriptionParameters, trackChange, ct);
 			var subscriptionDto = mapper.Map<IEnumerable<SubscriptionForReturnDto>>(subscriptionWithMetaData);
 			return (subscriptionDto, subscriptionWithMetaData.MetaData);
 		}
 
-		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange)
+		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange, CancellationToken ct = default)
 		{
-			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(subscriptionParameters, userId, trackChange);
+			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(subscriptionParameters, userId, trackChange, ct);
 			var subscriptionDto = mapper.Map<IEnumerable<SubscriptionForReturnDto>>(subscriptionWithMetaData);
 			return (subscriptionDto, subscriptionWithMetaData.MetaData);
 		}

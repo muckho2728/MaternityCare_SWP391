@@ -17,30 +17,30 @@ namespace MaternityCare_Backend.Service.FeedbackServices
 			this.repositoryManager = repositoryManager;
 			this.mapper = mapper;
 		}
-		private async Task<Feedback?> CheckFeedbackExist(Guid feedbackId, bool trackChange)
+		private async Task<Feedback?> CheckFeedbackExist(Guid feedbackId, bool trackChange, CancellationToken ct = default)
 		{
-			var feedback = await repositoryManager.FeedbackRepository.GetFeedbackById(feedbackId, trackChange);
+			var feedback = await repositoryManager.FeedbackRepository.GetFeedbackById(feedbackId, trackChange, ct);
 			if (feedback == null) throw new FeedbackNotFoundException();
 			return feedback;
 		}
-		public async Task<FeedbackForReturnDto> CreateFeedback(FeedbackForCreationDto feedbackForCreationDto)
+		public async Task<FeedbackForReturnDto> CreateFeedback(FeedbackForCreationDto feedbackForCreationDto, CancellationToken ct = default)
 		{
 			var feedbackEntity = mapper.Map<Feedback>(feedbackForCreationDto);
 			feedbackEntity.CreatedAt = DateTime.Now;
 			repositoryManager.FeedbackRepository.CreateFeedback(feedbackEntity);
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 			return mapper.Map<FeedbackForReturnDto>(feedbackEntity);
 		}
 
-		public async Task<FeedbackForReturnDto?> GetFeedbackById(Guid id, bool trackChange)
+		public async Task<FeedbackForReturnDto?> GetFeedbackById(Guid id, bool trackChange, CancellationToken ct = default)
 		{
-			var feedbackEntity = await CheckFeedbackExist(id, trackChange);
+			var feedbackEntity = await CheckFeedbackExist(id, trackChange, ct);
 			return mapper.Map<FeedbackForReturnDto>(feedbackEntity);
 		}
 
-		public async Task<(IEnumerable<FeedbackForReturnDto> feedbacks, MetaData metaData)> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange)
+		public async Task<(IEnumerable<FeedbackForReturnDto> feedbacks, MetaData metaData)> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var feedbackWithMetaData = await repositoryManager.FeedbackRepository.GetFeedbacks(feedbackParameters, trackChange);
+			var feedbackWithMetaData = await repositoryManager.FeedbackRepository.GetFeedbacks(feedbackParameters, trackChange, ct);
 			var feedbackDto = mapper.Map<IEnumerable<FeedbackForReturnDto>>(feedbackWithMetaData);
 			return (feedbackDto, feedbackWithMetaData.MetaData);
 

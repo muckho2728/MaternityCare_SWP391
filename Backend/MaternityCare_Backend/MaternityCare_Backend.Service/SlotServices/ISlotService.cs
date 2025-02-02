@@ -5,9 +5,9 @@ namespace MaternityCare_Backend.Service.SlotServices
 {
 	public interface ISlotService
 	{
-		Task CreateSlot(SlotForCreationDto slotForCreationDto);
-		Task DeleteSlot(Guid slotId);
-		Task<SlotForReturnDto?> GetSlot(Guid slotId, bool trackChange);
-		Task<(IEnumerable<SlotForReturnDto> slots, MetaData metaData)> GetSlots(SlotParameters slotParameters, bool trackChange);
+		Task CreateSlot(SlotForCreationDto slotForCreationDto, CancellationToken ct = default);
+		Task DeleteSlot(Guid slotId, CancellationToken ct = default);
+		Task<SlotForReturnDto?> GetSlot(Guid slotId, bool trackChange, CancellationToken ct = default);
+		Task<(IEnumerable<SlotForReturnDto> slots, MetaData metaData)> GetSlots(SlotParameters slotParameters, bool trackChange, CancellationToken ct = default);
 	}
 }

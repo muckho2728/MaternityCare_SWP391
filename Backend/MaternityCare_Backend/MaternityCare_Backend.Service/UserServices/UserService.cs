@@ -42,33 +42,33 @@ namespace MaternityCare_Backend.Service.UserServices
 			this.httpContextAccessor = httpContextAccessor;
 		}
 
-		private async Task CheckUserExistWhenRegister(string username, string email, string cccd)
+		private async Task CheckUserExistWhenRegister(string username, string email, string cccd, CancellationToken ct = default)
 		{
-			var user = await repositoryManager.UserRepository.GetUserByEmail(email, false);
+			var user = await repositoryManager.UserRepository.GetUserByEmail(email, false, ct);
 			if (user != null)
 			{
 				throw new UserBadRequestException("Email already existed");
 			}
-			user = await repositoryManager.UserRepository.GetUserByUserName(username, false);
+			user = await repositoryManager.UserRepository.GetUserByUserName(username, false, ct);
 			if (user != null)
 			{
 				throw new UserBadRequestException("Username already existed");
 			}
-			user = await repositoryManager.UserRepository.GetUserByCccd(cccd, false);
+			user = await repositoryManager.UserRepository.GetUserByCccd(cccd, false, ct);
 			if (user != null)
 			{
 				throw new UserBadRequestException("CCCD already existed");
 			}
 		}
 
-		private async Task<User?> CheckUserExistById(Guid userId, bool trackChange)
+		private async Task<User?> CheckUserExistById(Guid userId, bool trackChange, CancellationToken ct = default)
 		{
-			var user = await repositoryManager.UserRepository.GetUserById(userId, trackChange);
+			var user = await repositoryManager.UserRepository.GetUserById(userId, trackChange, ct);
 			if (user == null) throw new UserNotFoundException();
 			return user;
 		}
 
-		public async Task CreateUser(UserForCreationDto userForCreationDto)
+		public async Task CreateUser(UserForCreationDto userForCreationDto, CancellationToken ct = default)
 		{
 			await CheckUserExistWhenRegister(userForCreationDto.Username, userForCreationDto.Email, userForCreationDto.CCCD);
 			var userEntity = mapper.Map<User>(userForCreationDto);
@@ -80,7 +80,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			userEntity.EmailConfirmationToken = GenerateToken();
 
 			repositoryManager.UserRepository.CreateUser(userEntity);
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 
 			var param = new Dictionary<string, string>
 			{
@@ -94,9 +94,9 @@ namespace MaternityCare_Backend.Service.UserServices
 			emailSender.SendEmail(mail);
 		}
 
-		public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
+		public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth, CancellationToken ct = default)
 		{
-			user = await repositoryManager.UserRepository.GetUserByUserName(userForAuth.Username, true);
+			user = await repositoryManager.UserRepository.GetUserByUserName(userForAuth.Username, true, ct);
 			if (user is null || (passwordHasher.VerifyHashedPassword(user, user.Password, userForAuth.Password) == PasswordVerificationResult.Failed))
 			{
 				throw new NotAuthenticatedException("Username or password is incorrect");
@@ -108,7 +108,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			return true;
 		}
 
-		public async Task<TokenDto> CreateToken(bool populateExp)
+		public async Task<TokenDto> CreateToken(bool populateExp, CancellationToken ct = default)
 		{
 			var signingCredentials = GetSigningCredentials();
 			var claims = await GetClaims();
@@ -121,7 +121,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			if (populateExp)
 				user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
 
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 
 			var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
@@ -204,51 +204,51 @@ namespace MaternityCare_Backend.Service.UserServices
 			return principal;
 		}
 
-		public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+		public async Task<TokenDto> RefreshToken(TokenDto tokenDto, CancellationToken ct = default)
 		{
 			var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
-			var currentUser = await repositoryManager.UserRepository.GetUserByUserName(principal.Identity.Name, true);
+			var currentUser = await repositoryManager.UserRepository.GetUserByUserName(principal.Identity.Name, true, ct);
 			if (currentUser == null || currentUser.RefreshToken != tokenDto.RefreshToken || currentUser.RefreshTokenExpiryTime <= DateTime.Now)
 			{
 				throw new RequestTokenBadRequest();
 			}
 			user = currentUser;
-			return await CreateToken(populateExp: false);
+			return await CreateToken(populateExp: false, ct);
 		}
 
-		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange)
+		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange, CancellationToken ct = default)
 		{
-			var userEntity = await CheckUserExistById(userId, trackChange);
+			var userEntity = await CheckUserExistById(userId, trackChange, ct);
 			return mapper.Map<UserForReturnDto>(userEntity);
 		}
 
-		public Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange)
+		public async Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange, CancellationToken ct = default)
 		{
 			var handler = new JwtSecurityTokenHandler();
 			var token = handler.ReadJwtToken(jwt);
 			var userId = Guid.Parse(token.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
-			return GetUserById(userId, trackChange);
+			return await GetUserById(userId, trackChange, ct);
 		}
 
-		public async Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange)
+		public async Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, trackChange);
+			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, trackChange, ct);
 			var userDto = mapper.Map<IEnumerable<UserForReturnDto>>(usersWithMetaData);
 			return (userDto, usersWithMetaData.MetaData);
 		}
 
-		public async Task ChangeActiveStatus(Guid userId)
+		public async Task ChangeActiveStatus(Guid userId, CancellationToken ct = default)
 		{
-			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, true);
+			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, true, ct);
 			if (userEntity == null) throw new UserNotFoundException();
 
 			userEntity.IsActive = !userEntity.IsActive;
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange)
+		public async Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange, CancellationToken ct = default)
 		{
-			var userEntity = await CheckUserExistById(userId, trackChange);
+			var userEntity = await CheckUserExistById(userId, trackChange, ct);
 			mapper.Map(userForUpdateDto, userEntity);
 			if (userForUpdateDto.Avatar is not null && userForUpdateDto.Avatar.Length > 0)
 			{
@@ -257,34 +257,34 @@ namespace MaternityCare_Backend.Service.UserServices
 				userEntity.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, userForUpdateDto.Avatar);
 			}
 			userEntity.UpdatedAt = DateTime.Now;
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task ConfirmEmail(string token, string email)
+		public async Task ConfirmEmail(string token, string email, CancellationToken ct = default)
 		{
-			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true);
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true, ct);
 			if (userEntity is null || userEntity.EmailConfirmationToken != token) throw new RequestTokenBadRequest();
 			userEntity.IsEmailConfirmed = true;
 			userEntity.EmailConfirmationToken = null;
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task SendResetPasswordToken(string email)
+		public async Task SendResetPasswordToken(string email, CancellationToken ct = default)
 		{
-			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true);
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true, ct);
 			if (userEntity is null) throw new UserNotFoundException();
 
 			userEntity.PasswordResetToken = GenerateToken();
 			userEntity.PasswordResetTokenExpiryTime = DateTime.Now.AddHours(1);
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 
 			var mail = new Mail(userEntity.Email, "Reset password token", $"<p>Your reset password token is: <i>{userEntity.PasswordResetToken}</i></p>");
 			emailSender.SendEmail(mail);
 		}
 
-		public async Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto)
+		public async Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto, CancellationToken ct = default)
 		{
-			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(userForResetPasswordDto.Email, true);
+			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(userForResetPasswordDto.Email, true, ct);
 			if (userEntity is null || userEntity.PasswordResetToken != userForResetPasswordDto.Token || userEntity.PasswordResetTokenExpiryTime <= DateTime.Now)
 			{
 				throw new RequestTokenBadRequest();
@@ -293,18 +293,18 @@ namespace MaternityCare_Backend.Service.UserServices
 			userEntity.Password = passwordHasher.HashPassword(userEntity, userForResetPasswordDto.Password);
 			userEntity.PasswordResetToken = null;
 			userEntity.PasswordResetTokenExpiryTime = null;
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task UpdatePassword(Guid userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		public async Task UpdatePassword(Guid userId, UserForUpdatePasswordDto userForUpdatePasswordDto, CancellationToken ct = default)
 		{
-			var userEntity = await CheckUserExistById(userId, true);
+			var userEntity = await CheckUserExistById(userId, true, ct);
 			if (passwordHasher.VerifyHashedPassword(userEntity, userEntity.Password, userForUpdatePasswordDto.CurrentPassword) == PasswordVerificationResult.Failed)
 			{
 				throw new UserBadRequestException("Old password is incorrect");
 			}
 			userEntity.Password = passwordHasher.HashPassword(userEntity, userForUpdatePasswordDto.NewPassword);
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 		}
 	}
 }

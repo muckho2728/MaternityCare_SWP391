@@ -5,6 +5,6 @@ namespace MaternityCare_Backend.Service.DoctorServices
 {
 	public interface IDoctorService
 	{
-		Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, bool trackChange);
+		Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default);
 	}
 }

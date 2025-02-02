@@ -24,21 +24,21 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			this.configuration = configuration;
 		}
 
-		public async Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
+		public async Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var transactionsWithMetaData = await repositoryManager.TransactionRepository.GetTransactions(transactionParameters, trackChange);
+			var transactionsWithMetaData = await repositoryManager.TransactionRepository.GetTransactions(transactionParameters, trackChange, ct);
 			var transactions = mapper.Map<IEnumerable<TransactionForReturnDto>>(transactionsWithMetaData);
 			return (transactions, transactionsWithMetaData.MetaData);
 		}
 
-		public async Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange)
+		public async Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var transactionsWithMetaData = await repositoryManager.TransactionRepository.GetTransactionsByUserId(userId, transactionParameters, trackChange);
+			var transactionsWithMetaData = await repositoryManager.TransactionRepository.GetTransactionsByUserId(userId, transactionParameters, trackChange, ct);
 			var transactions = mapper.Map<IEnumerable<TransactionForReturnDto>>(transactionsWithMetaData);
 			return (transactions, transactionsWithMetaData.MetaData);
 		}
 
-		public async Task<IActionResult> IPNAsync(IQueryCollection query)
+		public async Task<IActionResult> IPNAsync(IQueryCollection query, CancellationToken ct = default)
 		{
 			var vnpay = new VnPayLibrary();
 			foreach (var key in query.Keys)
@@ -61,9 +61,9 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			var transactionId = Guid.Parse(vnpay.GetResponseData("vnp_TxnRef"));
 			var amount = long.Parse(vnpay.GetResponseData("vnp_Amount")) / 100;
 			var responseCode = vnpay.GetResponseData("vnp_ResponseCode");
-			var transaction = await repositoryManager.TransactionRepository.GetTransaction(transactionId, true);
-			var subscription = await repositoryManager.SubscriptionRepository.GetSubscription(transaction.SubscriptionId, true);
-			var package = await repositoryManager.PackageRepository.GetPackageById(subscription.PackageId, false);
+			var transaction = await repositoryManager.TransactionRepository.GetTransaction(transactionId, true, ct);
+			var subscription = await repositoryManager.SubscriptionRepository.GetSubscription(transaction.SubscriptionId, true, ct);
+			var package = await repositoryManager.PackageRepository.GetPackageById(subscription.PackageId, false, ct);
 
 			if (transaction == null)
 			{
@@ -81,7 +81,7 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			{
 				transaction.Status = TransactionStatus.Failed;
 			}
-			await repositoryManager.SaveAsync();
+			await repositoryManager.SaveAsync(ct);
 
 			return new JsonResult(new { RspCode = "00", Message = "Confirm Success" });
 		}

@@ -15,9 +15,9 @@ namespace MaternityCare_Backend.Service.DoctorServices
 			this.repositoryManager = repositoryManager;
 			this.mapper = mapper;
 		}
-		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, bool trackChange)
+		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default)
 		{
-			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetDoctors(doctorParameters, trackChange);
+			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetDoctors(doctorParameters, trackChange, ct);
 			var doctors = mapper.Map<IEnumerable<DoctorForReturnDto>>(doctorWithMetaData);
 			return (doctors, doctorWithMetaData.MetaData);
 		}

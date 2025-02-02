@@ -4,9 +4,9 @@ namespace MaternityCare_Backend.Service.LikeServices
 {
 	public interface ILikeService
 	{
-		Task CreateLike(LikeForCreationDto likeForCreationDto);
-		Task DeleteLike(Guid blogId, Guid userId, bool trackChange);
-		Task<IEnumerable<LikeForReturnDto>> GetLikesByBlogId(Guid blogId, bool trackChange);
-		Task<int> GetNumberOfLikesByBlogId(Guid blogId, bool trackChange);
+		Task CreateLike(LikeForCreationDto likeForCreationDto, CancellationToken ct = default);
+		Task DeleteLike(Guid blogId, Guid userId, bool trackChange, CancellationToken ct = default);
+		Task<IEnumerable<LikeForReturnDto>> GetLikesByBlogId(Guid blogId, bool trackChange, CancellationToken ct = default);
+		Task<int> GetNumberOfLikesByBlogId(Guid blogId, bool trackChange, CancellationToken ct = default);
 	}
 }

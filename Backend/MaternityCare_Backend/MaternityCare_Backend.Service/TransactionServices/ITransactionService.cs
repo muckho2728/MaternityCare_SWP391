@@ -7,8 +7,8 @@ namespace MaternityCare_Backend.Service.TransactionServices
 {
 	public interface ITransactionService
 	{
-		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange);
-		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
-		Task<IActionResult> IPNAsync(IQueryCollection query);
+		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default);
+		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default);
+		Task<IActionResult> IPNAsync(IQueryCollection query, CancellationToken ct = default);
 	}
 }
