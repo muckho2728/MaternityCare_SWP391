@@ -1,6 +1,7 @@
 ﻿using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.SubscriptionServices.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetSubscriptions([FromQuery] SubscriptionParameters subscriptionParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptions(subscriptionParameters, false, ct);
@@ -26,6 +28,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("users/{userId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetSubscriptionByUserId(SubscriptionParameters subscriptionParameters, Guid userId, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptionsByUserId(subscriptionParameters, userId, false, ct);
@@ -34,6 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{subscriptionId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetSubscriptionById(Guid subscriptionId, CancellationToken ct = default)
 		{
 			var subscription = await serviceManager.SubscriptionService.GetSubscription(subscriptionId, false, ct);
@@ -41,6 +45,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateSubscription([FromForm] SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct = default)
 		{
 			var paymentUrl = await serviceManager.SubscriptionService.CreateSubscription(subscriptionForCreationDto, ct);

@@ -1,6 +1,8 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.SlotServices.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetSlots([FromQuery] SlotParameters slotParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.SlotService.GetSlots(slotParameters, false, ct);
@@ -26,6 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{slotId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetSlot([FromRoute] Guid slotId, CancellationToken ct = default)
 		{
 			var slot = await serviceManager.SlotService.GetSlot(slotId, false, ct);
@@ -33,6 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> CreateSlot([FromForm] SlotForCreationDto slotForCreationDto, CancellationToken ct = default)
 		{
 			await serviceManager.SlotService.CreateSlot(slotForCreationDto, ct);
@@ -40,6 +45,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{slotId:guid}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> DeleteSlot([FromRoute] Guid slotId, CancellationToken ct = default)
 		{
 			await serviceManager.SlotService.DeleteSlot(slotId, ct);

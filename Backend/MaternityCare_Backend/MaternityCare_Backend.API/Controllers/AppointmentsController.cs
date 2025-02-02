@@ -1,6 +1,8 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.AppointmentServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetAppointments([FromQuery] AppointmentParameters appointmentParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.AppointmentService.GetAppointments(appointmentParameters, false, ct);
@@ -26,6 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{appointmentId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
 		{
 			var appointment = await serviceManager.AppointmentService.GetAppointment(appointmentId, false, ct);
@@ -33,6 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct = default)
 		{
 			await serviceManager.AppointmentService.CreateAppointment(appointmentForCreationDto, ct);
@@ -40,6 +45,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{appointmentId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> DeleteAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
 		{
 			await serviceManager.AppointmentService.DeleteAppointment(appointmentId, false, ct);
@@ -47,6 +53,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("excel-generating")]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GenerateExcel([FromQuery] DateOnly date, CancellationToken ct = default)
 		{
 			var fileContents = await serviceManager.AppointmentService.GenerateExcel(date, ct);

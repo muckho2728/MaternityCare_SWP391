@@ -1,5 +1,6 @@
 ﻿using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.LikeServices.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaternityCare_Backend.API.Controllers
@@ -16,6 +17,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> AddLike([FromForm] LikeForCreationDto likeDto, CancellationToken ct = default)
 		{
 			await serviceManager.LikeService.CreateLike(likeDto, ct);
@@ -23,6 +25,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{blogId:guid}/{userId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> DeleteLike([FromRoute] Guid blogId, [FromRoute] Guid userId, CancellationToken ct = default)
 		{
 			await serviceManager.LikeService.DeleteLike(blogId, userId, false, ct);
@@ -30,6 +33,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{blogId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct = default)
 		{
 			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, false, ct);
@@ -37,6 +41,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{blogId:guid}/number-of-likes")]
+		[Authorize]
 		public async Task<IActionResult> GetNumberOfLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct = default)
 		{
 			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, false, ct);

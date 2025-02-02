@@ -1,6 +1,8 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.FeedbackServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetFeedbacks([FromQuery] FeedbackParameters feedbackParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.FeedbackService.GetFeedbacks(feedbackParameters, false, ct);
@@ -26,6 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{feedbackId:guid}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetFeedbackById(Guid feedbackId, CancellationToken ct = default)
 		{
 			var feedback = await serviceManager.FeedbackService.GetFeedbackById(feedbackId, false, ct);
@@ -33,6 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateFeedback([FromForm] FeedbackForCreationDto feedbackForCreationDto, CancellationToken ct = default)
 		{
 			await serviceManager.FeedbackService.CreateFeedback(feedbackForCreationDto, ct);

@@ -1,5 +1,7 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -17,6 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetTransactions([FromQuery] TransactionParameters transactionParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.TransactionService.GetTransactions(transactionParameters, false, ct);
@@ -25,6 +28,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{userId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetTransactionsByUserId([FromRoute] Guid userId, [FromQuery] TransactionParameters transactionParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.TransactionService.GetTransactionsByUserId(userId, transactionParameters, false, ct);

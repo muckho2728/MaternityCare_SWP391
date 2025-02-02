@@ -1,5 +1,6 @@
 ﻿using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -17,6 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetDoctors([FromQuery] DoctorParameters doctorParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.DoctorService.GetDoctor(doctorParameters, false, ct);

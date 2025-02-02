@@ -1,6 +1,8 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.PackageServices.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, false, ct);
@@ -26,6 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("active")]
+		[Authorize]
 		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
 		{
 			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, false, ct);
@@ -34,6 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{packageId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId, CancellationToken ct = default)
 		{
 			var package = await serviceManager.PackageService.GetPackageById(packageId, false, ct);
@@ -41,6 +46,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto, CancellationToken ct = default)
 		{
 			await serviceManager.PackageService.CreatePackage(packageForCreationDto, ct);
@@ -48,6 +54,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPut("{packageId:guid}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct = default)
 		{
 			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true, ct);
@@ -55,6 +62,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpDelete("{packageId:guid}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId, CancellationToken ct = default)
 		{
 			await serviceManager.PackageService.DeletePackage(packageId, true, ct);
