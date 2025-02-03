@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Service.ReminderServices.DTOs;
 
@@ -18,6 +19,7 @@ namespace MaternityCare_Backend.Service.ReminderServices
 		public async Task<ReminderForReturnDto?> GetReminder(int week, bool trackChange, CancellationToken ct)
 		{
 			var reminderEntity = await repositoryManager.ReminderRepository.GetReminder(week, trackChange, ct);
+			if (reminderEntity == null) throw new ReminderNotFoundException(week);
 			return mapper.Map<ReminderForReturnDto>(reminderEntity);
 		}
 

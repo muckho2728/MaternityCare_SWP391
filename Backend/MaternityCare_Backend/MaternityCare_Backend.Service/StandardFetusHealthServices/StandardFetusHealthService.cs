@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Service.StandardFetusHealthServices.DTOs;
 
@@ -18,6 +19,7 @@ namespace MaternityCare_Backend.Service.StandardFetusHealthServices
 		public async Task<StandardFetusHealthForReturnDto?> GetStandardFetusHealth(int week, bool trackChange, CancellationToken ct)
 		{
 			var standardFetusHealthEntity = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealth(week, trackChange, ct);
+			if (standardFetusHealthEntity == null) throw new StandardFetusHealthNotFoundException(week);
 			return mapper.Map<StandardFetusHealthForReturnDto>(standardFetusHealthEntity);
 		}
 
