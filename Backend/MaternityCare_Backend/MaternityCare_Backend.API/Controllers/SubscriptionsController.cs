@@ -20,7 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> GetSubscriptions([FromQuery] SubscriptionParameters subscriptionParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetSubscriptions([FromQuery] SubscriptionParameters subscriptionParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptions(subscriptionParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -29,7 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("users/{userId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetSubscriptionByUserId(SubscriptionParameters subscriptionParameters, Guid userId, CancellationToken ct = default)
+		public async Task<IActionResult> GetSubscriptionByUserId(SubscriptionParameters subscriptionParameters, Guid userId, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptionsByUserId(subscriptionParameters, userId, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{subscriptionId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetSubscriptionById(Guid subscriptionId, CancellationToken ct = default)
+		public async Task<IActionResult> GetSubscriptionById(Guid subscriptionId, CancellationToken ct)
 		{
 			var subscription = await serviceManager.SubscriptionService.GetSubscription(subscriptionId, false, ct);
 			return Ok(subscription);
@@ -46,7 +46,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateSubscription([FromForm] SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> CreateSubscription([FromForm] SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct)
 		{
 			var paymentUrl = await serviceManager.SubscriptionService.CreateSubscription(subscriptionForCreationDto, ct);
 			return Ok(paymentUrl);

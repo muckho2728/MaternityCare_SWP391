@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> GetFeedbacks([FromQuery] FeedbackParameters feedbackParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetFeedbacks([FromQuery] FeedbackParameters feedbackParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.FeedbackService.GetFeedbacks(feedbackParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{feedbackId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> GetFeedbackById(Guid feedbackId, CancellationToken ct = default)
+		public async Task<IActionResult> GetFeedbackById(Guid feedbackId, CancellationToken ct)
 		{
 			var feedback = await serviceManager.FeedbackService.GetFeedbackById(feedbackId, false, ct);
 			return Ok(feedback);
@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateFeedback([FromForm] FeedbackForCreationDto feedbackForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> CreateFeedback([FromForm] FeedbackForCreationDto feedbackForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.FeedbackService.CreateFeedback(feedbackForCreationDto, ct);
 			return StatusCode(201);

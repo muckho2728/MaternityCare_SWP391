@@ -20,7 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> GetTransactions([FromQuery] TransactionParameters transactionParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetTransactions([FromQuery] TransactionParameters transactionParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.TransactionService.GetTransactions(transactionParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -29,7 +29,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{userId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetTransactionsByUserId([FromRoute] Guid userId, [FromQuery] TransactionParameters transactionParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetTransactionsByUserId([FromRoute] Guid userId, [FromQuery] TransactionParameters transactionParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.TransactionService.GetTransactionsByUserId(userId, transactionParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -37,7 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("ipn")]
-		public async Task<IActionResult> IPN(CancellationToken ct = default)
+		public async Task<IActionResult> IPN(CancellationToken ct)
 		{
 			var result = await serviceManager.TransactionService.IPNAsync(Request.Query, ct);
 			return Ok(result);

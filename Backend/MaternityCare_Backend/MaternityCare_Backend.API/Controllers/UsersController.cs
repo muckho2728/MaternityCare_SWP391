@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> GetUsers([FromQuery] UserParameters userParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetUsers([FromQuery] UserParameters userParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.UserService.GetUsers(userParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{userId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetUser([FromRoute] Guid userId, CancellationToken ct = default)
+		public async Task<IActionResult> GetUser([FromRoute] Guid userId, CancellationToken ct)
 		{
 			var user = await serviceManager.UserService.GetUserById(userId, false, ct);
 			return Ok(user);
@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{userId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromForm] UserForUpdateDto userForUpdateDto, CancellationToken ct = default)
+		public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromForm] UserForUpdateDto userForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.UserService.UpdateUser(userId, userForUpdateDto, true, ct);
 			return NoContent();
@@ -46,7 +46,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{userId:guid}/activation")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> ChangeActiveStatus([FromRoute] Guid userId, CancellationToken ct = default)
+		public async Task<IActionResult> ChangeActiveStatus([FromRoute] Guid userId, CancellationToken ct)
 		{
 			await serviceManager.UserService.ChangeActiveStatus(userId, ct);
 			return NoContent();
@@ -54,7 +54,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{userId:guid}/password")]
 		[Authorize]
-		public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto, CancellationToken ct = default)
+		public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto, CancellationToken ct)
 		{
 			await serviceManager.UserService.UpdatePassword(userId, userForUpdatePasswordDto, ct);
 			return NoContent();

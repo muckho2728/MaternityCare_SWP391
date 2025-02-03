@@ -19,7 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> GetDoctors([FromQuery] DoctorParameters doctorParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetDoctors([FromQuery] DoctorParameters doctorParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.DoctorService.GetDoctor(doctorParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));

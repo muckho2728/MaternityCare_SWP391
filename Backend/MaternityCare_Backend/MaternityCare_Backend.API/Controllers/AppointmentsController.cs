@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> GetAppointments([FromQuery] AppointmentParameters appointmentParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetAppointments([FromQuery] AppointmentParameters appointmentParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.AppointmentService.GetAppointments(appointmentParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{appointmentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
+		public async Task<IActionResult> GetAppointment([FromRoute] Guid appointmentId, CancellationToken ct)
 		{
 			var appointment = await serviceManager.AppointmentService.GetAppointment(appointmentId, false, ct);
 			return Ok(appointment);
@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.AppointmentService.CreateAppointment(appointmentForCreationDto, ct);
 			return StatusCode(201);
@@ -46,7 +46,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpDelete("{appointmentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> DeleteAppointment([FromRoute] Guid appointmentId, CancellationToken ct = default)
+		public async Task<IActionResult> DeleteAppointment([FromRoute] Guid appointmentId, CancellationToken ct)
 		{
 			await serviceManager.AppointmentService.DeleteAppointment(appointmentId, false, ct);
 			return NoContent();

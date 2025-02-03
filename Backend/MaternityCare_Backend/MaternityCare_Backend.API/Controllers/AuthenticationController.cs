@@ -17,7 +17,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromForm] UserForCreationDto userForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> Register([FromForm] UserForCreationDto userForCreationDto, CancellationToken ct)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -28,7 +28,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth, CancellationToken ct = default)
+		public async Task<IActionResult> Login([FromForm] UserForAuthenticationDto userForAuth, CancellationToken ct)
 		{
 			if (await serviceManager.UserService.ValidateUser(userForAuth, ct))
 			{
@@ -40,7 +40,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("current-user")]
 		[Authorize]
-		public async Task<IActionResult> GetCurrentUser(CancellationToken ct = default)
+		public async Task<IActionResult> GetCurrentUser(CancellationToken ct)
 		{
 			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
 			var user = await serviceManager.UserService.GetUserByToken(token, false, ct);
@@ -48,21 +48,21 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("email-verification")]
-		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email, CancellationToken ct = default)
+		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email, CancellationToken ct)
 		{
 			await serviceManager.UserService.ConfirmEmail(token, email, ct);
 			return Ok("Email verified successfully");
 		}
 
 		[HttpPost("password-forgeting")]
-		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email, CancellationToken ct = default)
+		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email, CancellationToken ct)
 		{
 			await serviceManager.UserService.SendResetPasswordToken(email, ct);
 			return Ok();
 		}
 
 		[HttpPut("password-forgeting")]
-		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto, CancellationToken ct = default)
+		public async Task<IActionResult> ResetPassword([FromForm] UserForResetPasswordDto userForResetPasswordDto, CancellationToken ct)
 		{
 			await serviceManager.UserService.ResetPassword(userForResetPasswordDto, ct);
 			return Ok();

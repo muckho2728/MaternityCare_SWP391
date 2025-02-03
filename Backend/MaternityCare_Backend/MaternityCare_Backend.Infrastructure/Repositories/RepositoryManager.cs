@@ -16,6 +16,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		private readonly Lazy<ISlotRepository> slotRepository;
 		private readonly Lazy<ILikeRepository> likeRepository;
 		private readonly Lazy<IDoctorRepository> doctorRepository;
+		private readonly Lazy<IStandardFetusHealthRepository> standardFetusHealthRepository;
+		private readonly Lazy<IReminderRepository> reminderRepository;
 
 		public RepositoryManager(RepositoryContext repositoryContext)
 		{
@@ -30,6 +32,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			this.slotRepository = new Lazy<ISlotRepository>(() => new SlotRepository(repositoryContext));
 			this.likeRepository = new Lazy<ILikeRepository>(() => new LikeRepository(repositoryContext));
 			this.doctorRepository = new Lazy<IDoctorRepository>(() => new DoctorRepository(repositoryContext));
+			this.standardFetusHealthRepository = new Lazy<IStandardFetusHealthRepository>(() => new StandardFetusHealthRepository(repositoryContext));
+			this.reminderRepository = new Lazy<IReminderRepository>(() => new ReminderRepository(repositoryContext));
 		}
 
 		public IUserRepository UserRepository => userRepository.Value;
@@ -51,6 +55,10 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public ILikeRepository LikeRepository => likeRepository.Value;
 
 		public IDoctorRepository DoctorRepository => doctorRepository.Value;
+
+		public IStandardFetusHealthRepository StandardFetusHealthRepository => standardFetusHealthRepository.Value;
+
+		public IReminderRepository ReminderRepository => reminderRepository.Value;
 
 		public Task SaveAsync(CancellationToken ct = default) => repositoryContext.SaveChangesAsync(ct);
 	}

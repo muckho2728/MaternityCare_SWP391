@@ -12,6 +12,8 @@
 		ISlotRepository SlotRepository { get; }
 		ILikeRepository LikeRepository { get; }
 		IDoctorRepository DoctorRepository { get; }
+		IStandardFetusHealthRepository StandardFetusHealthRepository { get; }
+		IReminderRepository ReminderRepository { get; }
 		Task SaveAsync(CancellationToken ct = default);
 	}
 }

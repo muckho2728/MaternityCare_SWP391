@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> GetSlots([FromQuery] SlotParameters slotParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetSlots([FromQuery] SlotParameters slotParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.SlotService.GetSlots(slotParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{slotId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetSlot([FromRoute] Guid slotId, CancellationToken ct = default)
+		public async Task<IActionResult> GetSlot([FromRoute] Guid slotId, CancellationToken ct)
 		{
 			var slot = await serviceManager.SlotService.GetSlot(slotId, false, ct);
 			return Ok(slot);
@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> CreateSlot([FromForm] SlotForCreationDto slotForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> CreateSlot([FromForm] SlotForCreationDto slotForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.SlotService.CreateSlot(slotForCreationDto, ct);
 			return StatusCode(201);
@@ -46,7 +46,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpDelete("{slotId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> DeleteSlot([FromRoute] Guid slotId, CancellationToken ct = default)
+		public async Task<IActionResult> DeleteSlot([FromRoute] Guid slotId, CancellationToken ct)
 		{
 			await serviceManager.SlotService.DeleteSlot(slotId, ct);
 			return NoContent();

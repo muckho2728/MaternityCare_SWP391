@@ -8,7 +8,9 @@ using MaternityCare_Backend.Service.FeedbackServices;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.LikeServices;
 using MaternityCare_Backend.Service.PackageServices;
+using MaternityCare_Backend.Service.ReminderServices;
 using MaternityCare_Backend.Service.SlotServices;
+using MaternityCare_Backend.Service.StandardFetusHealthServices;
 using MaternityCare_Backend.Service.SubscriptionServices;
 using MaternityCare_Backend.Service.TransactionServices;
 using MaternityCare_Backend.Service.UserServices;
@@ -29,6 +31,8 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<ITransactionService> transactionService;
 		private readonly Lazy<ILikeService> likeService;
 		private readonly Lazy<IDoctorService> doctorService;
+		private readonly Lazy<IReminderService> reminderService;
+		private readonly Lazy<IStandardFetusHealthService> standardFetusHealthService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -40,6 +44,8 @@ namespace MaternityCare_Backend.Service.Services
 			transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, utils, configuration));
 			likeService = new Lazy<ILikeService>(() => new LikeService(repositoryManager, mapper));
 			doctorService = new Lazy<IDoctorService>(() => new DoctorService(repositoryManager, mapper));
+			reminderService = new Lazy<IReminderService>(() => new ReminderService(repositoryManager, mapper));
+			standardFetusHealthService = new Lazy<IStandardFetusHealthService>(() => new StandardFetusHealthService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -59,5 +65,9 @@ namespace MaternityCare_Backend.Service.Services
 		public ILikeService LikeService => likeService.Value;
 
 		public IDoctorService DoctorService => doctorService.Value;
+
+		public IReminderService ReminderService => reminderService.Value;
+
+		public IStandardFetusHealthService StandardFetusHealthService => standardFetusHealthService.Value;
 	}
 }

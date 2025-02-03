@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("active")]
 		[Authorize]
-		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct = default)
+		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -39,7 +39,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{packageId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId, CancellationToken ct = default)
+		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId, CancellationToken ct)
 		{
 			var package = await serviceManager.PackageService.GetPackageById(packageId, false, ct);
 			return Ok(package);
@@ -47,7 +47,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto, CancellationToken ct = default)
+		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.PackageService.CreatePackage(packageForCreationDto, ct);
 			return StatusCode(201);
@@ -55,7 +55,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{packageId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct = default)
+		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true, ct);
 			return NoContent();
@@ -63,7 +63,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpDelete("{packageId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId, CancellationToken ct = default)
+		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId, CancellationToken ct)
 		{
 			await serviceManager.PackageService.DeletePackage(packageId, true, ct);
 			return NoContent();
