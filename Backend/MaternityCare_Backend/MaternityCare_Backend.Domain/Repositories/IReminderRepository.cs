@@ -6,5 +6,6 @@ namespace MaternityCare_Backend.Domain.Repositories
 	{
 		Task<IEnumerable<Reminder>> GetReminders(bool trackChange, CancellationToken ct = default);
 		Task<Reminder?> GetReminder(int week, bool trackChange, CancellationToken ct = default);
+		Task<Reminder?> GetReminderNextWeek(int week, bool trackChange, CancellationToken ct = default);
 	}
 }

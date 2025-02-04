@@ -223,7 +223,11 @@ namespace MaternityCare_Backend.Service.UserServices
 		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange, CancellationToken ct = default)
 		{
 			var userEntity = await CheckUserExistById(userId, trackChange, ct);
-			return mapper.Map<UserForReturnDto>(userEntity);
+			var subscription = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(userId, false, ct);
+			var isPremium = subscription.Any(sub => sub.EndDate < DateOnly.FromDateTime(DateTime.Now) && sub.Package.Type == "Premium");
+			var userReturnDto = mapper.Map<UserForReturnDto>(userEntity);
+			userReturnDto.Subscription = isPremium ? "Premium" : "Free";
+			return userReturnDto;
 		}
 
 		public async Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange, CancellationToken ct = default)

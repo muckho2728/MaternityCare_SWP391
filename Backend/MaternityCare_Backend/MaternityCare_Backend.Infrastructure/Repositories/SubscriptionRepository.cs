@@ -38,5 +38,9 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 			return await PagedList<Subscription>.ToPagedList(subscriptionEntities, subscriptionParameters.PageNumber, subscriptionParameters.PageSize, ct);
 		}
+
+		public async Task<IEnumerable<Subscription>> GetSubscriptionsByUserId(Guid userId, bool trackChange, CancellationToken ct = default) => await FindByCondition(s => s.UserId == userId, trackChange)
+			.Include(s => s.Package)
+			.ToListAsync(ct);
 	}
 }

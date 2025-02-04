@@ -13,6 +13,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public async Task<Reminder?> GetReminder(int week, bool trackChange, CancellationToken ct = default) => await FindByCondition(r => r.Week == week, trackChange).SingleOrDefaultAsync(ct);
 
+		public async Task<Reminder?> GetReminderNextWeek(int week, bool trackChange, CancellationToken ct = default) => await FindByCondition(r => r.Week == week + 1, trackChange).SingleOrDefaultAsync(ct);
+
 		public async Task<IEnumerable<Reminder>> GetReminders(bool trackChange, CancellationToken ct = default) => await FindAll(trackChange).OrderBy(r => r.Week).ToListAsync(ct);
 	}
 }

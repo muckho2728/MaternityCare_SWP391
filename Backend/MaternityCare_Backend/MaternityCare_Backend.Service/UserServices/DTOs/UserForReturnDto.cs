@@ -13,5 +13,6 @@ namespace MaternityCare_Backend.Service.UserServices.DTOs
 		public string CCCD { get; init; }
 		public bool IsActive { get; init; }
 		public RoleForReturnDto Role { get; set; }
+		public string Subscription { get; set; }
 	}
 }
