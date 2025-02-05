@@ -25,7 +25,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("{week:int}")]
 		[Authorize]
-		public async Task<IActionResult> GetReminder(int week, CancellationToken ct)
+		public async Task<IActionResult> GetReminder([FromRoute] int week, CancellationToken ct)
 		{
 			var reminder = await serviceManager.ReminderService.GetReminder(week, false, ct);
 			return Ok(reminder);

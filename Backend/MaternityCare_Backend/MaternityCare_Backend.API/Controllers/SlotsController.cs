@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> CreateSlot([FromForm] SlotForCreationDto slotForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateSlot([FromBody] SlotForCreationDto slotForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.SlotService.CreateSlot(slotForCreationDto, ct);
 			return StatusCode(201);

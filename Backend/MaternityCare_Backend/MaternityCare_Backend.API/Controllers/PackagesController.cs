@@ -47,7 +47,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> CreatePackage([FromForm] PackageForCreationDto packageForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreatePackage([FromBody] PackageForCreationDto packageForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.PackageService.CreatePackage(packageForCreationDto, ct);
 			return StatusCode(201);

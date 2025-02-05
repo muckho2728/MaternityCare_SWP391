@@ -38,7 +38,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateAppointment([FromForm] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateAppointment([FromBody] AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.AppointmentService.CreateAppointment(appointmentForCreationDto, ct);
 			return StatusCode(201);

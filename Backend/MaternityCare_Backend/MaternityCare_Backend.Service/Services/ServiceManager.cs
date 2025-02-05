@@ -2,6 +2,7 @@
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.FeedbackServices;
@@ -33,6 +34,7 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<IDoctorService> doctorService;
 		private readonly Lazy<IReminderService> reminderService;
 		private readonly Lazy<IStandardFetusHealthService> standardFetusHealthService;
+		private readonly Lazy<ICommentService> commentService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -46,6 +48,7 @@ namespace MaternityCare_Backend.Service.Services
 			doctorService = new Lazy<IDoctorService>(() => new DoctorService(repositoryManager, mapper));
 			reminderService = new Lazy<IReminderService>(() => new ReminderService(repositoryManager, mapper));
 			standardFetusHealthService = new Lazy<IStandardFetusHealthService>(() => new StandardFetusHealthService(repositoryManager, mapper));
+			commentService = new Lazy<ICommentService>(() => new CommentService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -69,5 +72,7 @@ namespace MaternityCare_Backend.Service.Services
 		public IReminderService ReminderService => reminderService.Value;
 
 		public IStandardFetusHealthService StandardFetusHealthService => standardFetusHealthService.Value;
+
+		public ICommentService CommentService => commentService.Value;
 	}
 }

@@ -14,6 +14,7 @@
 		IDoctorRepository DoctorRepository { get; }
 		IStandardFetusHealthRepository StandardFetusHealthRepository { get; }
 		IReminderRepository ReminderRepository { get; }
+		ICommentRepository CommentRepository { get; }
 		Task SaveAsync(CancellationToken ct = default);
 	}
 }

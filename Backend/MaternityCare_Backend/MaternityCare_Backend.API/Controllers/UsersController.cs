@@ -54,7 +54,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{userId:guid}/password")]
 		[Authorize]
-		public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromForm] UserForUpdatePasswordDto userForUpdatePasswordDto, CancellationToken ct)
+		public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromBody] UserForUpdatePasswordDto userForUpdatePasswordDto, CancellationToken ct)
 		{
 			await serviceManager.UserService.UpdatePassword(userId, userForUpdatePasswordDto, ct);
 			return NoContent();

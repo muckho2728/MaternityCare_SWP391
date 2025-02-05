@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> AddLike([FromForm] LikeForCreationDto likeDto, CancellationToken ct)
+		public async Task<IActionResult> AddLike([FromBody] LikeForCreationDto likeDto, CancellationToken ct)
 		{
 			await serviceManager.LikeService.CreateLike(likeDto, ct);
 			return StatusCode(201);

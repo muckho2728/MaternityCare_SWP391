@@ -1,4 +1,5 @@
 ﻿using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.FeedbackServices;
 using MaternityCare_Backend.Service.LikeServices;
@@ -25,5 +26,6 @@ namespace MaternityCare_Backend.Service.IServices
 		IDoctorService DoctorService { get; }
 		IReminderService ReminderService { get; }
 		IStandardFetusHealthService StandardFetusHealthService { get; }
+		ICommentService CommentService { get; }
 	}
 }
