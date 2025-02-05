@@ -11,14 +11,14 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Week).IsRequired();
-			builder.Property(x => x.HeadCircumference);
-			builder.Property(x => x.AmnioticFluidLevel);
-			builder.Property(x => x.CrownRumpLength);
-			builder.Property(x => x.BiparietalDiameter);
-			builder.Property(x => x.FemurLength);
-			builder.Property(x => x.EstimatedFetalWeight);
-			builder.Property(x => x.AbdominalCircumference);
-			builder.Property(x => x.GestationalSacDiameter);
+			builder.Property(x => x.HeadCircumference).HasMaxLength(20);
+			builder.Property(x => x.AmnioticFluidLevel).HasMaxLength(20);
+			builder.Property(x => x.CrownRumpLength).HasMaxLength(20);
+			builder.Property(x => x.BiparietalDiameter).HasMaxLength(20);
+			builder.Property(x => x.FemurLength).HasMaxLength(20);
+			builder.Property(x => x.EstimatedFetalWeight).HasMaxLength(20);
+			builder.Property(x => x.AbdominalCircumference).HasMaxLength(20);
+			builder.Property(x => x.GestationalSacDiameter).HasMaxLength(20);
 
 			builder.HasData(
 				new StandardFetusHealth
