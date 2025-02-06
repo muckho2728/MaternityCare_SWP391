@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{userId:guid}")]
-		public async Task<IActionResult> GetFetusesByUserId([FromQuery] FetusParameters fetusParameters, [FromQuery] Guid userId, CancellationToken ct)
+		public async Task<IActionResult> GetFetusesByUserId([FromQuery] FetusParameters fetusParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.FetusService.GetFetusesByUserId(fetusParameters, userId, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));

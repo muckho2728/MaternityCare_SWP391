@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/{fetusId:guid}/fetus-healths")]
+	[Route("api/fetuses/{fetusId:guid}/fetus-healths")]
 	[ApiController]
 	public class FetusHealthsController : ControllerBase
 	{
