@@ -3,6 +3,7 @@ using MaternityCare_Backend.API.Extensions;
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.Extensions;
+using MaternityCare_Backend.Service.SignalRServices;
 using MaternityCare_Backend.Service.TransactionServices;
 using Microsoft.AspNetCore.Identity;
 using OfficeOpenXml;
@@ -20,12 +21,18 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+//Azure Key Vault
+var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!);
+var azureCredential = new DefaultAzureCredential();
+builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
+
 builder.Services.ConfigureSwaggerForAuthentication();
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureAutomapper();
 builder.Services.ConfigureManager();
+builder.Services.ConfigureSignalR(builder.Configuration);
 builder.Services.ConfigureGlobalException();
 builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -33,10 +40,7 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Utils>();
 
-//Azure Key Vault
-var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!);
-var azureCredential = new DefaultAzureCredential();
-builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
+
 
 var app = builder.Build();
 
@@ -55,5 +59,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notification");
 
 app.Run();

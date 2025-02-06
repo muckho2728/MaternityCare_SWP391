@@ -20,6 +20,11 @@ namespace MaternityCare_Backend.API.Extensions
 				options.UseSqlServer(configuration.GetSection("DbString").Value));
 		}
 
+		public static void ConfigureSignalR(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSignalR().AddAzureSignalR(configuration.GetConnectionString("SignalR"));
+		}
+
 		public static void ConfigureCors(this IServiceCollection services) => services.AddCors(options =>
 		{
 			options.AddPolicy("CorsPolicy", builder =>

@@ -55,7 +55,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost("password-forgeting")]
-		public async Task<IActionResult> SendResetPasswordToken([FromBody] string email, CancellationToken ct)
+		public async Task<IActionResult> SendResetPasswordToken([FromForm] string email, CancellationToken ct)
 		{
 			await serviceManager.UserService.SendResetPasswordToken(email, ct);
 			return Ok();
