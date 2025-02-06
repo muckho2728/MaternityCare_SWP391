@@ -15,6 +15,7 @@ using MaternityCare_Backend.Service.ReminderServices;
 using MaternityCare_Backend.Service.SlotServices;
 using MaternityCare_Backend.Service.StandardFetusHealthServices;
 using MaternityCare_Backend.Service.SubscriptionServices;
+using MaternityCare_Backend.Service.TagServices;
 using MaternityCare_Backend.Service.TransactionServices;
 using MaternityCare_Backend.Service.UserServices;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +40,7 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<ICommentService> commentService;
 		private readonly Lazy<IFetusService> fetusService;
 		private readonly Lazy<IFetusHealthService> fetusHealthService;
+		private readonly Lazy<ITagService> tagService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -55,6 +57,7 @@ namespace MaternityCare_Backend.Service.Services
 			commentService = new Lazy<ICommentService>(() => new CommentService(repositoryManager, mapper));
 			fetusService = new Lazy<IFetusService>(() => new FetusService(repositoryManager, mapper));
 			fetusHealthService = new Lazy<IFetusHealthService>(() => new FetusHealthService(repositoryManager, mapper));
+			tagService = new Lazy<ITagService>(() => new TagService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -84,5 +87,7 @@ namespace MaternityCare_Backend.Service.Services
 		public IFetusService FetusService => fetusService.Value;
 
 		public IFetusHealthService FetusHealthService => fetusHealthService.Value;
+
+		public ITagService TagService => tagService.Value;
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.FetusServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -18,6 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{userId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> GetFetusesByUserId([FromQuery] FetusParameters fetusParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.FetusService.GetFetusesByUserId(fetusParameters, userId, false, ct);
@@ -26,6 +28,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> CreateFetus([FromBody] FetusForCreationDto fetusForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.FetusService.CreateFetus(fetusForCreationDto, ct);
@@ -33,6 +36,7 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpPut("{fetusId:guid}")]
+		[Authorize]
 		public async Task<IActionResult> UpdateFetus([FromRoute] Guid fetusId, [FromBody] FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, false, ct);

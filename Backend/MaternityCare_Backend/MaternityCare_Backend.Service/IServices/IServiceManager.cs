@@ -10,6 +10,7 @@ using MaternityCare_Backend.Service.ReminderServices;
 using MaternityCare_Backend.Service.SlotServices;
 using MaternityCare_Backend.Service.StandardFetusHealthServices;
 using MaternityCare_Backend.Service.SubscriptionServices;
+using MaternityCare_Backend.Service.TagServices;
 using MaternityCare_Backend.Service.TransactionServices;
 using MaternityCare_Backend.Service.UserServices;
 
@@ -31,5 +32,6 @@ namespace MaternityCare_Backend.Service.IServices
 		ICommentService CommentService { get; }
 		IFetusService FetusService { get; }
 		IFetusHealthService FetusHealthService { get; }
+		ITagService TagService { get; }
 	}
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaternityCare_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20250130090749_SeedDataForSlot")]
-    partial class SeedDataForSlot
+    [Migration("20250206092620_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(MAX)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -72,7 +72,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("NVARCHAR(MAX)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -144,7 +144,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("NVARCHAR(MAX)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -174,7 +174,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         {
                             Id = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             Avatar = "https://maternitycare.blob.core.windows.net/maternitycare/LamVietTrung.jpg",
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 40, DateTimeKind.Local).AddTicks(1802),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 331, DateTimeKind.Local).AddTicks(2448),
                             Email = "lamviettrung@gmail.com",
                             FullName = "Lam Viet Trung",
                             IsDeleted = false,
@@ -186,7 +186,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         {
                             Id = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             Avatar = "https://maternitycare.blob.core.windows.net/maternitycare/LeThiMinhHong.jpg",
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 40, DateTimeKind.Local).AddTicks(1839),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 331, DateTimeKind.Local).AddTicks(2467),
                             Email = "lethiminhhong@gmail.com",
                             FullName = "Le Thi Minh Hong",
                             IsDeleted = false,
@@ -198,7 +198,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         {
                             Id = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             Avatar = "https://maternitycare.blob.core.windows.net/maternitycare/NguyenThiThuHa.jpg",
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 40, DateTimeKind.Local).AddTicks(1841),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 331, DateTimeKind.Local).AddTicks(2471),
                             Email = "nguyenthithuha@gmail.com",
                             FullName = "Nguyen Thi Thu Ha",
                             IsDeleted = false,
@@ -210,7 +210,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         {
                             Id = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             Avatar = "https://maternitycare.blob.core.windows.net/maternitycare/VoDucHieu.jpg",
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 40, DateTimeKind.Local).AddTicks(1844),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 331, DateTimeKind.Local).AddTicks(2476),
                             Email = "voduchieu@gmail.com",
                             FullName = "Vo Duc Hieu",
                             IsDeleted = false,
@@ -280,31 +280,31 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("AbdominalCircumference")
+                    b.Property<double?>("AbdominalCircumference")
                         .HasColumnType("float");
 
-                    b.Property<double>("AmnioticFluidLevel")
+                    b.Property<double?>("AmnioticFluidLevel")
                         .HasColumnType("float");
 
-                    b.Property<double>("BiparietalDiameter")
+                    b.Property<double?>("BiparietalDiameter")
                         .HasColumnType("float");
 
-                    b.Property<double>("CrownRumpLength")
+                    b.Property<double?>("CrownRumpLength")
                         .HasColumnType("float");
 
-                    b.Property<double>("EstimatedFetalWeight")
+                    b.Property<double?>("EstimatedFetalWeight")
                         .HasColumnType("float");
 
-                    b.Property<double>("FemurLength")
+                    b.Property<double?>("FemurLength")
                         .HasColumnType("float");
 
                     b.Property<Guid>("FetusId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("GestationalSacDiameter")
+                    b.Property<double?>("GestationalSacDiameter")
                         .HasColumnType("float");
 
-                    b.Property<double>("HeadCircumference")
+                    b.Property<double?>("HeadCircumference")
                         .HasColumnType("float");
 
                     b.Property<int>("Week")
@@ -383,7 +383,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("595a4777-de2b-4c8a-a45f-3ddba55dddee"),
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 41, DateTimeKind.Local).AddTicks(2507),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 332, DateTimeKind.Local).AddTicks(6581),
                             Duration = 10.0,
                             Feature = "Like and comment blogs;Update fetus health record",
                             IsDeleted = false,
@@ -393,7 +393,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e401f557-307a-4b1d-b65b-d7c26f3aac61"),
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 41, DateTimeKind.Local).AddTicks(2515),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 332, DateTimeKind.Local).AddTicks(6598),
                             Duration = 10.0,
                             Feature = "All the free features;Generate chart;Book doctor in advance",
                             IsDeleted = false,
@@ -418,6 +418,62 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reminders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4a5f6b3f-361c-4a79-9fe2-0a8d734bc5b4"),
+                            Description = "You should have your first prenatal visit and have an ultrasound or blood tests to confirm the pregnancy.",
+                            Week = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("363a958e-352f-44d2-b02d-5856c7beadd9"),
+                            Description = "You should have your first-trimester screening to check for chromosomal conditions.",
+                            Week = 9
+                        },
+                        new
+                        {
+                            Id = new Guid("d1d2509f-4ffe-493c-8767-ed8512d5a94a"),
+                            Description = "This is the beginning of the second trimester. A routine check-up is a must to check if the pregnancy is progressing normally",
+                            Week = 13
+                        },
+                        new
+                        {
+                            Id = new Guid("c353be84-cef6-4278-a887-dc69d98db49e"),
+                            Description = "You should have an anomaly scan to examine fetal anatomy.",
+                            Week = 18
+                        },
+                        new
+                        {
+                            Id = new Guid("03a4969a-4a6e-4598-ab1d-d67382d8b0a7"),
+                            Description = "You should have the mid-pregnancy ultrasound to check the baby’s development.",
+                            Week = 20
+                        },
+                        new
+                        {
+                            Id = new Guid("1f1a62e2-e8d4-453c-a7e2-70f27571a0da"),
+                            Description = "This is the beginning of the third trimester. You should have schedule for additional tests or screenings (such as for anemia or gestational diabetes)",
+                            Week = 25
+                        },
+                        new
+                        {
+                            Id = new Guid("38d65a1b-8707-4d4f-b47c-eb245e6f5ef8"),
+                            Description = "From now on, you have schedule an appointment with your doctor once a week to make sure the baby is developing weel.",
+                            Week = 31
+                        },
+                        new
+                        {
+                            Id = new Guid("6a10cacc-b219-4fc2-b72a-a8c2a530904c"),
+                            Description = "You’re now considered early term. You should have regular monitoring.",
+                            Week = 37
+                        },
+                        new
+                        {
+                            Id = new Guid("2681c772-28d7-47e9-a7bc-e1c9f68d9742"),
+                            Description = "You’re now considered full term. You should attend all scheduled prenatal appointments and contact your provider if you experience any changes or discomfort.",
+                            Week = 39
+                        });
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Role", b =>
@@ -478,7 +534,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("09244d81-370c-41d4-b320-38fe5bf3945d"),
+                            Id = new Guid("0abd2476-858f-4e16-9175-7cef2392a9dc"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -487,7 +543,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("25b0aed8-4854-406e-93ee-b905889b9567"),
+                            Id = new Guid("e6027451-5342-4eea-b22f-c47ab8863726"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -496,7 +552,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6c8f2a45-9c4a-4d81-9e81-79cb53abcfb0"),
+                            Id = new Guid("8a947b93-2b92-440f-8e48-714f496492e0"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -505,7 +561,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("179efabd-dfa3-4103-bd67-caf0a7650a3b"),
+                            Id = new Guid("fcfb41d2-e100-4065-8c06-c407a4e85c29"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -514,7 +570,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3e14e411-dd84-42a8-9f9a-0caa88009eef"),
+                            Id = new Guid("e3652cb4-7b78-497a-9fcd-f67f21fadc23"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -523,7 +579,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("02946bd7-b0f0-46dc-aefa-a9673a4719b4"),
+                            Id = new Guid("77a85e53-028c-48ef-84ff-cb220056faad"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -532,7 +588,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b2f32404-2f4d-4146-8e7b-5abf698d54ba"),
+                            Id = new Guid("b30e7ca9-4c19-4e0c-a2d8-03a75065fbfe"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -541,7 +597,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("605efe55-ddd4-4c4f-b7ef-16a6860801be"),
+                            Id = new Guid("1314c564-cb32-47ea-a948-5829a9a10c2b"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -550,7 +606,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6a62bd01-966c-4e6b-927f-b8e82ba5ca6a"),
+                            Id = new Guid("b1fb1acc-7a01-4b45-9b04-2d2d11e8e1c3"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -559,7 +615,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fdc53866-a79c-459f-9774-724111259102"),
+                            Id = new Guid("c93ad6a2-29f5-4582-84dd-c66bcdde13c8"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -568,7 +624,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("341d3403-086d-4470-adbf-595c5402cd6b"),
+                            Id = new Guid("a661101b-d2db-4789-ae2d-30c40d1d2f56"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -577,7 +633,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4b2d66e6-2070-42a9-938a-86b34a9ce15d"),
+                            Id = new Guid("b7082fcf-7608-4c64-affc-65ead1735ce6"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -586,7 +642,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ac1b5522-d10c-4548-866d-c541cc1cffe8"),
+                            Id = new Guid("c37d05e3-33a5-4d63-ba53-7b452068f2f4"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -595,7 +651,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2186a940-a2aa-48f1-81c1-659a3d9e46f0"),
+                            Id = new Guid("69b93c80-8471-43a6-8046-73edf7c5c93d"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -604,7 +660,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("86caf959-d440-429f-a40f-d4455a65f130"),
+                            Id = new Guid("bbac8e76-5cdf-4ee9-80e8-42853186c1a5"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -613,7 +669,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d4c48fb9-53f5-4b5a-af6b-28632e3998bf"),
+                            Id = new Guid("715f8058-9ed6-4f7a-b2ac-c733723d5a02"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("1f498837-82e7-4901-b4d6-4810f4aa1785"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -622,7 +678,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("714ec5b5-6014-4e48-848f-bf48cc44c366"),
+                            Id = new Guid("881f5451-0f77-41ef-a59f-82432b3d0197"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -631,7 +687,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9d935cc6-0b29-4e4d-997b-0fb796c1074d"),
+                            Id = new Guid("bdd656cf-e157-4ce3-b779-3c85bebcf28e"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -640,7 +696,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("956d8a76-44b3-43df-9349-99ffbff3f8d4"),
+                            Id = new Guid("f2a4463a-09d9-4974-96db-f24c4f72d8a4"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -649,7 +705,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("babfafe7-4bd6-4b5c-b017-c286fed0138a"),
+                            Id = new Guid("9ef291ff-d312-4d7a-96a2-ef633a88deea"),
                             Date = new DateOnly(2025, 3, 31),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -658,7 +714,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8afbeb46-6c8d-49d2-b9e4-9a3cbc199bdd"),
+                            Id = new Guid("57fa1690-1f6b-4108-965c-dfbfd11ede11"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -667,7 +723,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("78c5f4b0-c464-41e7-96a6-d57437de6ace"),
+                            Id = new Guid("5ab06c47-9e36-4b30-ae8f-71da725f4ac6"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -676,7 +732,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("27d787f1-bbb8-4779-9a8c-560217bfcc3d"),
+                            Id = new Guid("b951e0ba-bfed-4677-bee1-1d2e9fa5e03c"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -685,7 +741,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("46aeb2bf-bb3e-45e3-9471-91fd84b5679e"),
+                            Id = new Guid("eaf7d77b-3b01-4c6f-b80b-ff20cd973b38"),
                             Date = new DateOnly(2025, 4, 3),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -694,7 +750,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("659651ba-99e9-4624-a37b-8f95520badca"),
+                            Id = new Guid("892201d3-bd32-433f-b2d3-1e1d26ef52e4"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -703,7 +759,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0bdbb506-939d-4099-a38c-7586e01ab893"),
+                            Id = new Guid("738f6bf8-366f-4437-98b6-4427bd5634e7"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -712,7 +768,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("36de15a4-d717-4de9-af31-e2a4aaf8dcaa"),
+                            Id = new Guid("bd836f58-72a5-4965-8af3-471fdae5a0b3"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -721,7 +777,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f6baf34f-072e-4795-8d2a-622ce0cf43e0"),
+                            Id = new Guid("e259b4dd-0d5a-473e-9fff-17418a57f7c9"),
                             Date = new DateOnly(2025, 4, 7),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -730,7 +786,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c0dc0655-e803-449e-8b0f-00ad5957b63b"),
+                            Id = new Guid("6fff3d4f-67fc-4fe4-851d-80f8073c175a"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -739,7 +795,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7dc102b7-0a8c-4d2d-ad9c-35ee089a19f7"),
+                            Id = new Guid("e5d3b464-b39f-4d4e-b31d-250ea8b64b7c"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -748,7 +804,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e5adba32-78e4-4935-920f-f1ac9e78fa96"),
+                            Id = new Guid("13f8a6af-609e-470c-a396-e11b698234f1"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -757,7 +813,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0a8f5161-caa4-49c1-8268-636957d3a85b"),
+                            Id = new Guid("6362d81c-c764-464e-9ac1-20b8b662dd86"),
                             Date = new DateOnly(2025, 4, 10),
                             DoctorId = new Guid("7983bd2f-20c4-4d9b-89bd-b5099c704286"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -766,7 +822,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8223f902-5a64-48a6-94a7-327f35103186"),
+                            Id = new Guid("058fdcfe-62ea-48aa-8d89-6ddded627dd8"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -775,7 +831,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c8bcec31-1c06-4cb4-903a-4c10446630a4"),
+                            Id = new Guid("ade9385b-d804-4a57-95bc-9dc13ab2bbe5"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -784,7 +840,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6be7feec-e35b-4e0b-9645-4d8270d9aa8a"),
+                            Id = new Guid("d4f3c13f-5f6b-4fc8-bd3f-442c8e3f1056"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -793,7 +849,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6bec4eef-35bc-4b97-87f4-90db0ff7cacf"),
+                            Id = new Guid("8c209408-f581-4f7b-8113-7413b30cfab9"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -802,7 +858,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2186e687-5141-4c3b-9b86-1cedae92d62a"),
+                            Id = new Guid("dc0a8dcc-ef30-412b-941a-3f049e589eb2"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -811,7 +867,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("70f4060d-6eae-4b41-95b5-168f9f6014ec"),
+                            Id = new Guid("dc35ef80-47a9-4bd0-807f-98cf40825f42"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -820,7 +876,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fd4976a3-c218-4d3e-8e39-d7c2381accf7"),
+                            Id = new Guid("92b4ae9c-1c8c-41b0-82f0-ca288949e6b0"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -829,7 +885,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("13949f2d-2b89-48b3-907e-888e188427e8"),
+                            Id = new Guid("927c58b3-1802-4db5-a5fc-aea11de14b17"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -838,7 +894,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b24f3573-e65e-43ac-be39-a9953626901c"),
+                            Id = new Guid("a0ae8dc4-669b-4961-9a5b-89876484a6e4"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -847,7 +903,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("962d66a0-325f-423e-8f8d-6e86a426e12f"),
+                            Id = new Guid("1f6bad07-6aaf-463e-8c0d-6125caff8000"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -856,7 +912,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7e5bbc73-40ba-4cf5-afa7-5f12dc1d6e86"),
+                            Id = new Guid("8e97fdf3-e679-4818-99ce-b6432bf78bca"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -865,7 +921,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0ee4b85f-c302-464a-b896-f024c7bb1675"),
+                            Id = new Guid("743e8dcf-7e76-4cfc-b068-0cff00284b5f"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -874,7 +930,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("56225442-60b4-4ff6-a576-d0768e90c617"),
+                            Id = new Guid("d01726f1-9627-4183-88d3-d973b664036e"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -883,7 +939,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d333f145-fbdd-4b69-9ef8-63579f3423de"),
+                            Id = new Guid("ceabc3ae-98ec-4ce7-b952-99e277976393"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -892,7 +948,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a5a13df1-b72c-4d7b-9f8e-886529b292c8"),
+                            Id = new Guid("d37fcc08-3ac0-4271-84f5-192efb624f8d"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -901,7 +957,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("050d6416-acfa-4781-b7a5-7508433f211e"),
+                            Id = new Guid("91cef874-2ac1-4ed9-8a61-e86e69adf8ed"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("39dce4a1-f917-4d8b-bde6-9994c1bb8a94"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -910,7 +966,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bc23d25e-0a0d-4078-b359-44056a4a1644"),
+                            Id = new Guid("c2923f78-9bf6-4866-99cf-f462958d3ff3"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -919,7 +975,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6998b707-55ec-49b2-97f8-9ed5e9ecf4f9"),
+                            Id = new Guid("23d6fb92-0eb9-4d73-86b0-9886fd54c8a1"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -928,7 +984,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4e94be80-37f2-4c83-a433-12fcd94860c7"),
+                            Id = new Guid("acbfbfd3-e94d-4d83-8329-69e2aaec962f"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -937,7 +993,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c8e0a5a-bca9-436b-9393-651963a8527b"),
+                            Id = new Guid("dfc174f5-f924-4502-bfd3-5a2136318521"),
                             Date = new DateOnly(2025, 4, 1),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -946,7 +1002,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d9ca4477-ab31-4bd5-9a6f-a367e4353eef"),
+                            Id = new Guid("2cf409c5-77f4-45d1-9d93-94214aabb3d8"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -955,7 +1011,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("45f92e2a-1390-4bfb-8d8d-4065d54b7c17"),
+                            Id = new Guid("b1b862c4-308c-4b7e-9b5e-f8ceb2705e92"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -964,7 +1020,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9c4fdd30-a320-48b6-979e-1a3f871f5a4a"),
+                            Id = new Guid("2daaf64a-f8ff-47b7-80e8-75364ddbb153"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -973,7 +1029,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("22ed0780-2c8a-4023-9ca7-9a690f8877c7"),
+                            Id = new Guid("263a6317-cfc1-48db-82d5-95d1390ca7ff"),
                             Date = new DateOnly(2025, 4, 4),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -982,7 +1038,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("80892961-32f1-4514-a867-202cb5936f74"),
+                            Id = new Guid("dfbd596a-5c6b-4176-ae97-4227422c5a96"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -991,7 +1047,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3fd89ffd-c960-4829-b60d-018232139e62"),
+                            Id = new Guid("20e2b8ec-4ac6-4a3b-8920-ffeb5f1344a4"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -1000,7 +1056,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4068734-aecf-4154-a327-95bc0e6782fd"),
+                            Id = new Guid("e378877a-dcdf-40b3-9adf-3671e7d40520"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -1009,7 +1065,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4b8e06bf-8bfe-495f-9455-5b5daacbdef4"),
+                            Id = new Guid("a78a05ec-1337-4c14-bb3d-0dde9b1777b7"),
                             Date = new DateOnly(2025, 4, 8),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -1018,7 +1074,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("54b4915c-fd60-4635-902e-5ffeaa8482b3"),
+                            Id = new Guid("3af43c61-17ff-4523-823c-238eea4cb150"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(10, 30, 0),
@@ -1027,7 +1083,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0299517a-7f66-4233-a50e-e16a6b7243a3"),
+                            Id = new Guid("2602ef37-1426-40d9-90c2-a3eee18d681f"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(11, 0, 0),
@@ -1036,7 +1092,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4166e3e-4d7c-426b-83aa-186d849bfb3d"),
+                            Id = new Guid("1300ecc6-3e10-4423-9902-b339b5266f76"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(13, 30, 0),
@@ -1045,7 +1101,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b99abfe2-cd27-49ff-8c45-45c4ebc8a7c7"),
+                            Id = new Guid("cd0a41d2-08a3-4893-a9fa-db1c605d771b"),
                             Date = new DateOnly(2025, 4, 11),
                             DoctorId = new Guid("91d4bcac-44fe-4959-bb87-75e0865e4f8c"),
                             EndTime = new TimeOnly(14, 0, 0),
@@ -1060,29 +1116,37 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("AbdominalCircumference")
-                        .HasColumnType("float");
+                    b.Property<string>("AbdominalCircumference")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("AmnioticFluidLevel")
-                        .HasColumnType("float");
+                    b.Property<string>("AmnioticFluidLevel")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("BiparietalDiameter")
-                        .HasColumnType("float");
+                    b.Property<string>("BiparietalDiameter")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("CrownRumpLength")
-                        .HasColumnType("float");
+                    b.Property<string>("CrownRumpLength")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("EstimatedFetalWeight")
-                        .HasColumnType("float");
+                    b.Property<string>("EstimatedFetalWeight")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("FemurLength")
-                        .HasColumnType("float");
+                    b.Property<string>("FemurLength")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("GestationalSacDiameter")
-                        .HasColumnType("float");
+                    b.Property<string>("GestationalSacDiameter")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("HeadCircumference")
-                        .HasColumnType("float");
+                    b.Property<string>("HeadCircumference")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Week")
                         .HasColumnType("int");
@@ -1090,6 +1154,220 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StandardFetusHealths");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5a6da19d-0a04-460c-91c7-fe343c5c7741"),
+                            AmnioticFluidLevel = "2-3",
+                            CrownRumpLength = "4-9",
+                            GestationalSacDiameter = "14-25",
+                            Week = 6
+                        },
+                        new
+                        {
+                            Id = new Guid("1a5aa8c3-29e6-45a3-a721-3341e22cd06f"),
+                            AmnioticFluidLevel = "2-3",
+                            CrownRumpLength = "9-14",
+                            GestationalSacDiameter = "18-30",
+                            Week = 7
+                        },
+                        new
+                        {
+                            Id = new Guid("5ff4defa-2bee-48c5-b9f1-dac279c67c82"),
+                            AmnioticFluidLevel = "2-3",
+                            CrownRumpLength = "14-22",
+                            GestationalSacDiameter = "25-35",
+                            Week = 8
+                        },
+                        new
+                        {
+                            Id = new Guid("d985db13-3050-49cd-bc1d-a9c8b03da6ad"),
+                            AmnioticFluidLevel = "2-3",
+                            CrownRumpLength = "22-31",
+                            GestationalSacDiameter = "28-36",
+                            Week = 9
+                        },
+                        new
+                        {
+                            Id = new Guid("7e42a4b4-1218-416e-ab92-d3b8f5213020"),
+                            AmnioticFluidLevel = "2-3",
+                            BiparietalDiameter = "15-22",
+                            CrownRumpLength = "31-40",
+                            EstimatedFetalWeight = "5-8",
+                            FemurLength = "7-9",
+                            GestationalSacDiameter = "30-40",
+                            HeadCircumference = "56-78",
+                            Week = 10
+                        },
+                        new
+                        {
+                            Id = new Guid("7afaece0-9dc3-4456-9093-8048af71b8e2"),
+                            AbdominalCircumference = "50-65",
+                            AmnioticFluidLevel = "2-3",
+                            BiparietalDiameter = "21-24",
+                            CrownRumpLength = "50-60",
+                            EstimatedFetalWeight = "14-19",
+                            FemurLength = "9-12",
+                            GestationalSacDiameter = "40-50",
+                            HeadCircumference = "70-85",
+                            Week = 12
+                        },
+                        new
+                        {
+                            Id = new Guid("76c81405-4bda-420d-bdff-e9ae7043e26c"),
+                            AbdominalCircumference = "70-85",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "24-30",
+                            CrownRumpLength = "78-85",
+                            EstimatedFetalWeight = "40-60",
+                            FemurLength = "14-17",
+                            HeadCircumference = "90-110",
+                            Week = 14
+                        },
+                        new
+                        {
+                            Id = new Guid("2b2f8638-b1e3-4d71-8102-a61447f9cfab"),
+                            AbdominalCircumference = "90-110",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "32-38",
+                            EstimatedFetalWeight = "100-150",
+                            FemurLength = "18-22",
+                            HeadCircumference = "110-130",
+                            Week = 16
+                        },
+                        new
+                        {
+                            Id = new Guid("4bec53cb-6f58-40f3-af36-c3ba1273ce35"),
+                            AbdominalCircumference = "110-130",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "38-45",
+                            EstimatedFetalWeight = "190-220",
+                            FemurLength = "22-27",
+                            HeadCircumference = "130-150",
+                            Week = 18
+                        },
+                        new
+                        {
+                            Id = new Guid("6c0f83be-e3be-4e4e-acf8-feb42428fa54"),
+                            AbdominalCircumference = "125-155",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "45-50",
+                            EstimatedFetalWeight = "260-300",
+                            FemurLength = "30-34",
+                            HeadCircumference = "150-170",
+                            Week = 20
+                        },
+                        new
+                        {
+                            Id = new Guid("3131e008-0cc2-4078-b28b-639aeb27e38f"),
+                            AbdominalCircumference = "150-180",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "50-55",
+                            EstimatedFetalWeight = "350-420",
+                            FemurLength = "34-38",
+                            HeadCircumference = "170-190",
+                            Week = 22
+                        },
+                        new
+                        {
+                            Id = new Guid("756038dd-a400-44b8-8d22-cf5914337d15"),
+                            AbdominalCircumference = "170-200",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "55-60",
+                            EstimatedFetalWeight = "500-600",
+                            FemurLength = "38-42",
+                            HeadCircumference = "190-210",
+                            Week = 24
+                        },
+                        new
+                        {
+                            Id = new Guid("2f0a6b62-2efa-490f-948b-f07d62b8fe02"),
+                            AbdominalCircumference = "190-220",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "60-65",
+                            EstimatedFetalWeight = "750-850",
+                            FemurLength = "42-47",
+                            HeadCircumference = "210-230",
+                            Week = 26
+                        },
+                        new
+                        {
+                            Id = new Guid("53cdec06-cd7d-4087-9e65-e40c0b4f5970"),
+                            AbdominalCircumference = "210-250",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "65-70",
+                            EstimatedFetalWeight = "1000-1200",
+                            FemurLength = "47-52",
+                            HeadCircumference = "230-250",
+                            Week = 28
+                        },
+                        new
+                        {
+                            Id = new Guid("b179e197-57ba-4714-a3e0-f634da36adad"),
+                            AbdominalCircumference = "230-270",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "70-75",
+                            EstimatedFetalWeight = "1400-1600",
+                            FemurLength = "52-56",
+                            HeadCircumference = "250-270",
+                            Week = 30
+                        },
+                        new
+                        {
+                            Id = new Guid("2b3a4243-dd9e-4eb9-bb42-8dfa1d4dd1c5"),
+                            AbdominalCircumference = "250-290",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "75-80",
+                            EstimatedFetalWeight = "1700-2000",
+                            FemurLength = "56-60",
+                            HeadCircumference = "270-290",
+                            Week = 32
+                        },
+                        new
+                        {
+                            Id = new Guid("8c1ddf4f-74b2-4404-8f97-b17e8c2b1807"),
+                            AbdominalCircumference = "270-310",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "80-85",
+                            EstimatedFetalWeight = "2100-2500",
+                            FemurLength = "60-65",
+                            HeadCircumference = "290-310",
+                            Week = 34
+                        },
+                        new
+                        {
+                            Id = new Guid("bce56d3e-b9fd-4a5f-9552-9add41f20335"),
+                            AbdominalCircumference = "290-330",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "85-90",
+                            EstimatedFetalWeight = "2500-2900",
+                            FemurLength = "65-70",
+                            HeadCircumference = "310-330",
+                            Week = 36
+                        },
+                        new
+                        {
+                            Id = new Guid("081e566e-1baa-4d19-b0b0-2167d2c0d318"),
+                            AbdominalCircumference = "310-350",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "90-95",
+                            EstimatedFetalWeight = "2900-3200",
+                            FemurLength = "70-75",
+                            HeadCircumference = "330-350",
+                            Week = 38
+                        },
+                        new
+                        {
+                            Id = new Guid("11f2de10-275f-43dc-8b3f-d2e3572ace74"),
+                            AbdominalCircumference = "320-360",
+                            AmnioticFluidLevel = "2-8",
+                            BiparietalDiameter = "95-100",
+                            EstimatedFetalWeight = "3200-3500",
+                            FemurLength = "75-80",
+                            HeadCircumference = "350-370",
+                            Week = 40
+                        });
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Subscription", b =>
@@ -1195,15 +1473,10 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<Guid>("SubscriptionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SubscriptionId")
                         .IsUnique();
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -1240,7 +1513,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("NVARCHAR(MAX)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1287,13 +1560,13 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                             Id = new Guid("6a0c434f-b4b8-4342-a991-b343f2b0ee3d"),
                             Avatar = "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=",
                             CCCD = "123456789012",
-                            CreatedAt = new DateTime(2025, 1, 30, 16, 7, 49, 42, DateTimeKind.Local).AddTicks(9496),
+                            CreatedAt = new DateTime(2025, 2, 6, 16, 26, 20, 334, DateTimeKind.Local).AddTicks(8360),
                             DateOfBirth = new DateOnly(2002, 1, 23),
                             Email = "admin@gmail.com",
                             FullName = "Admin",
                             IsActive = true,
                             IsEmailConfirmed = true,
-                            Password = "AQAAAAIAAYagAAAAEENveO0yq+UT7nRbjF8xBIWQ8WBcYaRARrj4lrsWL2UZ7TwMT/3F2Edn0T7ig85TTg==",
+                            Password = "AQAAAAIAAYagAAAAENlgL3XfqseKF93QRMi1NH0lAZiNrFeYHNKamrpveYbam/Bva2NTWhpBrIP28JZA7A==",
                             RoleId = new Guid("825fe2a6-c543-49cb-9d84-1f8cf2864047"),
                             Username = "admin"
                         });
@@ -1446,10 +1719,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("MaternityCare_Backend.Domain.Entities.User", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Subscription");
                 });
 
@@ -1523,8 +1792,6 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.Navigation("Likes");
 
                     b.Navigation("Subscriptions");
-
-                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }
