@@ -6,6 +6,8 @@ using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.FeedbackServices;
+using MaternityCare_Backend.Service.FetusHealthServices;
+using MaternityCare_Backend.Service.FetusServices;
 using MaternityCare_Backend.Service.IServices;
 using MaternityCare_Backend.Service.LikeServices;
 using MaternityCare_Backend.Service.PackageServices;
@@ -35,6 +37,8 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<IReminderService> reminderService;
 		private readonly Lazy<IStandardFetusHealthService> standardFetusHealthService;
 		private readonly Lazy<ICommentService> commentService;
+		private readonly Lazy<IFetusService> fetusService;
+		private readonly Lazy<IFetusHealthService> fetusHealthService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -49,6 +53,8 @@ namespace MaternityCare_Backend.Service.Services
 			reminderService = new Lazy<IReminderService>(() => new ReminderService(repositoryManager, mapper));
 			standardFetusHealthService = new Lazy<IStandardFetusHealthService>(() => new StandardFetusHealthService(repositoryManager, mapper));
 			commentService = new Lazy<ICommentService>(() => new CommentService(repositoryManager, mapper));
+			fetusService = new Lazy<IFetusService>(() => new FetusService(repositoryManager, mapper));
+			fetusHealthService = new Lazy<IFetusHealthService>(() => new FetusHealthService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -74,5 +80,9 @@ namespace MaternityCare_Backend.Service.Services
 		public IStandardFetusHealthService StandardFetusHealthService => standardFetusHealthService.Value;
 
 		public ICommentService CommentService => commentService.Value;
+
+		public IFetusService FetusService => fetusService.Value;
+
+		public IFetusHealthService FetusHealthService => fetusHealthService.Value;
 	}
 }

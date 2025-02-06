@@ -2,6 +2,8 @@
 using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.FeedbackServices;
+using MaternityCare_Backend.Service.FetusHealthServices;
+using MaternityCare_Backend.Service.FetusServices;
 using MaternityCare_Backend.Service.LikeServices;
 using MaternityCare_Backend.Service.PackageServices;
 using MaternityCare_Backend.Service.ReminderServices;
@@ -27,5 +29,7 @@ namespace MaternityCare_Backend.Service.IServices
 		IReminderService ReminderService { get; }
 		IStandardFetusHealthService StandardFetusHealthService { get; }
 		ICommentService CommentService { get; }
+		IFetusService FetusService { get; }
+		IFetusHealthService FetusHealthService { get; }
 	}
 }
