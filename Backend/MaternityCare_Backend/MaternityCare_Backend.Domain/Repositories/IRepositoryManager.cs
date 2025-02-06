@@ -15,6 +15,8 @@
 		IStandardFetusHealthRepository StandardFetusHealthRepository { get; }
 		IReminderRepository ReminderRepository { get; }
 		ICommentRepository CommentRepository { get; }
+		IFetusRepository FetusRepository { get; }
+		IFetusHealthRepository FetusHealthRepository { get; }
 		Task SaveAsync(CancellationToken ct = default);
 	}
 }
