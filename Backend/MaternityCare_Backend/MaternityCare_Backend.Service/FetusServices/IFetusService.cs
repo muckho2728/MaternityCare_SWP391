@@ -6,7 +6,7 @@ namespace MaternityCare_Backend.Service.FetusServices
 	public interface IFetusService
 	{
 		Task CreateFetus(FetusForCreationDto fetusForCreationDto, CancellationToken ct);
-		Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default);
+		Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default);
 		Task UpdateFetus(Guid fetusId, FetusForUpdateDto fetusForUpdateDto, bool trackChange, CancellationToken ct);
 	}
 }

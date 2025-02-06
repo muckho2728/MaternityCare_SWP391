@@ -26,9 +26,9 @@ namespace MaternityCare_Backend.Service.FetusServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
 		{
-			var fetusWithMetaData = await repositoryManager.FetusRepository.GetFetusByUserId(fetusParameters, userId, trackChange, ct);
+			var fetusWithMetaData = await repositoryManager.FetusRepository.GetFetusesByUserId(fetusParameters, userId, trackChange, ct);
 			var fetusesDto = mapper.Map<IEnumerable<FetusForReturnDto>>(fetusWithMetaData);
 			return (fetusesDto, fetusWithMetaData.MetaData);
 		}

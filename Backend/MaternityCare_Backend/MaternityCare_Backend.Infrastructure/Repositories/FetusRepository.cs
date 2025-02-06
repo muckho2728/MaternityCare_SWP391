@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<Fetus?> GetFetusById(Guid fetusId, bool trackChange, CancellationToken ct = default) => await FindByCondition(f => f.Id.Equals(fetusId), trackChange)
 			.SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Fetus>> GetFetusByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<PagedList<Fetus>> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
 		{
 			var fetusEntities = FindByCondition(f => f.UserId.Equals(userId), trackChange)
 				.Sort();
