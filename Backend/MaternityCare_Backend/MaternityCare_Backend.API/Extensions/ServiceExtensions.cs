@@ -22,7 +22,7 @@ namespace MaternityCare_Backend.API.Extensions
 
 		public static void ConfigureSignalR(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddSignalR().AddAzureSignalR(configuration.GetConnectionString("SignalR"));
+			services.AddSignalR().AddAzureSignalR(configuration.GetSection("SignalR").Value);
 		}
 
 		public static void ConfigureCors(this IServiceCollection services) => services.AddCors(options =>
@@ -110,7 +110,7 @@ namespace MaternityCare_Backend.API.Extensions
 
 		public static void ConfigureBlobService(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddSingleton(u => new BlobServiceClient(configuration.GetConnectionString("StorageAccount")));
+			services.AddSingleton(u => new BlobServiceClient(configuration.GetSection("StorageAccount").Value));
 			services.AddSingleton<IBlobService, BlobService>();
 		}
 	}
