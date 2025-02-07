@@ -20,7 +20,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> GetFetusHealthByFetusId([FromRoute] Guid fetusId, FetusHealthParameters fetusHealthParameters, CancellationToken ct)
+		public async Task<IActionResult> GetFetusHealthByFetusId([FromRoute] Guid fetusId, [FromQuery] FetusHealthParameters fetusHealthParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.FetusHealthService.GetFetusHealthByFetusId(fetusHealthParameters, fetusId, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
@@ -31,8 +31,8 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> CreateFetusHealth([FromRoute] Guid fetusId, [FromBody] FetusHealthForCreationDto fetusHealthForCreationDto, CancellationToken ct)
 		{
-			var (standardFetusHealth, reminder) = await serviceManager.FetusHealthService.CreateFetusHealth(fetusHealthForCreationDto, ct);
-			return StatusCode(201, new { standardFetusHealth, reminder });
+			var (fetusHealth, standardFetusHealth, reminder) = await serviceManager.FetusHealthService.CreateFetusHealth(fetusId, fetusHealthForCreationDto, ct);
+			return StatusCode(201, new { fetusHealth, standardFetusHealth, reminder });
 		}
 	}
 }

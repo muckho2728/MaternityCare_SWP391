@@ -2,7 +2,6 @@
 {
 	public record FetusHealthForCreationDto
 	{
-		public Guid FetusId { get; init; }
 		public int Week { get; init; }
 		public double? HeadCircumference { get; init; }
 		public double? AmnioticFluidLevel { get; init; }

@@ -28,6 +28,8 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 
 		public async Task CreateAppointment(AppointmentForCreationDto appointmentForCreationDto, CancellationToken ct = default)
 		{
+			var slotEntity = await repositoryManager.SlotRepository.GetSlot(appointmentForCreationDto.SlotId, false, ct);
+			if (slotEntity.IsBooked) throw new SlotConflictException("This slot is already booked");
 			var appointmentEntity = mapper.Map<Appointment>(appointmentForCreationDto);
 			appointmentEntity.CreatedAt = DateTime.Now;
 			repositoryManager.AppointmentRepository.CreateAppointment(appointmentEntity);

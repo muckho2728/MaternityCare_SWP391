@@ -19,14 +19,15 @@ namespace MaternityCare_Backend.Service.FetusHealthServices
 			this.mapper = mapper;
 		}
 
-		public async Task<(StandardFetusHealthForReturnDto standardFetusHealth, ReminderForReturnDto reminder)> CreateFetusHealth(FetusHealthForCreationDto fetusHealthForCreationDto, CancellationToken ct = default)
+		public async Task<(FetusHealthForReturnDto fetusHealth, StandardFetusHealthForReturnDto standardFetusHealth, ReminderForReturnDto reminder)> CreateFetusHealth(Guid fetusId, FetusHealthForCreationDto fetusHealthForCreationDto, CancellationToken ct = default)
 		{
 			var fetusHealthEntity = mapper.Map<FetusHealth>(fetusHealthForCreationDto);
+			fetusHealthEntity.FetusId = fetusId;
 			repositoryManager.FetusHealthRepository.CreateFetusHealth(fetusHealthEntity);
 			var standardFetusHealthEntity = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealth(fetusHealthForCreationDto.Week, false, ct);
 			var reminderEntity = await repositoryManager.ReminderRepository.GetReminderNextWeek(fetusHealthForCreationDto.Week, false, ct);
 			await repositoryManager.SaveAsync(ct);
-			return (mapper.Map<StandardFetusHealthForReturnDto>(standardFetusHealthEntity), mapper.Map<ReminderForReturnDto>(reminderEntity));
+			return (mapper.Map<FetusHealthForReturnDto>(fetusHealthEntity), mapper.Map<StandardFetusHealthForReturnDto>(standardFetusHealthEntity), mapper.Map<ReminderForReturnDto>(reminderEntity));
 		}
 
 		public async Task<(IEnumerable<FetusHealthForReturnDto> fetusHealths, MetaData metaData)> GetFetusHealthByFetusId(FetusHealthParameters fetusHealthParameters, Guid fetusId, bool trackChange, CancellationToken ct = default)

@@ -39,7 +39,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateFetus([FromRoute] Guid fetusId, [FromBody] FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, false, ct);
+			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, true, ct);
 			return NoContent();
 		}
 	}
