@@ -36,5 +36,13 @@ namespace MaternityCare_Backend.Service.FetusHealthServices
 			var fetusHealthDto = mapper.Map<IEnumerable<FetusHealthForReturnDto>>(fetusHealthWithMetaData);
 			return (fetusHealthDto, fetusHealthWithMetaData.MetaData);
 		}
+
+		public async Task<(FetusHealthForReturnDto fetusHealth, StandardFetusHealthForReturnDto standardFetusHealth, ReminderForReturnDto reminder)> GetFetusHealthByFetusIdAndWeek(Guid fetusId, int week, CancellationToken ct = default)
+		{
+			var fetusHealthEntity = await repositoryManager.FetusHealthRepository.GetFetusHealthByFetusIdAndWeek(fetusId, week, false, ct);
+			var standardFetusHealthEntity = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealth(week, false, ct);
+			var reminderEntity = await repositoryManager.ReminderRepository.GetReminderNextWeek(week, false, ct);
+			return (mapper.Map<FetusHealthForReturnDto>(fetusHealthEntity), mapper.Map<StandardFetusHealthForReturnDto>(standardFetusHealthEntity), mapper.Map<ReminderForReturnDto>(reminderEntity));
+		}
 	}
 }

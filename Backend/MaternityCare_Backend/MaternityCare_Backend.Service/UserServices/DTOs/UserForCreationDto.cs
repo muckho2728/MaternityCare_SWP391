@@ -10,12 +10,15 @@ namespace MaternityCare_Backend.Service.UserServices.DTOs
 		[Required]
 		public string Email { get; init; }
 		[Required]
+		[RegularExpression(@"^[A-Za-z][A-Za-z0-9]{4,}$", ErrorMessage = "Username must be at least 5 characters long and contain only letters and numbers.")]
 		public string Username { get; init; }
 		[Required]
 		public DateOnly DateOfBirth { get; init; }
 		[Required]
+		[RegularExpression(@"^\d{12}$", ErrorMessage = "Wrong format of CCCD.")]
 		public string CCCD { get; init; }
 		[Required]
+		[RegularExpression(@"^[A-Za-z][A-Za-z0-9]{4,}$", ErrorMessage = "Password must be at least 5 characters long and contain only letters and numbers.")]
 		public string Password { get; init; }
 		[Required]
 		[Compare("Password")]

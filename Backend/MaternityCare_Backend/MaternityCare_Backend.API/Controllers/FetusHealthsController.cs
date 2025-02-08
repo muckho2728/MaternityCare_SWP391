@@ -34,5 +34,13 @@ namespace MaternityCare_Backend.API.Controllers
 			var (fetusHealth, standardFetusHealth, reminder) = await serviceManager.FetusHealthService.CreateFetusHealth(fetusId, fetusHealthForCreationDto, ct);
 			return StatusCode(201, new { fetusHealth, standardFetusHealth, reminder });
 		}
+
+		[HttpGet("{week:int}")]
+		[Authorize]
+		public async Task<IActionResult> GetFetusHealthByFetusIdAndWeek([FromRoute] Guid fetusId, [FromRoute] int week, CancellationToken ct)
+		{
+			var (fetusHealth, standardFetusHealth, reminder) = await serviceManager.FetusHealthService.GetFetusHealthByFetusIdAndWeek(fetusId, week, ct);
+			return Ok(new { fetusHealth, standardFetusHealth, reminder });
+		}
 	}
 }
