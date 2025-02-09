@@ -29,9 +29,7 @@ namespace MaternityCare_Backend.API
 				{
 					Title = "An error occurred",
 					Status = httpContext.Response.StatusCode,
-					Extensions = {
-						["message"] =exception.Message
-					},
+					Detail = exception.Message,
 					Type = exception.GetType().Name
 				},
 				Exception = exception
@@ -42,7 +40,7 @@ namespace MaternityCare_Backend.API
 				{
 					Title = "An error occurred",
 					Status = httpContext.Response.StatusCode,
-					message = exception.Message,
+					Detail = exception.Message,
 					Type = exception.GetType().Name
 				});
 			}

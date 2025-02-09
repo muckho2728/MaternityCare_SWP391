@@ -97,6 +97,10 @@ namespace MaternityCare_Backend.Service.UserServices
 		public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth, CancellationToken ct = default)
 		{
 			user = await repositoryManager.UserRepository.GetUserByUserName(userForAuth.Username, true, ct);
+			if (user is null)
+			{
+				user = await repositoryManager.UserRepository.GetUserByEmail(userForAuth.Username, true, ct);
+			}
 			if (user is null || (passwordHasher.VerifyHashedPassword(user, user.Password, userForAuth.Password) == PasswordVerificationResult.Failed))
 			{
 				throw new NotAuthenticatedException("Username or password is incorrect");
