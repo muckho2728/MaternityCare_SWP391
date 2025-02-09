@@ -21,6 +21,7 @@ namespace MaternityCare_Backend.Service.FetusServices
 		public async Task CreateFetus(FetusForCreationDto fetusForCreationDto, CancellationToken ct)
 		{
 			var fetusEntity = mapper.Map<Fetus>(fetusForCreationDto);
+			fetusEntity.DueDate = fetusEntity.ConceptionDate.AddMonths(9).AddDays(10);
 			fetusEntity.CreatedAt = DateTime.Now;
 			repositoryManager.FetusRepository.CreateFetus(fetusEntity);
 			await repositoryManager.SaveAsync(ct);
