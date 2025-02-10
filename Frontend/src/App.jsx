@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import CreateFetus from './component/CreateFetus/CreateFetus'
-import CreateFetusHealth from './component/CreateFetusHealth/CreateFetusHealth'
-import Header from './component/Header/Header'
-import Footer from './component/Footer/Footer'
-import LoginPage from './Minh/Login';
-import RegisPage from './Minh/Register';
-import ForgetPage from './Minh/ForgetP';
-import ForgetPage2 from './Minh/ForgetP2';
+import CreateFetus from './pages/CreateFetus/CreateFetus'
+import CreateFetusHealth from './pages/CreateFetusHealth/CreateFetusHealth'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import LoginPage from './pages/Login/Login';
+import RegisPage from './pages/Register/Register';
+import ForgetPage from './pages/ForgotPassword/ForgetP';
+import ForgetPage2 from './pages/ForgotPassword/ForgetP2';
+import Home from './pages/Home/Home.jsx';
+import { useEffect, useState } from 'react';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
