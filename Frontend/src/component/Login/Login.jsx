@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import './Login.css';
+import api from '../../config/axios';
 const Login = () => {
   //code remember me
   const [remember, setRemember] = useState(false);

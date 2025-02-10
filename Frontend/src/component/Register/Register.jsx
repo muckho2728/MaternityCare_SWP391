@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './index.css';
-import api from './config/axios';
+import './Register.css';
+import api from '../../config/axios';
 
 const Register = () => {
   const navigate = useNavigate();
