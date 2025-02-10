@@ -3,6 +3,7 @@ using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Infrastructure.Extensions;
 using MaternityCare_Backend.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
@@ -21,5 +22,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 			return await PagedList<FetusHealth>.ToPagedList(fetusHealthEntities, fetusHealthParameters.PageNumber, fetusHealthParameters.PageSize, ct);
 		}
+
+		public async Task<FetusHealth?> GetFetusHealthByFetusIdAndWeek(Guid fetusId, int week, bool trackChange, CancellationToken ct = default) => await FindByCondition(f => f.FetusId.Equals(fetusId) && f.Week.Equals(week), trackChange).SingleOrDefaultAsync(ct);
 	}
 }

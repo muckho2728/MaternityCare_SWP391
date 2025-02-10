@@ -30,6 +30,5 @@
 		public ICollection<Fetus> Fetus { get; set; }
 		public ICollection<Appointment> Appointments { get; set; }
 		public ICollection<Subscription> Subscriptions { get; set; }
-		public ICollection<Transaction> Transactions { get; set; }
 	}
 }

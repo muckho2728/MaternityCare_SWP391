@@ -1,5 +1,6 @@
 ﻿using MaternityCare_Backend.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MaternityCare_Backend.API
 {
@@ -29,20 +30,18 @@ namespace MaternityCare_Backend.API
 				{
 					Title = "An error occurred",
 					Status = httpContext.Response.StatusCode,
-					Extensions = {
-						["message"] =exception.Message
-					},
+					Detail = exception.Message,
 					Type = exception.GetType().Name
 				},
 				Exception = exception
 			});
 			if (!result)
 			{
-				await httpContext.Response.WriteAsJsonAsync(new
+				await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
 				{
 					Title = "An error occurred",
 					Status = httpContext.Response.StatusCode,
-					message = exception.Message,
+					Detail = exception.Message,
 					Type = exception.GetType().Name
 				});
 			}

@@ -3,6 +3,7 @@ using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Infrastructure.Extensions;
 using MaternityCare_Backend.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
@@ -14,7 +15,10 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateFetus(Fetus fetus) => Create(fetus);
 
-		public async Task<PagedList<Fetus>> GetFetusByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<Fetus?> GetFetusById(Guid fetusId, bool trackChange, CancellationToken ct = default) => await FindByCondition(f => f.Id.Equals(fetusId), trackChange)
+			.SingleOrDefaultAsync(ct);
+
+		public async Task<PagedList<Fetus>> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
 		{
 			var fetusEntities = FindByCondition(f => f.UserId.Equals(userId), trackChange)
 				.Sort();

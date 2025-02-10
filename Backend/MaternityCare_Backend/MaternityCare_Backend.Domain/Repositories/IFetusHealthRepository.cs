@@ -7,5 +7,6 @@ namespace MaternityCare_Backend.Domain.Repositories
 	{
 		void CreateFetusHealth(FetusHealth fetusHealth);
 		Task<PagedList<FetusHealth>> GetFetusHealthByFetusId(FetusHealthParameters fetusHealthParameters, Guid fetusId, bool trackChange, CancellationToken ct = default);
+		Task<FetusHealth?> GetFetusHealthByFetusIdAndWeek(Guid fetusId, int week, bool trackChange, CancellationToken ct = default);
 	}
 }
