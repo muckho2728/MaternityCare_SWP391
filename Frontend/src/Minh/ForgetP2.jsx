@@ -24,7 +24,7 @@ const ForgetP2 = () => {
         onChange={(e) => setConfirmPassword(e.target.value)} 
       />
       <button className="forget-button">Xác nhận</button>
-      <Link to="/" className="login-reg-button">Đăng nhập</Link>
+      <Link to="/login" className="login-reg-button">Đăng nhập</Link>
 
       </div>
       </div>

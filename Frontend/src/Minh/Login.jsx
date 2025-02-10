@@ -99,7 +99,7 @@ const Login = () => {
               </label>
               <Link to="/forget" className="forgot-password">Quên mật khẩu?</Link>
             </div>
-            <button className="login-button" onClick={handleLogin}>Đăng nhập</button>
+            <button type="submit" className="login-button" onClick={handleLogin}>Đăng nhập</button>
             <div className="register">
               Chưa có tài khoản? <Link to="/regis" className="register-link">Đăng kí ngay</Link>
             </div>

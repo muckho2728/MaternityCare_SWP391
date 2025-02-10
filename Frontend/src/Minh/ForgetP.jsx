@@ -23,7 +23,7 @@ const ForgetP = () => {
           onChange={(e) => setEmail(e.target.value)} 
         />
         <button type="submit" className="forget-button"><Link to="/forget2">Tiếp theo</Link></button>
-        <Link to="/" className="login-reg-button">Đăng nhập</Link>
+        <Link to="/login" className="login-reg-button">Đăng nhập</Link>
       </form>
     </div>
   );
