@@ -1,18 +1,29 @@
 .footer {
+<<<<<<< HEAD
+    background-color: #ffffff;
+=======
     background-color: #FFCDD2;
+>>>>>>> b4ec0dadcd15a5d3b920a6cb5caf550fa0698dee
     padding: 40px 0 20px;
     color: #333;
     margin-top: 50px;
 }
 
 .footer-content {
+<<<<<<< HEAD
+    max-width: 1200px;
+=======
     /* max-width: 1200px; */
+>>>>>>> b4ec0dadcd15a5d3b920a6cb5caf550fa0698dee
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 0 20px;
+<<<<<<< HEAD
+=======
     width: 1800px1800px;
+>>>>>>> b4ec0dadcd15a5d3b920a6cb5caf550fa0698dee
 }
 
 .footer-section {

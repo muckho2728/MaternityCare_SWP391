@@ -10,14 +10,14 @@ const Header = () => {
                 <div className="logo-section">
                     <Link to="/" className="logo-link">
                         <img src={logo} alt="Baby Logo" className="logo" />
-                        <span className="brand-name">MaternityCare</span>
+                        <span className="brand-name">Maternity Care</span>
                     </Link>
                 </div>
 
                 <nav className="main-nav">
                     <ul className="nav-list">
                         <li><Link to="/community">Community</Link></li>
-                        <li><Link to="/pregnancy-development">Pregnancy Development</Link></li>
+                        <li><Link to="/create-fetus">Pregnancy Tracker</Link></li>
                         <li><Link to="/view-package">View Package</Link></li>
                         <li><Link to="/booking">Booking</Link></li>
                     </ul>

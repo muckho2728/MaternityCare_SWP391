@@ -22,15 +22,15 @@ function App() {
         <Header />
         <main className="main-content">
           <Routes>
-          <Route path="/" element={<LoginPage />} />
-            <Route path="/regis" element={<RegisPage />} />
-            <Route path="/forget" element={<ForgetPage />} />
-            <Route path="/forget2" element={<ForgetPage2 />} />
             <Route path="/" element={<CreateFetus />} />
             <Route path="/fetus-health" element={<CreateFetusHealth />} />
           </Routes>
         </main>
+<<<<<<< HEAD
+        <Footer />
+=======
         <Footer/>
+>>>>>>> b4ec0dadcd15a5d3b920a6cb5caf550fa0698dee
       </div>
     </Router>
   )
