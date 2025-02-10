@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 import ForgetPage from "./Minh/ForgetP";
 import ForgetPage2 from "./Minh/ForgetP2";
 import LoginPage from "./Minh/Login";
 import RegisPage from "./Minh/Register";
 import CreateFetus from "./pages/CreateFetus/CreateFetus";
 import CreateFetusHealth from "./pages/CreateFetusHealth/CreateFetusHealth";
-import Footer from "./pages/Footer/Footer";
-import Header from "./pages/Header/Header";
 import Home from "./pages/Home/Home";
 
 function App() {
