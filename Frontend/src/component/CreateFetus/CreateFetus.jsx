@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateFetus.css';
+import api from '../../config/axios';
 
 const CreateFetus = () => {
     const navigate = useNavigate();
     const [fetusData, setFetusData] = useState({
         dueDate: '',
-        birthDate: '',
-        bloodType: ''
+        birthDate: ''
     });
 
     const handleSubmit = (e) => {
@@ -15,7 +15,7 @@ const CreateFetus = () => {
         // Handle form submission here
         console.log('Form submitted:', fetusData);
         // Navigate to CreateFetusHealth page
-        navigate('/fetus-health');
+        navigate('/create-fetus-health');
     };
 
     const handleChange = (e) => {
@@ -28,7 +28,7 @@ const CreateFetus = () => {
 
     return (
         <div className="create-fetus-container">
-            <h1 className="page-title">Create Fetus</h1>
+            <h1 className="page-title">Theo dõi thai kỳ</h1>
 
             <div className="info-sections">
                 <div className="info-card">
@@ -64,34 +64,7 @@ const CreateFetus = () => {
                     />
                 </div>
 
-                <div className="form-group">
-                    <label>Ngày dự sinh</label>
-                    <input
-                        type="date"
-                        name="birthDate"
-                        value={fetusData.birthDate}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Nhóm máu</label>
-                    <select
-                        name="bloodType"
-                        value={fetusData.bloodType}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="">Chọn nhóm máu</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="O">O</option>
-                        <option value="AB">AB</option>
-                    </select>
-                </div>
-
-                <button type="submit" className="submit-button">Submit</button>
+                <button type="submit" className="submit-button">Lưu thông tin</button>
             </form>
         </div>
     );
