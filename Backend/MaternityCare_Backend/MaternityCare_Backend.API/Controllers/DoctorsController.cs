@@ -1,4 +1,6 @@
-﻿using MaternityCare_Backend.Domain.RequestFeatures;
+﻿using MaternityCare_Backend.Domain.Constants;
+using MaternityCare_Backend.Domain.RequestFeatures;
+using MaternityCare_Backend.Service.DoctorServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +26,38 @@ namespace MaternityCare_Backend.API.Controllers
 			var pagedResult = await serviceManager.DoctorService.GetDoctor(doctorParameters, false, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.doctors);
+		}
+
+		[HttpGet("{doctorId}")]
+		[Authorize]
+		public async Task<IActionResult> GetDoctor(Guid doctorId, CancellationToken ct)
+		{
+			var doctor = await serviceManager.DoctorService.GetDoctorById(doctorId, false, ct);
+			return Ok(doctor);
+		}
+
+		[HttpPost]
+		[Authorize(Roles = nameof(Roles.Admin))]
+		public async Task<IActionResult> CreateDoctor([FromBody] DoctorForCreationDto doctorForCreationDto, CancellationToken ct)
+		{
+			await serviceManager.DoctorService.CreateDoctor(doctorForCreationDto, ct);
+			return Ok();
+		}
+
+		[HttpPut("{doctorId}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
+		public async Task<IActionResult> UpdateDoctor(Guid doctorId, [FromBody] DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct)
+		{
+			await serviceManager.DoctorService.UpdateDoctor(doctorId, doctorForUpdateDto, false, ct);
+			return Ok();
+		}
+
+		[HttpDelete("{doctorId}")]
+		[Authorize(Roles = nameof(Roles.Admin))]
+		public async Task<IActionResult> DeleteDoctor(Guid doctorId, CancellationToken ct)
+		{
+			await serviceManager.DoctorService.DeleteDoctor(doctorId, false, ct);
+			return Ok();
 		}
 	}
 }
