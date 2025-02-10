@@ -16,10 +16,10 @@ const Header = () => {
 
                 <nav className="main-nav">
                     <ul className="nav-list">
-                        <li><Link to="/community">Community</Link></li>
-                        <li><Link to="/pregnancy-development">Pregnancy Development</Link></li>
-                        <li><Link to="/view-package">View Package</Link></li>
-                        <li><Link to="/booking">Booking</Link></li>
+                        <li><Link to="/community">Cộng Đồng</Link></li>
+                        <li><Link to="/pregnancy-development">Phát Triển Thai Kỳ</Link></li>
+                        <li><Link to="/view-package">Xem Gói Dịch Vụ</Link></li>
+                        <li><Link to="/booking">Đặt Lịch</Link></li>
                     </ul>
                 </nav>
 
@@ -40,10 +40,12 @@ const Header = () => {
                         </svg>
                     </button>
                     <button className="profile-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        <Link to="/profile" style={{ color: 'black' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </Link>
                     </button>
                 </div>
             </div>

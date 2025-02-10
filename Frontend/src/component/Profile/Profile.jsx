@@ -7,7 +7,7 @@ import { fetchUserByIdAction } from '../../store/redux/action/userAction';
 const { Content } = Layout;
 const { Title } = Typography;
 
-const MyProfile = () => {
+const Profile = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const userLogin = useSelector((state) => state.userReducer.currentUser);
@@ -59,7 +59,7 @@ const MyProfile = () => {
   };
 
   if (!userLogin) {
-    return null; // Render nothing if userLogin is null
+    return null; 
   }
 
   return (
@@ -70,7 +70,7 @@ const MyProfile = () => {
             <Col span={8} style={{ textAlign: 'center' }}>
               <Title level={3}>Thông tin cá nhân</Title>
               <Avatar
-                size={120} // Tăng kích thước avatar
+                size={120} 
                 src={userLogin?.imageUrl || 'https://via.placeholder.com/120'}
                 style={{ marginBottom: '16px', border: '2px solid #1890ff' }}
               />
@@ -80,7 +80,7 @@ const MyProfile = () => {
               <p>{userLogin?.address}</p>
             </Col>
             <Col span={16}>
-             
+              <Title level={3}>Thông tin cá nhân</Title>
               <Form
                 form={form}
                 onFinish={handleSubmit}
@@ -150,4 +150,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default Profile;
