@@ -175,7 +175,7 @@ const Register = () => {
           />
           {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
         </div>
-        <button type="submit" className={`register-button ${ActiveTab === "register" ? "active-class" : ""}`} onClick={handleSubmit}>Đăng ký</button>
+        <button className={`register-button ${ActiveTab === "register" ? "active-class" : ""}`} onClick={handleSubmit}>Đăng ký</button>
         <p>Đã có tài khoản? <button><Link to="/login" className="login-reg-button">Đăng nhập ngay</Link></button></p>
       </div>
       <div className="picture">Picture</div>
