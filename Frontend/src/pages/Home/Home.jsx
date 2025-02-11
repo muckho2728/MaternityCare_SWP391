@@ -5,10 +5,10 @@ import "./Home.css";
 
 const Home = () => {
 	return (
-		<div className="text-black">
-			<main>
-				<section>
-					<div>
+		<div className="home">
+			<main className="main-content">
+				<section className="introduction">
+					<div className="carousel">
 						<Carousel autoplay>
 							<div>
 								<img
@@ -28,7 +28,7 @@ const Home = () => {
 							</div>
 						</Carousel>
 					</div>
-					<div>
+					<div className="introduction-text">
 						<h2>INTRODUCTION</h2>
 						<p>
 							Chào mừng bạn đến với Maternity Care, nơi đồng hành cùng mẹ bầu
