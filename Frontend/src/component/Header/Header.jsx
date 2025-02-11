@@ -10,16 +10,16 @@ const Header = () => {
                 <div className="logo-section">
                     <Link to="/" className="logo-link">
                         <img src={logo} alt="Baby Logo" className="logo" />
-                        <span className="brand-name">Maternity Care</span>
+                        <span className="brand-name">MaternityCare</span>
                     </Link>
                 </div>
 
                 <nav className="main-nav">
                     <ul className="nav-list">
-                        <li><Link to="/community">Community</Link></li>
-                        <li><Link to="/create-fetus">Pregnancy Tracker</Link></li>
-                        <li><Link to="/view-package">View Package</Link></li>
-                        <li><Link to="/booking">Booking</Link></li>
+                        <li><Link to="/community">Cộng Đồng</Link></li>
+                        <li><Link to="/pregnancy-development">Phát Triển Thai Kỳ</Link></li>
+                        <li><Link to="/view-package">Xem Gói Dịch Vụ</Link></li>
+                        <li><Link to="/booking">Đặt Lịch</Link></li>
                     </ul>
                 </nav>
 

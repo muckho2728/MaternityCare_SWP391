@@ -118,7 +118,7 @@
     .nav-list {
         gap: 1rem;
     }
-
+    
     .search-box input {
         width: 150px;
     }
@@ -128,11 +128,11 @@
     .main-nav {
         display: none;
     }
-
+    
     .search-box {
         display: none;
     }
-
+    
     .header-container {
         padding: 0.5rem 1rem;
     }
