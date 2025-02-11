@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./index.css";
+import '../../../src/index.css';
 
 const ForgetP = () => {
 	const [email, setEmail] = useState("");

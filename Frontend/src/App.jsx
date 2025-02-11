@@ -8,9 +8,9 @@ import RegisPage from './pages/Register/Register';
 import ForgetPage from './pages/ForgotPassword/ForgetP';
 import ForgetPage2 from './pages/ForgotPassword/ForgetP2';
 import Home from './pages/Home/Home.jsx';
-import CreateFetusHealth from './component/CreateFetusHealth/CreateFetusHealth';
-import ManageUsersPage from './component/Admin/ManageUsersPage';
-import Profile from './component/Profile/Profile';
+import CreateFetusHealth from './pages/Admin/ManageUsersPage';
+import ManageUsersPage from './pages/Admin/ManageUsersPage';
+import Profile from './pages/Profile';
 import { useEffect, useState } from 'react';
 
 function App() {
