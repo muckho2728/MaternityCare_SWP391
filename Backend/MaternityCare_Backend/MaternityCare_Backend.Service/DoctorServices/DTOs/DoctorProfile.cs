@@ -8,6 +8,8 @@ namespace MaternityCare_Backend.Service.DoctorServices.DTOs
 		public DoctorProfile()
 		{
 			CreateMap<Doctor, DoctorForReturnDto>();
+			CreateMap<DoctorForCreationDto, Doctor>();
+			CreateMap<DoctorForUpdateDto, Doctor>();
 		}
 	}
 }

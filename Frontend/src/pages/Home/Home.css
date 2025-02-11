@@ -1,0 +1,71 @@
+/* Home.css */
+
+/* .home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.main-content {
+    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+.introduction {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.introduction .introduction-text{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.introduction h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.introduction p {
+    font-size: 16px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #333;
+} */

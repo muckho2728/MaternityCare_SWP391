@@ -30,11 +30,11 @@ const CreateFetusHealth = () => {
     return (
         <div className="create-fetus-health-container">
             <h1 className="page-title">Thông tin sức khỏe thai nhi</h1>
-            
+
             <form className="health-form" onSubmit={handleSubmit}>
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Tuần</label>
+                        <label>Tuần (Week)</label>
                         <input
                             type="number"
                             name="week"
@@ -47,7 +47,7 @@ const CreateFetusHealth = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Head Circumference (cm)</label>
+                        <label>Chu vi đầu (Head Circumference) (cm)</label>
                         <input
                             type="number"
                             name="headCircumference"
@@ -61,7 +61,7 @@ const CreateFetusHealth = () => {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Mức độ nước ối</label>
+                        <label>Mức độ nước ối (Amniotic fluid)</label>
                         <select
                             name="amnioticFluidLevel"
                             value={healthData.amnioticFluidLevel}
@@ -76,7 +76,7 @@ const CreateFetusHealth = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Crown Rump Length (mm)</label>
+                        <label> Chiều dài đầu mông (Crown Rump Length) (mm)</label>
                         <input
                             type="number"
                             name="crownRumpLength"
@@ -90,7 +90,7 @@ const CreateFetusHealth = () => {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Biparietal Diameter (mm)</label>
+                        <label> Đường kính lưỡng đỉnh (Biparietal Diameter) (mm)</label>
                         <input
                             type="number"
                             name="biparietalDiameter"
@@ -102,7 +102,7 @@ const CreateFetusHealth = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Femur Length (mm)</label>
+                        <label>Chiều dài xương đùi (Femur Length) (mm)</label>
                         <input
                             type="number"
                             name="femurLength"
@@ -116,7 +116,7 @@ const CreateFetusHealth = () => {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Estimated Fetal Weight (g)</label>
+                        <label> Cân nặng thai nhi ước tính (Estimated Fetal Weight) (g)</label>
                         <input
                             type="number"
                             name="estimatedFetalWeight"
@@ -128,7 +128,7 @@ const CreateFetusHealth = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Abdominal Circumference (mm)</label>
+                        <label>Chu vi vòng bụng (Abdominal Circumference) (mm)</label>
                         <input
                             type="number"
                             name="abdominalCircumference"
@@ -142,7 +142,7 @@ const CreateFetusHealth = () => {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Gestational Sac Diameter (mm)</label>
+                        <label>Đường kính túi thai (Gestational Sac Diameter) (mm)</label>
                         <input
                             type="number"
                             name="gestationalSacDiameter"
