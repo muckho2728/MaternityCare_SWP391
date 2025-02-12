@@ -1,5 +1,5 @@
 import axios from "axios"
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjZhMGM0MzRmLWI0YjgtNDM0Mi1hOTkxLWIzNDNmMmIwZWUzZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM5MjkxMTYzLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MjMxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIzMSJ9.IoZLUSUp5R4d4Y3geHOgsAJbAyJHoGhCpT71TvhGkMQ';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjZhMGM0MzRmLWI0YjgtNDM0Mi1hOTkxLWIzNDNmMmIwZWUzZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM5MzY4NTMyLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MjMxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIzMSJ9.C2H-YFlASGIfTRnOsdfoEW1GlZgdP02vjydTirgb7bE';
 
 export const getAllUserAPI = () => {
 
@@ -46,5 +46,17 @@ return axios({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token') || token}`
     }
+})
+}
+
+export const changePasswordByUserIdAPI = (id, data) => {
+return axios({
+    method: 'PUT',
+    url: `https://maternitycare.azurewebsites.net/api/users/${id}/password`,
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token') || token}`
+    },
+    data: data
 })
 }

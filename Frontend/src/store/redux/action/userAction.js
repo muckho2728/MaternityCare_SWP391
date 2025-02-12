@@ -1,5 +1,5 @@
 
-import { activeUserAPI, getAllUserAPI, getUserByIdAPI,updateUserAPI } from '../../../service/API/userAPI';
+import { activeUserAPI, getAllUserAPI, getUserByIdAPI,updateUserAPI ,changePasswordByUserIdAPI} from '../../../service/API/userAPI';
 import { setListUser, setUser,setCurrentUser } from '../reducers/userReducer';
 
 export const fetchUsersAction = () => {
@@ -43,3 +43,16 @@ export const activateUserAction = (id) => {
         }
     };
 };
+
+export const changePassworbyUserIdAction = (id, data) => {
+  return async (dispatch) => {
+      try {
+          const res = await changePasswordByUserIdAPI(id, data);
+          dispatch(setCurrentUser(res.data));
+          return res; // Trả về response khi thành công
+      } catch (error) {
+          console.error(`Failed to change password user with id ${id}:`, error.response ? error.response.data : error.message);
+          throw error; // Quan trọng: throw error để Promise reject
+      }
+  };
+}
