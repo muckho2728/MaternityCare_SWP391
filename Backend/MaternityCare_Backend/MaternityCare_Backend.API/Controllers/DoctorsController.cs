@@ -28,9 +28,9 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.doctors);
 		}
 
-		[HttpGet("{doctorId}")]
+		[HttpGet("{doctorId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> GetDoctor(Guid doctorId, CancellationToken ct)
+		public async Task<IActionResult> GetDoctor([FromRoute] Guid doctorId, CancellationToken ct)
 		{
 			var doctor = await serviceManager.DoctorService.GetDoctorById(doctorId, false, ct);
 			return Ok(doctor);
@@ -38,23 +38,23 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> CreateDoctor([FromBody] DoctorForCreationDto doctorForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateDoctor([FromForm] DoctorForCreationDto doctorForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.DoctorService.CreateDoctor(doctorForCreationDto, ct);
 			return Ok();
 		}
 
-		[HttpPut("{doctorId}")]
+		[HttpPut("{doctorId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> UpdateDoctor(Guid doctorId, [FromBody] DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateDoctor([FromRoute] Guid doctorId, [FromForm] DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.DoctorService.UpdateDoctor(doctorId, doctorForUpdateDto, false, ct);
 			return Ok();
 		}
 
-		[HttpDelete("{doctorId}")]
+		[HttpDelete("{doctorId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> DeleteDoctor(Guid doctorId, CancellationToken ct)
+		public async Task<IActionResult> DeleteDoctor([FromRoute] Guid doctorId, CancellationToken ct)
 		{
 			await serviceManager.DoctorService.DeleteDoctor(doctorId, false, ct);
 			return Ok();

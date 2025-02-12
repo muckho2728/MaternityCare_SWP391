@@ -51,7 +51,7 @@ namespace MaternityCare_Backend.Service.Services
 			slotService = new Lazy<ISlotService>(() => new SlotService(repositoryManager, mapper));
 			transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, utils, configuration));
 			likeService = new Lazy<ILikeService>(() => new LikeService(repositoryManager, mapper));
-			doctorService = new Lazy<IDoctorService>(() => new DoctorService(repositoryManager, mapper));
+			doctorService = new Lazy<IDoctorService>(() => new DoctorService(repositoryManager, mapper, blobService));
 			reminderService = new Lazy<IReminderService>(() => new ReminderService(repositoryManager, mapper));
 			standardFetusHealthService = new Lazy<IStandardFetusHealthService>(() => new StandardFetusHealthService(repositoryManager, mapper));
 			commentService = new Lazy<ICommentService>(() => new CommentService(repositoryManager, mapper));
