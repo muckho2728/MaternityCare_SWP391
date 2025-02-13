@@ -1,4 +1,5 @@
 ﻿using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.BlogServices;
 using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.FeedbackServices;
@@ -33,5 +34,6 @@ namespace MaternityCare_Backend.Service.IServices
 		IFetusService FetusService { get; }
 		IFetusHealthService FetusHealthService { get; }
 		ITagService TagService { get; }
+		IBlogService BlogService { get; }
 	}
 }

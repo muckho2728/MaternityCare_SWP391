@@ -2,6 +2,7 @@
 using MaternityCare_Backend.Domain.Entities;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Service.AppointmentServices;
+using MaternityCare_Backend.Service.BlogServices;
 using MaternityCare_Backend.Service.CommentServices;
 using MaternityCare_Backend.Service.DoctorServices;
 using MaternityCare_Backend.Service.EmailServices;
@@ -41,6 +42,7 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<IFetusService> fetusService;
 		private readonly Lazy<IFetusHealthService> fetusHealthService;
 		private readonly Lazy<ITagService> tagService;
+		private readonly Lazy<IBlogService> blogService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
 		{
 			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
@@ -58,6 +60,7 @@ namespace MaternityCare_Backend.Service.Services
 			fetusService = new Lazy<IFetusService>(() => new FetusService(repositoryManager, mapper));
 			fetusHealthService = new Lazy<IFetusHealthService>(() => new FetusHealthService(repositoryManager, mapper));
 			tagService = new Lazy<ITagService>(() => new TagService(repositoryManager, mapper));
+			blogService = new Lazy<IBlogService>(() => new BlogService(repositoryManager, mapper));
 		}
 
 		public IUserService UserService => userService.Value;
@@ -89,5 +92,7 @@ namespace MaternityCare_Backend.Service.Services
 		public IFetusHealthService FetusHealthService => fetusHealthService.Value;
 
 		public ITagService TagService => tagService.Value;
+
+		public IBlogService BlogService => blogService.Value;
 	}
 }

@@ -18,6 +18,7 @@
 		IFetusRepository FetusRepository { get; }
 		IFetusHealthRepository FetusHealthRepository { get; }
 		ITagRepository TagRepository { get; }
+		IBlogRepository BlogRepository { get; }
 		Task SaveAsync(CancellationToken ct = default);
 	}
 }

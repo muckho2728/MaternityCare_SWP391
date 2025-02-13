@@ -22,6 +22,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		private readonly Lazy<IFetusRepository> fetusRepository;
 		private readonly Lazy<IFetusHealthRepository> fetusHealthRepository;
 		private readonly Lazy<ITagRepository> tagRepository;
+		private readonly Lazy<IBlogRepository> blogRepository;
 
 		public RepositoryManager(RepositoryContext repositoryContext)
 		{
@@ -42,6 +43,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			this.fetusHealthRepository = new Lazy<IFetusHealthRepository>(() => new FetusHealthRepository(repositoryContext));
 			this.fetusRepository = new Lazy<IFetusRepository>(() => new FetusRepository(repositoryContext));
 			this.tagRepository = new Lazy<ITagRepository>(() => new TagRepository(repositoryContext));
+			this.blogRepository = new Lazy<IBlogRepository>(() => new BlogRepository(repositoryContext));
 		}
 
 		public IUserRepository UserRepository => userRepository.Value;
@@ -75,6 +77,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public IFetusHealthRepository FetusHealthRepository => fetusHealthRepository.Value;
 
 		public ITagRepository TagRepository => tagRepository.Value;
+
+		public IBlogRepository BlogRepository => blogRepository.Value;
 
 		public Task SaveAsync(CancellationToken ct = default) => repositoryContext.SaveChangesAsync(ct);
 	}

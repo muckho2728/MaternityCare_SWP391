@@ -16,6 +16,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.CreatedAt).IsRequired();
 			builder.Property(x => x.UpdatedAt).IsRequired(false);
 			builder.Property(x => x.UserId).IsRequired();
+			builder.Property(x => x.IsActive).IsRequired();
 			builder.HasOne(x => x.User).WithMany(x => x.Blogs).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Comments).WithOne(x => x.Blog).HasForeignKey(x => x.BlogId).OnDelete(DeleteBehavior.NoAction);
 			builder.HasMany(x => x.Likes).WithOne(x => x.Blog).HasForeignKey(x => x.BlogId).OnDelete(DeleteBehavior.NoAction);
