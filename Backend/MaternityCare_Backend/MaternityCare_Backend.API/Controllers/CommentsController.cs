@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/comments")]
+	[Route("api/blogs/{blogId:guid}/users/{userId:guid}/comments")]
 	[ApiController]
 	public class CommentsController : ControllerBase
 	{
@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet("{blogId:guid}")]
+		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> GetCommentsByBlogId([FromQuery] CommentParameters commentParameters, [FromRoute] Guid blogId, CancellationToken ct)
 		{
@@ -29,9 +29,9 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateComment([FromBody] CommentForCreationDto commentForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromBody] CommentForCreationDto commentForCreationDto, CancellationToken ct)
 		{
-			await serviceManager.CommentService.CreateComment(commentForCreationDto, ct);
+			await serviceManager.CommentService.CreateComment(blogId, userId, commentForCreationDto, ct);
 			return StatusCode(201);
 		}
 

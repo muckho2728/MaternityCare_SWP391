@@ -16,10 +16,14 @@ namespace MaternityCare_Backend.Service.LikeServices
 			this.mapper = mapper;
 		}
 
-		public async Task CreateLike(LikeForCreationDto likeForCreationDto, CancellationToken ct = default)
+		public async Task CreateLike(Guid blogId, Guid userId, CancellationToken ct = default)
 		{
-			var likeEntity = mapper.Map<Like>(likeForCreationDto);
-			likeEntity.CreatedAt = DateTime.Now;
+			var likeEntity = new Like
+			{
+				UserId = userId,
+				BlogId = blogId,
+				CreatedAt = DateTime.Now
+			};
 			repositoryManager.LikeRepository.CreateLike(likeEntity);
 			await repositoryManager.SaveAsync(ct);
 		}

@@ -25,9 +25,11 @@ namespace MaternityCare_Backend.Service.CommentServices
 			return commentEntity;
 		}
 
-		public async Task CreateComment(CommentForCreationDto commentForCreationDto, CancellationToken ct = default)
+		public async Task CreateComment(Guid blogId, Guid userId, CommentForCreationDto commentForCreationDto, CancellationToken ct = default)
 		{
 			var commentEntity = mapper.Map<Comment>(commentForCreationDto);
+			commentEntity.BlogId = blogId;
+			commentEntity.UserId = userId;
 			commentEntity.CreatedAt = DateTime.Now;
 			repositoryManager.CommentRepository.CreateComment(commentEntity);
 			await repositoryManager.SaveAsync(ct);

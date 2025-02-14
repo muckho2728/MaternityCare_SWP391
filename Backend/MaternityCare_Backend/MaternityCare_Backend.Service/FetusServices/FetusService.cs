@@ -18,9 +18,10 @@ namespace MaternityCare_Backend.Service.FetusServices
 			this.mapper = mapper;
 		}
 
-		public async Task CreateFetus(FetusForCreationDto fetusForCreationDto, CancellationToken ct)
+		public async Task CreateFetus(Guid userId, FetusForCreationDto fetusForCreationDto, CancellationToken ct)
 		{
 			var fetusEntity = mapper.Map<Fetus>(fetusForCreationDto);
+			fetusEntity.UserId = userId;
 			fetusEntity.DueDate = fetusEntity.ConceptionDate.AddMonths(9).AddDays(10);
 			fetusEntity.CreatedAt = DateTime.Now;
 			repositoryManager.FetusRepository.CreateFetus(fetusEntity);

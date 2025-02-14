@@ -20,7 +20,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<PagedList<Blog>> GetActiveBlogs(BlogParameters blogParameters, bool trackChanges, CancellationToken ct = default)
 		{
 			var blogEntities = FindByCondition(b => b.IsActive, trackChanges)
-				.Filter(blogParameters.TagId, blogParameters.IsActive)
+				.FilterActive(blogParameters.TagId)
 				.Search(blogParameters.Title)
 				.Sort()
 				.Include(b => b.Tag);

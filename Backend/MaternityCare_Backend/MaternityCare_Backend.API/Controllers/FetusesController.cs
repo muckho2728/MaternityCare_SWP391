@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/fetuses")]
+	[Route("api/users/{userId:guid}fetuses")]
 	[ApiController]
 	public class FetusesController : ControllerBase
 	{
@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet("{userId:guid}")]
+		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> GetFetusesByUserId([FromQuery] FetusParameters fetusParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
@@ -29,15 +29,15 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> CreateFetus([FromBody] FetusForCreationDto fetusForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateFetus([FromRoute] Guid userId, [FromBody] FetusForCreationDto fetusForCreationDto, CancellationToken ct)
 		{
-			await serviceManager.FetusService.CreateFetus(fetusForCreationDto, ct);
+			await serviceManager.FetusService.CreateFetus(userId, fetusForCreationDto, ct);
 			return StatusCode(201);
 		}
 
 		[HttpPut("{fetusId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateFetus([FromRoute] Guid fetusId, [FromBody] FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateFetus([FromRoute] Guid userId, [FromRoute] Guid fetusId, [FromBody] FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, true, ct);
 			return NoContent();

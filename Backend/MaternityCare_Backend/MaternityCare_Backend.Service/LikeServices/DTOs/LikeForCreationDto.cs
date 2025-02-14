@@ -2,7 +2,5 @@
 {
 	public record LikeForCreationDto
 	{
-		public Guid BlogId { get; init; }
-		public Guid UserId { get; init; }
 	}
 }
