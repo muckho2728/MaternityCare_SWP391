@@ -18,9 +18,13 @@ namespace MaternityCare_Backend.Service.CommentServices
 			this.mapper = mapper;
 		}
 
-		private async Task<Comment?> CheckCommentExist(Guid commentId, bool trackChange, CancellationToken ct = default)
+		private async Task<Comment?> CheckCommentExist(Guid blogId, Guid userId, Guid commentId, bool trackChange, CancellationToken ct = default)
 		{
-			var commentEntity = await repositoryManager.CommentRepository.GetComment(commentId, trackChange, ct);
+			var blogEntity = await repositoryManager.BlogRepository.GetBlog(blogId, false, ct);
+			if (blogEntity == null) throw new BlogNotFoundException();
+			var userEntity = await repositoryManager.UserRepository.GetUserById(userId, false, ct);
+			if (userEntity == null) throw new UserNotFoundException();
+			var commentEntity = await repositoryManager.CommentRepository.GetComment(blogId, userId, commentId, trackChange, ct);
 			if (commentEntity == null) throw new CommentNotFoundException();
 			return commentEntity;
 		}
@@ -35,9 +39,9 @@ namespace MaternityCare_Backend.Service.CommentServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteComment(Guid commentId, bool trackChange, CancellationToken ct = default)
+		public async Task DeleteComment(Guid blogId, Guid userId, Guid commentId, bool trackChange, CancellationToken ct = default)
 		{
-			var commentEntity = await CheckCommentExist(commentId, trackChange, ct);
+			var commentEntity = await CheckCommentExist(blogId, userId, commentId, trackChange, ct);
 			repositoryManager.CommentRepository.DeleteComment(commentEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
@@ -49,9 +53,9 @@ namespace MaternityCare_Backend.Service.CommentServices
 			return (comments, commentsWithMetaData.MetaData);
 		}
 
-		public async Task UpdateComment(Guid commentId, CommentForUpdateDto commentForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdateComment(Guid blogId, Guid userId, Guid commentId, CommentForUpdateDto commentForUpdateDto, bool trackChange, CancellationToken ct = default)
 		{
-			var commentEntity = await CheckCommentExist(commentId, trackChange, ct);
+			var commentEntity = await CheckCommentExist(blogId, userId, commentId, trackChange, ct);
 			mapper.Map(commentForUpdateDto, commentEntity);
 			commentEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);

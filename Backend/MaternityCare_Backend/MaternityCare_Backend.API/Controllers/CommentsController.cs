@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/blogs/{blogId:guid}/users/{userId:guid}/comments")]
+	[Route("api")]
 	[ApiController]
 	public class CommentsController : ControllerBase
 	{
@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet]
+		[HttpGet("blogs/{blogId:guid}/comments")]
 		[Authorize]
 		public async Task<IActionResult> GetCommentsByBlogId([FromQuery] CommentParameters commentParameters, [FromRoute] Guid blogId, CancellationToken ct)
 		{
@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.comments);
 		}
 
-		[HttpPost]
+		[HttpPost("blogs/{blogId:guid}/users/{userId:guid}/comments")]
 		[Authorize]
 		public async Task<IActionResult> CreateComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromBody] CommentForCreationDto commentForCreationDto, CancellationToken ct)
 		{
@@ -35,19 +35,19 @@ namespace MaternityCare_Backend.API.Controllers
 			return StatusCode(201);
 		}
 
-		[HttpPut("{commentId:guid}")]
+		[HttpPut("blogs/{blogId:guid}/users/{userId:guid}/comments/{commentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateComment([FromRoute] Guid commentId, [FromBody] CommentForUpdateDto commentForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, [FromBody] CommentForUpdateDto commentForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.CommentService.UpdateComment(commentId, commentForUpdateDto, false, ct);
+			await serviceManager.CommentService.UpdateComment(blogId, userId, commentId, commentForUpdateDto, true, ct);
 			return NoContent();
 		}
 
-		[HttpDelete("{commentId:guid}")]
+		[HttpDelete("blogs/{blogId:guid}/users/{userId:guid}/comments/{commentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> DeleteComment([FromRoute] Guid commentId, CancellationToken ct)
+		public async Task<IActionResult> DeleteComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, CancellationToken ct)
 		{
-			await serviceManager.CommentService.DeleteComment(commentId, false, ct);
+			await serviceManager.CommentService.DeleteComment(blogId, userId, commentId, false, ct);
 			return NoContent();
 		}
 	}

@@ -8,6 +8,6 @@ namespace MaternityCare_Backend.Domain.Repositories
 		void CreateComment(Comment comment);
 		void DeleteComment(Comment comment);
 		Task<PagedList<Comment>> GetCommentsByBlogId(CommentParameters commentParameters, Guid blogId, bool trackChange, CancellationToken ct = default);
-		Task<Comment?> GetComment(Guid commentId, bool trackChange, CancellationToken ct);
+		Task<Comment?> GetComment(Guid blogid, Guid userId, Guid commentId, bool trackChange, CancellationToken ct);
 	}
 }
