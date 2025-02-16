@@ -8,12 +8,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using System.Text;
 
 namespace MaternityCare_Backend.API.Extensions
 {
 	public static class ServiceExtensions
 	{
+
+		public static void ConfigureQuartz(this IServiceCollection services)
+		{
+			services.AddQuartz();
+			services.AddQuartzHostedService(opt =>
+			{
+				opt.WaitForJobsToComplete = true;
+			});
+		}
 		public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddDbContext<RepositoryContext>(options =>

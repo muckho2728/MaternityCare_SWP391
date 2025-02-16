@@ -26,6 +26,7 @@ var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!
 var azureCredential = new DefaultAzureCredential();
 builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
 
+builder.Services.ConfigureQuartz();
 builder.Services.ConfigureSwaggerForAuthentication();
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureCors();
