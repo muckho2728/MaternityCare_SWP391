@@ -7,12 +7,14 @@ using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.EmailServices.DTOs;
 using MaternityCare_Backend.Service.IServices;
+using MaternityCare_Backend.Service.Jobs;
 using MaternityCare_Backend.Service.UserServices.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -29,9 +31,10 @@ namespace MaternityCare_Backend.Service.UserServices
 		private readonly IPasswordHasher<User> passwordHasher;
 		private readonly IEmailSender emailSender;
 		private readonly IHttpContextAccessor httpContextAccessor;
+		private readonly ISchedulerFactory schedulerFactory;
 		private User? user;
 
-		public UserService(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IBlobService blobService, IPasswordHasher<User> passwordHasher, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+		public UserService(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IBlobService blobService, IPasswordHasher<User> passwordHasher, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, ISchedulerFactory schedulerFactory)
 		{
 			this.repositoryManager = repositoryManager;
 			this.mapper = mapper;
@@ -40,6 +43,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			this.passwordHasher = passwordHasher;
 			this.emailSender = emailSender;
 			this.httpContextAccessor = httpContextAccessor;
+			this.schedulerFactory = schedulerFactory;
 		}
 
 		private async Task CheckUserExistWhenRegister(string username, string email, string cccd, CancellationToken ct = default)
@@ -90,8 +94,24 @@ namespace MaternityCare_Backend.Service.UserServices
 			var request = httpContextAccessor.HttpContext?.Request;
 			var uri = $"{request?.Scheme}://{request?.Host}/api/authentications/email-verification";
 			var callback = QueryHelpers.AddQueryString(uri, param);
-			var mail = new Mail(userEntity.Email, "Email verification", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>");
-			emailSender.SendEmail(mail);
+			//var mail = new Mail(userEntity.Email, "Email verification", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>");
+			//emailSender.SendEmail(mail);
+
+			IJobDetail job = JobBuilder.Create<EmailSendingJob>()
+			.WithIdentity("emailJob", "group1")
+			.UsingJobData("to", userEntity.Email)
+			.UsingJobData("subject", "Email verification")
+			.UsingJobData("body", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>")
+			.Build();
+
+			ITrigger trigger = TriggerBuilder.Create()
+		   .WithIdentity("emailTrigger", "group1")
+		   .StartNow()
+		   .Build();
+
+			var scheduler = await schedulerFactory.GetScheduler(ct);
+
+			await scheduler.ScheduleJob(job, trigger, ct);
 		}
 
 		public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth, CancellationToken ct = default)

@@ -13,6 +13,7 @@ namespace MaternityCare_Backend.Service.EmailServices
 		{
 			this.configuration = configuration;
 		}
+
 		public void SendEmail(Mail mail)
 		{
 			var mailMessage = CreateMailMessage(mail);

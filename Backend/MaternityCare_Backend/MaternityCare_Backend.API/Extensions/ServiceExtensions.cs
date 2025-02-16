@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Quartz;
+using Quartz.Simpl;
 using System.Text;
 
 namespace MaternityCare_Backend.API.Extensions
@@ -18,7 +19,10 @@ namespace MaternityCare_Backend.API.Extensions
 
 		public static void ConfigureQuartz(this IServiceCollection services)
 		{
-			services.AddQuartz();
+			services.AddQuartz(q =>
+			{
+				q.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+			});
 			services.AddQuartzHostedService(opt =>
 			{
 				opt.WaitForJobsToComplete = true;

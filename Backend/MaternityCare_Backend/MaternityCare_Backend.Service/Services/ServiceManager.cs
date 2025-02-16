@@ -22,6 +22,7 @@ using MaternityCare_Backend.Service.UserServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Quartz;
 
 namespace MaternityCare_Backend.Service.Services
 {
@@ -43,9 +44,9 @@ namespace MaternityCare_Backend.Service.Services
 		private readonly Lazy<IFetusHealthService> fetusHealthService;
 		private readonly Lazy<ITagService> tagService;
 		private readonly Lazy<IBlogService> blogService;
-		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils)
+		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher, IBlobService blobService, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, Utils utils, ISchedulerFactory schedulerFactory)
 		{
-			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor));
+			userService = new Lazy<IUserService>(() => new UserService(repositoryManager, mapper, configuration, blobService, passwordHasher, emailSender, httpContextAccessor, schedulerFactory));
 			feedbackService = new Lazy<IFeedbackService>(() => new FeedbackService(repositoryManager, mapper));
 			packageService = new Lazy<IPackageService>(() => new PackageService(repositoryManager, mapper));
 			subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repositoryManager, mapper, configuration, utils));
