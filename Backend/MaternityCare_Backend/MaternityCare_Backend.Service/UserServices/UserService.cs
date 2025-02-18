@@ -202,6 +202,13 @@ namespace MaternityCare_Backend.Service.UserServices
 			}
 		}
 
+		private string GenerateOTP()
+		{
+			Random random = new Random();
+			int otp = random.Next(100000, 999999);
+			return otp.ToString();
+		}
+
 		private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
 		{
 			var jwtSettings = configuration.GetSection("JwtSettings");
@@ -306,7 +313,7 @@ namespace MaternityCare_Backend.Service.UserServices
 			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(email, true, ct);
 			if (userEntity is null) throw new UserNotFoundException();
 
-			userEntity.PasswordResetToken = GenerateToken();
+			userEntity.PasswordResetToken = GenerateOTP();
 			userEntity.PasswordResetTokenExpiryTime = DateTime.Now.AddHours(1);
 			await repositoryManager.SaveAsync(ct);
 
@@ -317,7 +324,7 @@ namespace MaternityCare_Backend.Service.UserServices
 		public async Task ResetPassword(UserForResetPasswordDto userForResetPasswordDto, CancellationToken ct = default)
 		{
 			var userEntity = await repositoryManager.UserRepository.GetUserByEmail(userForResetPasswordDto.Email, true, ct);
-			if (userEntity is null || userEntity.PasswordResetToken != userForResetPasswordDto.Token || userEntity.PasswordResetTokenExpiryTime <= DateTime.Now)
+			if (userEntity is null || userEntity.PasswordResetToken != userForResetPasswordDto.OTP || userEntity.PasswordResetTokenExpiryTime <= DateTime.Now)
 			{
 				throw new RequestTokenBadRequest();
 			}

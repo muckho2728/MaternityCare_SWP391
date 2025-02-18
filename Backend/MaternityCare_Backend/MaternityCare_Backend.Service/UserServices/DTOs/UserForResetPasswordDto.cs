@@ -8,7 +8,7 @@ namespace MaternityCare_Backend.Service.UserServices.DTOs
 		[EmailAddress]
 		public string Email { get; init; }
 		[Required]
-		public string Token { get; init; }
+		public string OTP { get; init; }
 		[Required]
 		public string Password { get; init; }
 		[Required]

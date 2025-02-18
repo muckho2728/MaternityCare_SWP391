@@ -1,7 +1,10 @@
-﻿namespace MaternityCare_Backend.Service.FetusHealthServices.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MaternityCare_Backend.Service.FetusHealthServices.DTOs
 {
 	public record FetusHealthForCreationDto
 	{
+		[Range(6, 40, ErrorMessage = "The week must be between 6 and 40.")]
 		public int Week { get; init; }
 		public double? HeadCircumference { get; init; }
 		public double? AmnioticFluidLevel { get; init; }
