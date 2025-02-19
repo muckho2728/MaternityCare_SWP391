@@ -1,5 +1,7 @@
 ﻿using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 
 namespace MaternityCare_Backend.Infrastructure.Repositories
 {
@@ -79,6 +81,12 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public ITagRepository TagRepository => tagRepository.Value;
 
 		public IBlogRepository BlogRepository => blogRepository.Value;
+
+		public async Task<IDbTransaction> BeginTransaction(CancellationToken ct = default)
+		{
+			var transaction = await repositoryContext.Database.BeginTransactionAsync(ct);
+			return transaction.GetDbTransaction();
+		}
 
 		public Task SaveAsync(CancellationToken ct = default) => repositoryContext.SaveChangesAsync(ct);
 	}

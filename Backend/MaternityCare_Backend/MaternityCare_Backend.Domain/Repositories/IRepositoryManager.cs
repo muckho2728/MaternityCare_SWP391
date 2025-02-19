@@ -1,4 +1,6 @@
-﻿namespace MaternityCare_Backend.Domain.Repositories
+﻿using System.Data;
+
+namespace MaternityCare_Backend.Domain.Repositories
 {
 	public interface IRepositoryManager
 	{
@@ -20,5 +22,6 @@
 		ITagRepository TagRepository { get; }
 		IBlogRepository BlogRepository { get; }
 		Task SaveAsync(CancellationToken ct = default);
+		Task<IDbTransaction> BeginTransaction(CancellationToken ct = default);
 	}
 }
