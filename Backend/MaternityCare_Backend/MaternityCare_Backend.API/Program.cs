@@ -40,6 +40,7 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Utils>();
+builder.Services.ConfigureRateLimitingOptions();
 
 
 
@@ -52,6 +53,8 @@ app.UseSwaggerUI();
 app.UseExceptionHandler(opt => { });
 
 app.UseHttpsRedirection();
+
+app.UseRateLimiter();
 
 app.UseCors("CorsPolicy");
 

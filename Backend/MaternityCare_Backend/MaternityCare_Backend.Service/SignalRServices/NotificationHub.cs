@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
 
 namespace MaternityCare_Backend.Service.SignalRServices
 {
@@ -7,9 +6,12 @@ namespace MaternityCare_Backend.Service.SignalRServices
 	{
 		public override Task OnConnectedAsync()
 		{
-			string userId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-			Clients.All.SendAsync("ReceiveMessage", $"A new user with id {userId} has joined the chat");
 			return base.OnConnectedAsync();
+		}
+
+		public override Task OnDisconnectedAsync(Exception? exception)
+		{
+			return base.OnDisconnectedAsync(exception);
 		}
 	}
 }

@@ -3,6 +3,7 @@ using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Infrastructure.Persistence;
 using MaternityCare_Backend.Infrastructure.Repositories;
 using MaternityCare_Backend.Service.IServices;
+using MaternityCare_Backend.Service.Jobs;
 using MaternityCare_Backend.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Quartz;
 using Quartz.Simpl;
 using System.Text;
+using System.Threading.RateLimiting;
 
 namespace MaternityCare_Backend.API.Extensions
 {
@@ -22,6 +24,11 @@ namespace MaternityCare_Backend.API.Extensions
 			services.AddQuartz(q =>
 			{
 				q.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+				q.ScheduleJob<NotificationJob>(trigger => trigger
+					.WithIdentity("notificationTrigger", "group1")
+					.StartNow()
+					.WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
+					.RepeatForever()));
 			});
 			services.AddQuartzHostedService(opt =>
 			{
@@ -41,6 +48,13 @@ namespace MaternityCare_Backend.API.Extensions
 
 		public static void ConfigureCors(this IServiceCollection services) => services.AddCors(options =>
 		{
+			//options.AddPolicy("CorsPolicy", builder =>
+			//	builder.WithOrigins("http://localhost:5173")
+			//	.AllowAnyMethod()
+			//	.AllowAnyHeader()
+			//	.AllowCredentials()
+			//	.WithExposedHeaders("X-Pagination"));
+
 			options.AddPolicy("CorsPolicy", builder =>
 				builder.AllowAnyOrigin()
 				.AllowAnyMethod()
@@ -126,6 +140,34 @@ namespace MaternityCare_Backend.API.Extensions
 		{
 			services.AddSingleton(u => new BlobServiceClient(configuration.GetSection("StorageAccount").Value));
 			services.AddSingleton<IBlobService, BlobService>();
+		}
+
+		public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+		{
+			services.AddRateLimiter(opt =>
+			{
+				opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+					RateLimitPartition.GetFixedWindowLimiter("GlobalLimiter",
+					partition => new FixedWindowRateLimiterOptions
+					{
+						AutoReplenishment = true,
+						PermitLimit = 5,
+						QueueLimit = 0,
+						Window = TimeSpan.FromMinutes(1)
+					}));
+
+				opt.OnRejected = async (context, token) =>
+				{
+					context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+					if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+						await context.HttpContext.Response
+							.WriteAsync($"Too many requests. " +
+							$"Please try again after {retryAfter.TotalSeconds} second(s).", token);
+					else
+						await context.HttpContext.Response
+							.WriteAsync("Too many requests. Please try again later.", token);
+				};
+			});
 		}
 	}
 }
