@@ -151,7 +151,7 @@ namespace MaternityCare_Backend.API.Extensions
 					partition => new FixedWindowRateLimiterOptions
 					{
 						AutoReplenishment = true,
-						PermitLimit = 5,
+						PermitLimit = 10,
 						QueueLimit = 0,
 						Window = TimeSpan.FromMinutes(1)
 					}));

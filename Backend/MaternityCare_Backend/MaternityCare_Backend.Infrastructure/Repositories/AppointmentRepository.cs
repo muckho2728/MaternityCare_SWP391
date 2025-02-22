@@ -17,11 +17,11 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void DeleteAppointment(Appointment appointment) => Delete(appointment);
 
-		public async Task<Appointment?> GetAppointment(Guid appointmentId, bool trackChanges, CancellationToken ct = default) => await FindByCondition(a => a.Id.Equals(appointmentId), trackChanges).Include(a => a.Slot).SingleOrDefaultAsync(ct);
+		public async Task<Appointment?> GetAppointment(Guid userId, Guid slotId, bool trackChanges, CancellationToken ct = default) => await FindByCondition(a => a.UserId.Equals(userId) && a.SlotId.Equals(slotId), trackChanges).Include(a => a.Slot).SingleOrDefaultAsync(ct);
 
-		public async Task<PagedList<Appointment>> GetAppointments(AppointmentParameters appointmentParameters, bool trackChanges, CancellationToken ct = default)
+		public async Task<PagedList<Appointment>> GetAppointments(Guid userId, AppointmentParameters appointmentParameters, bool trackChanges, CancellationToken ct = default)
 		{
-			var appointmentEntities = FindAll(trackChanges)
+			var appointmentEntities = FindByCondition(a => a.UserId.Equals(userId), trackChanges)
 				.Sort()
 				.Include(a => a.Slot);
 			return await PagedList<Appointment>.ToPagedList(appointmentEntities, appointmentParameters.PageNumber, appointmentParameters.PageSize, ct);
