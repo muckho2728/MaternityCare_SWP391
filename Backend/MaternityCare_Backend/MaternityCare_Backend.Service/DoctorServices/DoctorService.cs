@@ -44,30 +44,30 @@ namespace MaternityCare_Backend.Service.DoctorServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteDoctor(Guid doctorId, bool trackChange, CancellationToken ct = default)
+		public async Task DeleteDoctor(Guid doctorId, CancellationToken ct = default)
 		{
-			var doctorEntity = await CheckDoctorExist(doctorId, trackChange, ct);
+			var doctorEntity = await CheckDoctorExist(doctorId, true, ct);
 			doctorEntity.IsDeleted = true;
 			doctorEntity.DeletedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, CancellationToken ct = default)
 		{
-			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetDoctors(doctorParameters, trackChange, ct);
+			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetDoctors(doctorParameters, false, ct);
 			var doctors = mapper.Map<IEnumerable<DoctorForReturnDto>>(doctorWithMetaData);
 			return (doctors, doctorWithMetaData.MetaData);
 		}
 
-		public async Task<DoctorForReturnDto> GetDoctorById(Guid doctorId, bool trackChange, CancellationToken ct = default)
+		public async Task<DoctorForReturnDto> GetDoctorById(Guid doctorId, CancellationToken ct = default)
 		{
-			var doctorEntity = await repositoryManager.DoctorRepository.GetDoctor(doctorId, trackChange, ct);
+			var doctorEntity = await repositoryManager.DoctorRepository.GetDoctor(doctorId, false, ct);
 			return mapper.Map<DoctorForReturnDto>(doctorEntity);
 		}
 
-		public async Task UpdateDoctor(Guid doctorId, DoctorForUpdateDto doctorForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdateDoctor(Guid doctorId, DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct = default)
 		{
-			var doctorEntity = await CheckDoctorExist(doctorId, trackChange, ct);
+			var doctorEntity = await CheckDoctorExist(doctorId, true, ct);
 			mapper.Map(doctorForUpdateDto, doctorEntity);
 			if (doctorForUpdateDto.Avatar is not null && doctorForUpdateDto.Avatar.Length > 0)
 			{

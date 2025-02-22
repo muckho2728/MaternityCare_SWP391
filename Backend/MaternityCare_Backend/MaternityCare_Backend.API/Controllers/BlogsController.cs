@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.BlogService.GetBlogs(blogParameters, false, ct);
+			var pagedResult = await serviceManager.BlogService.GetBlogs(blogParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.blogs);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetBlog([FromRoute] Guid blogId, CancellationToken ct)
 		{
-			var blog = await serviceManager.BlogService.GetBlog(blogId, false, ct);
+			var blog = await serviceManager.BlogService.GetBlog(blogId, ct);
 			return Ok(blog);
 		}
 
@@ -48,7 +48,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateBlog([FromRoute] Guid blogId, [FromBody] BlogForUpdateDto blogForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.BlogService.UpdateBlog(blogId, blogForUpdateDto, true, ct);
+			await serviceManager.BlogService.UpdateBlog(blogId, blogForUpdateDto, ct);
 			return NoContent();
 		}
 
@@ -64,7 +64,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> ActivateBlog([FromRoute] Guid blogId, CancellationToken ct)
 		{
-			await serviceManager.BlogService.ActivateBlog(blogId, true, ct);
+			await serviceManager.BlogService.ActivateBlog(blogId, ct);
 			return NoContent();
 		}
 
@@ -72,7 +72,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetActiveBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.BlogService.GetActiveBlogs(blogParameters, false, ct);
+			var pagedResult = await serviceManager.BlogService.GetActiveBlogs(blogParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.blogs);
 		}

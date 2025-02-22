@@ -39,23 +39,23 @@ namespace MaternityCare_Backend.Service.CommentServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteComment(Guid blogId, Guid userId, Guid commentId, bool trackChange, CancellationToken ct = default)
+		public async Task DeleteComment(Guid blogId, Guid userId, Guid commentId, CancellationToken ct = default)
 		{
-			var commentEntity = await CheckCommentExist(blogId, userId, commentId, trackChange, ct);
+			var commentEntity = await CheckCommentExist(blogId, userId, commentId, false, ct);
 			repositoryManager.CommentRepository.DeleteComment(commentEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<CommentForReturnDto> comments, MetaData metaData)> GetCommentsByBlogId(CommentParameters commentParameters, Guid blogId, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<CommentForReturnDto> comments, MetaData metaData)> GetCommentsByBlogId(CommentParameters commentParameters, Guid blogId, CancellationToken ct = default)
 		{
-			var commentsWithMetaData = await repositoryManager.CommentRepository.GetCommentsByBlogId(commentParameters, blogId, trackChange, ct);
+			var commentsWithMetaData = await repositoryManager.CommentRepository.GetCommentsByBlogId(commentParameters, blogId, false, ct);
 			var comments = mapper.Map<IEnumerable<CommentForReturnDto>>(commentsWithMetaData);
 			return (comments, commentsWithMetaData.MetaData);
 		}
 
-		public async Task UpdateComment(Guid blogId, Guid userId, Guid commentId, CommentForUpdateDto commentForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdateComment(Guid blogId, Guid userId, Guid commentId, CommentForUpdateDto commentForUpdateDto, CancellationToken ct = default)
 		{
-			var commentEntity = await CheckCommentExist(blogId, userId, commentId, trackChange, ct);
+			var commentEntity = await CheckCommentExist(blogId, userId, commentId, true, ct);
 			mapper.Map(commentForUpdateDto, commentEntity);
 			commentEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);

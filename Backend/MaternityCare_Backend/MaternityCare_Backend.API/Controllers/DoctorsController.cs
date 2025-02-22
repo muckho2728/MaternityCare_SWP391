@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetDoctors([FromQuery] DoctorParameters doctorParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.DoctorService.GetDoctor(doctorParameters, false, ct);
+			var pagedResult = await serviceManager.DoctorService.GetDoctor(doctorParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.doctors);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetDoctor([FromRoute] Guid doctorId, CancellationToken ct)
 		{
-			var doctor = await serviceManager.DoctorService.GetDoctorById(doctorId, false, ct);
+			var doctor = await serviceManager.DoctorService.GetDoctorById(doctorId, ct);
 			return Ok(doctor);
 		}
 
@@ -48,7 +48,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> UpdateDoctor([FromRoute] Guid doctorId, [FromForm] DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.DoctorService.UpdateDoctor(doctorId, doctorForUpdateDto, false, ct);
+			await serviceManager.DoctorService.UpdateDoctor(doctorId, doctorForUpdateDto, ct);
 			return Ok();
 		}
 
@@ -56,7 +56,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> DeleteDoctor([FromRoute] Guid doctorId, CancellationToken ct)
 		{
-			await serviceManager.DoctorService.DeleteDoctor(doctorId, false, ct);
+			await serviceManager.DoctorService.DeleteDoctor(doctorId, ct);
 			return Ok();
 		}
 	}

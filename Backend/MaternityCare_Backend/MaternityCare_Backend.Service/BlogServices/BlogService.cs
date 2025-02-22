@@ -23,9 +23,9 @@ namespace MaternityCare_Backend.Service.BlogServices
 			if (blog is null) throw new BlogNotFoundException();
 			return blog;
 		}
-		public async Task ActivateBlog(Guid blogId, bool trackChange, CancellationToken ct = default)
+		public async Task ActivateBlog(Guid blogId, CancellationToken ct = default)
 		{
-			var blogEntity = await CheckBlogExist(blogId, trackChange, ct);
+			var blogEntity = await CheckBlogExist(blogId, true, ct);
 			blogEntity.IsActive = !blogEntity.IsActive;
 			await repositoryManager.SaveAsync(ct);
 		}
@@ -46,9 +46,9 @@ namespace MaternityCare_Backend.Service.BlogServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(BlogParameters blogParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(BlogParameters blogParameters, CancellationToken ct = default)
 		{
-			var blogsWithMetaData = await repositoryManager.BlogRepository.GetActiveBlogs(blogParameters, trackChange, ct);
+			var blogsWithMetaData = await repositoryManager.BlogRepository.GetActiveBlogs(blogParameters, false, ct);
 			var blogs = mapper.Map<IEnumerable<BlogForReturnDto>>(blogsWithMetaData);
 			return (blogs, blogsWithMetaData.MetaData);
 		}
@@ -59,16 +59,16 @@ namespace MaternityCare_Backend.Service.BlogServices
 			return mapper.Map<BlogForReturnDto>(blogEntity);
 		}
 
-		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogs(BlogParameters blogParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogs(BlogParameters blogParameters, CancellationToken ct = default)
 		{
-			var blogsWithMetaData = await repositoryManager.BlogRepository.GetBlogs(blogParameters, trackChange, ct);
+			var blogsWithMetaData = await repositoryManager.BlogRepository.GetBlogs(blogParameters, false, ct);
 			var blogs = mapper.Map<IEnumerable<BlogForReturnDto>>(blogsWithMetaData);
 			return (blogs, blogsWithMetaData.MetaData);
 		}
 
-		public async Task UpdateBlog(Guid blogId, BlogForUpdateDto blogForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdateBlog(Guid blogId, BlogForUpdateDto blogForUpdateDto, CancellationToken ct = default)
 		{
-			var blogEntity = await CheckBlogExist(blogId, trackChange, ct);
+			var blogEntity = await CheckBlogExist(blogId, true, ct);
 			mapper.Map(blogForUpdateDto, blogEntity);
 			blogEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);

@@ -22,7 +22,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetCommentsByBlogId([FromQuery] CommentParameters commentParameters, [FromRoute] Guid blogId, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.CommentService.GetCommentsByBlogId(commentParameters, blogId, false, ct);
+			var pagedResult = await serviceManager.CommentService.GetCommentsByBlogId(commentParameters, blogId, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.comments);
 		}
@@ -39,7 +39,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, [FromBody] CommentForUpdateDto commentForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.CommentService.UpdateComment(blogId, userId, commentId, commentForUpdateDto, true, ct);
+			await serviceManager.CommentService.UpdateComment(blogId, userId, commentId, commentForUpdateDto, ct);
 			return NoContent();
 		}
 
@@ -47,7 +47,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> DeleteComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, CancellationToken ct)
 		{
-			await serviceManager.CommentService.DeleteComment(blogId, userId, commentId, false, ct);
+			await serviceManager.CommentService.DeleteComment(blogId, userId, commentId, ct);
 			return NoContent();
 		}
 	}
