@@ -16,16 +16,16 @@ namespace MaternityCare_Backend.Service.TagServices
 			this.mapper = mapper;
 		}
 
-		public async Task<TagForReturnDto> GetTag(Guid tagId, bool trackChange, CancellationToken ct = default)
+		public async Task<TagForReturnDto> GetTag(Guid tagId, CancellationToken ct = default)
 		{
-			var tagEntity = await repositoryManager.TagRepository.GetTag(tagId, trackChange, ct);
+			var tagEntity = await repositoryManager.TagRepository.GetTag(tagId, false, ct);
 			if (tagEntity == null) throw new TagNotFoundException();
 			return mapper.Map<TagForReturnDto>(tagEntity);
 		}
 
-		public async Task<IEnumerable<TagForReturnDto>> GetTags(bool trackChange, CancellationToken ct = default)
+		public async Task<IEnumerable<TagForReturnDto>> GetTags(CancellationToken ct = default)
 		{
-			var tagEntities = await repositoryManager.TagRepository.GetTags(trackChange, ct);
+			var tagEntities = await repositoryManager.TagRepository.GetTags(false, ct);
 			return mapper.Map<IEnumerable<TagForReturnDto>>(tagEntities);
 		}
 	}

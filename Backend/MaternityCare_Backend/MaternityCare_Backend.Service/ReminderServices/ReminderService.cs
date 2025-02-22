@@ -16,16 +16,16 @@ namespace MaternityCare_Backend.Service.ReminderServices
 			this.mapper = mapper;
 		}
 
-		public async Task<ReminderForReturnDto?> GetReminder(int week, bool trackChange, CancellationToken ct)
+		public async Task<ReminderForReturnDto?> GetReminder(int week, CancellationToken ct)
 		{
-			var reminderEntity = await repositoryManager.ReminderRepository.GetReminder(week, trackChange, ct);
+			var reminderEntity = await repositoryManager.ReminderRepository.GetReminder(week, false, ct);
 			if (reminderEntity == null) throw new ReminderNotFoundException(week);
 			return mapper.Map<ReminderForReturnDto>(reminderEntity);
 		}
 
-		public async Task<IEnumerable<ReminderForReturnDto>> GetReminders(bool trackChange, CancellationToken ct)
+		public async Task<IEnumerable<ReminderForReturnDto>> GetReminders(CancellationToken ct)
 		{
-			var reminderEntities = await repositoryManager.ReminderRepository.GetReminders(trackChange, ct);
+			var reminderEntities = await repositoryManager.ReminderRepository.GetReminders(false, ct);
 			return mapper.Map<IEnumerable<ReminderForReturnDto>>(reminderEntities);
 		}
 	}

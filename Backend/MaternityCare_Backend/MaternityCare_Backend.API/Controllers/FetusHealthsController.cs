@@ -22,7 +22,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetFetusHealthByFetusId([FromRoute] Guid fetusId, [FromQuery] FetusHealthParameters fetusHealthParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.FetusHealthService.GetFetusHealthByFetusId(fetusHealthParameters, fetusId, false, ct);
+			var pagedResult = await serviceManager.FetusHealthService.GetFetusHealthByFetusId(fetusHealthParameters, fetusId, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.fetusHealths);
 		}

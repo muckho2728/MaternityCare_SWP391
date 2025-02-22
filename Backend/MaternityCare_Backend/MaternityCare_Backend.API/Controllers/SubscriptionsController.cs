@@ -22,7 +22,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptions([FromQuery] SubscriptionParameters subscriptionParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptions(subscriptionParameters, false, ct);
+			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptions(subscriptionParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.subscriptions);
 		}
@@ -31,7 +31,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptionByUserId([FromBody] SubscriptionParameters subscriptionParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptionsByUserId(subscriptionParameters, userId, false, ct);
+			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptionsByUserId(subscriptionParameters, userId, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.subscriptions);
 		}
@@ -40,7 +40,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptionById([FromRoute] Guid subscriptionId, CancellationToken ct)
 		{
-			var subscription = await serviceManager.SubscriptionService.GetSubscription(subscriptionId, false, ct);
+			var subscription = await serviceManager.SubscriptionService.GetSubscription(subscriptionId, ct);
 			return Ok(subscription);
 		}
 

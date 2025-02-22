@@ -68,22 +68,22 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 
 		}
 
-		public async Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, bool trackChange, CancellationToken ct = default)
+		public async Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, CancellationToken ct = default)
 		{
-			var subscriptionEntity = await CheckSubscriptionExist(subscriptionId, trackChange, ct);
+			var subscriptionEntity = await CheckSubscriptionExist(subscriptionId, false, ct);
 			return mapper.Map<SubscriptionForReturnDto>(subscriptionEntity);
 		}
 
-		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, CancellationToken ct = default)
 		{
-			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptions(subscriptionParameters, trackChange, ct);
+			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptions(subscriptionParameters, false, ct);
 			var subscriptionDto = mapper.Map<IEnumerable<SubscriptionForReturnDto>>(subscriptionWithMetaData);
 			return (subscriptionDto, subscriptionWithMetaData.MetaData);
 		}
 
-		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, CancellationToken ct = default)
 		{
-			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(subscriptionParameters, userId, trackChange, ct);
+			var subscriptionWithMetaData = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(subscriptionParameters, userId, false, ct);
 			var subscriptionDto = mapper.Map<IEnumerable<SubscriptionForReturnDto>>(subscriptionWithMetaData);
 			return (subscriptionDto, subscriptionWithMetaData.MetaData);
 		}

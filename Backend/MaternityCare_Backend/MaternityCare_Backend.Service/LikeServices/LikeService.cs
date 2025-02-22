@@ -28,22 +28,22 @@ namespace MaternityCare_Backend.Service.LikeServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteLike(Guid blogId, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task DeleteLike(Guid blogId, Guid userId, CancellationToken ct = default)
 		{
-			var likeEntity = await repositoryManager.LikeRepository.GetLikeByBlogIdAndUserId(blogId, userId, trackChange, ct);
+			var likeEntity = await repositoryManager.LikeRepository.GetLikeByBlogIdAndUserId(blogId, userId, false, ct);
 			repositoryManager.LikeRepository.DeleteLike(likeEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<IEnumerable<LikeForReturnDto>> GetLikesByBlogId(Guid blogId, bool trackChange, CancellationToken ct = default)
+		public async Task<IEnumerable<LikeForReturnDto>> GetLikesByBlogId(Guid blogId, CancellationToken ct = default)
 		{
-			var likeEntities = await repositoryManager.LikeRepository.GetLikesByBlogId(blogId, trackChange, ct);
+			var likeEntities = await repositoryManager.LikeRepository.GetLikesByBlogId(blogId, false, ct);
 			return mapper.Map<IEnumerable<LikeForReturnDto>>(likeEntities);
 		}
 
-		public async Task<int> GetNumberOfLikesByBlogId(Guid blogId, bool trackChange, CancellationToken ct = default)
+		public async Task<int> GetNumberOfLikesByBlogId(Guid blogId, CancellationToken ct = default)
 		{
-			return (await repositoryManager.LikeRepository.GetLikesByBlogId(blogId, trackChange, ct)).Count();
+			return (await repositoryManager.LikeRepository.GetLikesByBlogId(blogId, false, ct)).Count();
 		}
 	}
 }

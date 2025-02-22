@@ -6,9 +6,9 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 	public interface ISubscriptionService
 	{
 		Task<string> CreateSubscription(SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct = default);
-		Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, bool trackChange, CancellationToken ct = default);
-		Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, bool trackChange, CancellationToken ct = default);
-		Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, bool trackChange, CancellationToken ct = default);
+		Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptions(SubscriptionParameters subscriptionParameters, CancellationToken ct = default);
+		Task<(IEnumerable<SubscriptionForReturnDto> subscriptions, MetaData metaData)> GetSubscriptionsByUserId(SubscriptionParameters subscriptionParameters, Guid userId, CancellationToken ct = default);
+		Task<SubscriptionForReturnDto?> GetSubscription(Guid subscriptionId, CancellationToken ct = default);
 
 	}
 }

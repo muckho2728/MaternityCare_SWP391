@@ -251,9 +251,9 @@ namespace MaternityCare_Backend.Service.UserServices
 			return await CreateToken(populateExp: false, ct);
 		}
 
-		public async Task<UserForReturnDto> GetUserById(Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<UserForReturnDto> GetUserById(Guid userId, CancellationToken ct = default)
 		{
-			var userEntity = await CheckUserExistById(userId, trackChange, ct);
+			var userEntity = await CheckUserExistById(userId, false, ct);
 			var subscription = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(userId, false, ct);
 			var isPremium = subscription.Any(sub => sub.EndDate < DateOnly.FromDateTime(DateTime.Now) && sub.Package.Type == "Premium");
 			var userReturnDto = mapper.Map<UserForReturnDto>(userEntity);
@@ -261,17 +261,17 @@ namespace MaternityCare_Backend.Service.UserServices
 			return userReturnDto;
 		}
 
-		public async Task<UserForReturnDto> GetUserByToken(string jwt, bool trackChange, CancellationToken ct = default)
+		public async Task<UserForReturnDto> GetUserByToken(string jwt, CancellationToken ct = default)
 		{
 			var handler = new JwtSecurityTokenHandler();
 			var token = handler.ReadJwtToken(jwt);
 			var userId = Guid.Parse(token.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
-			return await GetUserById(userId, trackChange, ct);
+			return await GetUserById(userId, ct);
 		}
 
-		public async Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<UserForReturnDto> users, MetaData metaData)> GetUsers(UserParameters userParameters, CancellationToken ct = default)
 		{
-			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, trackChange, ct);
+			var usersWithMetaData = await repositoryManager.UserRepository.GetUsers(userParameters, false, ct);
 			var userDto = mapper.Map<IEnumerable<UserForReturnDto>>(usersWithMetaData);
 			return (userDto, usersWithMetaData.MetaData);
 		}
@@ -285,9 +285,9 @@ namespace MaternityCare_Backend.Service.UserServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdateUser(Guid userId, UserForUpdateDto userForUpdateDto, CancellationToken ct = default)
 		{
-			var userEntity = await CheckUserExistById(userId, trackChange, ct);
+			var userEntity = await CheckUserExistById(userId, true, ct);
 			mapper.Map(userForUpdateDto, userEntity);
 			if (userForUpdateDto.Avatar is not null && userForUpdateDto.Avatar.Length > 0)
 			{

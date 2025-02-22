@@ -32,15 +32,15 @@ namespace MaternityCare_Backend.Service.FeedbackServices
 			return mapper.Map<FeedbackForReturnDto>(feedbackEntity);
 		}
 
-		public async Task<FeedbackForReturnDto?> GetFeedbackById(Guid id, bool trackChange, CancellationToken ct = default)
+		public async Task<FeedbackForReturnDto?> GetFeedbackById(Guid id, CancellationToken ct = default)
 		{
-			var feedbackEntity = await CheckFeedbackExist(id, trackChange, ct);
+			var feedbackEntity = await CheckFeedbackExist(id, false, ct);
 			return mapper.Map<FeedbackForReturnDto>(feedbackEntity);
 		}
 
-		public async Task<(IEnumerable<FeedbackForReturnDto> feedbacks, MetaData metaData)> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<FeedbackForReturnDto> feedbacks, MetaData metaData)> GetFeedbacks(FeedbackParameters feedbackParameters, CancellationToken ct = default)
 		{
-			var feedbackWithMetaData = await repositoryManager.FeedbackRepository.GetFeedbacks(feedbackParameters, trackChange, ct);
+			var feedbackWithMetaData = await repositoryManager.FeedbackRepository.GetFeedbacks(feedbackParameters, false, ct);
 			var feedbackDto = mapper.Map<IEnumerable<FeedbackForReturnDto>>(feedbackWithMetaData);
 			return (feedbackDto, feedbackWithMetaData.MetaData);
 

@@ -4,7 +4,7 @@ namespace MaternityCare_Backend.Service.TagServices
 {
 	public interface ITagService
 	{
-		Task<IEnumerable<TagForReturnDto>> GetTags(bool trackChange, CancellationToken ct = default);
-		Task<TagForReturnDto> GetTag(Guid tagId, bool trackChange, CancellationToken ct = default);
+		Task<IEnumerable<TagForReturnDto>> GetTags(CancellationToken ct = default);
+		Task<TagForReturnDto> GetTag(Guid tagId, CancellationToken ct = default);
 	}
 }

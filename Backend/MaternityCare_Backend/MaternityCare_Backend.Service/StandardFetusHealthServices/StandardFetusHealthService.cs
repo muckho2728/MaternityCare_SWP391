@@ -16,16 +16,16 @@ namespace MaternityCare_Backend.Service.StandardFetusHealthServices
 			this.mapper = mapper;
 		}
 
-		public async Task<StandardFetusHealthForReturnDto?> GetStandardFetusHealth(int week, bool trackChange, CancellationToken ct)
+		public async Task<StandardFetusHealthForReturnDto?> GetStandardFetusHealth(int week, CancellationToken ct)
 		{
-			var standardFetusHealthEntity = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealth(week, trackChange, ct);
+			var standardFetusHealthEntity = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealth(week, false, ct);
 			if (standardFetusHealthEntity == null) throw new StandardFetusHealthNotFoundException(week);
 			return mapper.Map<StandardFetusHealthForReturnDto>(standardFetusHealthEntity);
 		}
 
-		public async Task<IEnumerable<StandardFetusHealthForReturnDto>> GetStandardFetusHealths(bool trackChange, CancellationToken ct)
+		public async Task<IEnumerable<StandardFetusHealthForReturnDto>> GetStandardFetusHealths(CancellationToken ct)
 		{
-			var standardFetusHealthEntities = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealths(trackChange, ct);
+			var standardFetusHealthEntities = await repositoryManager.StandardFetusHealthRepository.GetStandardFetusHealths(false, ct);
 			return mapper.Map<IEnumerable<StandardFetusHealthForReturnDto>>(standardFetusHealthEntities);
 		}
 	}

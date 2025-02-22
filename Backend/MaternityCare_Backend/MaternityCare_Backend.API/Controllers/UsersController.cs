@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetUsers([FromQuery] UserParameters userParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.UserService.GetUsers(userParameters, false, ct);
+			var pagedResult = await serviceManager.UserService.GetUsers(userParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.users);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetUser([FromRoute] Guid userId, CancellationToken ct)
 		{
-			var user = await serviceManager.UserService.GetUserById(userId, false, ct);
+			var user = await serviceManager.UserService.GetUserById(userId, ct);
 			return Ok(user);
 		}
 
@@ -40,7 +40,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromForm] UserForUpdateDto userForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.UserService.UpdateUser(userId, userForUpdateDto, true, ct);
+			await serviceManager.UserService.UpdateUser(userId, userForUpdateDto, ct);
 			return NoContent();
 		}
 

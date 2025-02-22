@@ -34,37 +34,37 @@ namespace MaternityCare_Backend.Service.PackageServices
 			return mapper.Map<PackageForReturnDto>(packageEntity);
 		}
 
-		public async Task DeletePackage(Guid id, bool trackChange, CancellationToken ct = default)
+		public async Task DeletePackage(Guid id, CancellationToken ct = default)
 		{
-			var packageEntity = await CheckPackageExist(id, trackChange, ct);
+			var packageEntity = await CheckPackageExist(id, true, ct);
 			packageEntity.IsDeleted = true;
 			packageEntity.DeletedAt = DateTime.Now;
 			await repositoryManager.SaveAsync();
 		}
 
-		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(PackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(PackageParameters packageParameters, CancellationToken ct = default)
 		{
-			var packageWithMetaData = await repositoryManager.PackageRepository.GetActivePackages(packageParameters, trackChange, ct);
+			var packageWithMetaData = await repositoryManager.PackageRepository.GetActivePackages(packageParameters, false, ct);
 			var packageDto = mapper.Map<IEnumerable<PackageForReturnDto>>(packageWithMetaData);
 			return (packageDto, packageWithMetaData.MetaData);
 		}
 
-		public async Task<PackageForReturnDto?> GetPackageById(Guid id, bool trackChange, CancellationToken ct = default)
+		public async Task<PackageForReturnDto?> GetPackageById(Guid id, CancellationToken ct = default)
 		{
-			var packageEntity = await CheckPackageExist(id, trackChange, ct);
+			var packageEntity = await CheckPackageExist(id, false, ct);
 			return mapper.Map<PackageForReturnDto>(packageEntity);
 		}
 
-		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetPackages(PackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetPackages(PackageParameters packageParameters, CancellationToken ct = default)
 		{
-			var packageWithMetaData = await repositoryManager.PackageRepository.GetPackages(packageParameters, trackChange, ct);
+			var packageWithMetaData = await repositoryManager.PackageRepository.GetPackages(packageParameters, false, ct);
 			var packageDto = mapper.Map<IEnumerable<PackageForReturnDto>>(packageWithMetaData);
 			return (packageDto, packageWithMetaData.MetaData);
 		}
 
-		public async Task UpdatePackage(Guid id, PackageForUpdateDto packageForUpdateDto, bool trackChange, CancellationToken ct = default)
+		public async Task UpdatePackage(Guid id, PackageForUpdateDto packageForUpdateDto, CancellationToken ct = default)
 		{
-			var packageEntity = await CheckPackageExist(id, trackChange, ct);
+			var packageEntity = await CheckPackageExist(id, true, ct);
 			mapper.Map(packageForUpdateDto, packageEntity);
 			packageEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);

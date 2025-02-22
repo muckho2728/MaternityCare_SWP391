@@ -22,7 +22,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetFetusesByUserId([FromQuery] FetusParameters fetusParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.FetusService.GetFetusesByUserId(fetusParameters, userId, false, ct);
+			var pagedResult = await serviceManager.FetusService.GetFetusesByUserId(fetusParameters, userId, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.fetuses);
 		}
@@ -39,7 +39,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateFetus([FromRoute] Guid userId, [FromRoute] Guid fetusId, [FromBody] FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, true, ct);
+			await serviceManager.FetusService.UpdateFetus(fetusId, fetusForUpdateDto, ct);
 			return NoContent();
 		}
 	}

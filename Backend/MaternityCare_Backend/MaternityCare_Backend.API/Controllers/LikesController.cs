@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> DeleteLike([FromRoute] Guid blogId, [FromRoute] Guid userId, CancellationToken ct)
 		{
-			await serviceManager.LikeService.DeleteLike(blogId, userId, false, ct);
+			await serviceManager.LikeService.DeleteLike(blogId, userId, ct);
 			return NoContent();
 		}
 
@@ -35,7 +35,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct)
 		{
-			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, false, ct);
+			var likes = await serviceManager.LikeService.GetLikesByBlogId(blogId, ct);
 			return Ok(likes);
 		}
 
@@ -43,7 +43,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetNumberOfLikesByBlogId([FromRoute] Guid blogId, CancellationToken ct)
 		{
-			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, false, ct);
+			var numberOfLikes = await serviceManager.LikeService.GetNumberOfLikesByBlogId(blogId, ct);
 			return Ok(numberOfLikes);
 		}
 

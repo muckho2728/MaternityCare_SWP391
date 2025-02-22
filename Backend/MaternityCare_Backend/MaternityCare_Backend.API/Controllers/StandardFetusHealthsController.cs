@@ -19,7 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetStandardFetusHealths(CancellationToken ct)
 		{
-			var standardFetusHealths = await serviceManager.StandardFetusHealthService.GetStandardFetusHealths(false, ct);
+			var standardFetusHealths = await serviceManager.StandardFetusHealthService.GetStandardFetusHealths(ct);
 			return Ok(standardFetusHealths);
 		}
 
@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetStandardFetusHealth(int week, CancellationToken ct)
 		{
-			var standardFetusHealth = await serviceManager.StandardFetusHealthService.GetStandardFetusHealth(week, false, ct);
+			var standardFetusHealth = await serviceManager.StandardFetusHealthService.GetStandardFetusHealth(week, ct);
 			return Ok(standardFetusHealth);
 		}
 	}

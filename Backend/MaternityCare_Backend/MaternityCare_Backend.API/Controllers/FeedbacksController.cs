@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetFeedbacks([FromQuery] FeedbackParameters feedbackParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.FeedbackService.GetFeedbacks(feedbackParameters, false, ct);
+			var pagedResult = await serviceManager.FeedbackService.GetFeedbacks(feedbackParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.feedbacks);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetFeedbackById([FromRoute] Guid feedbackId, CancellationToken ct)
 		{
-			var feedback = await serviceManager.FeedbackService.GetFeedbackById(feedbackId, false, ct);
+			var feedback = await serviceManager.FeedbackService.GetFeedbackById(feedbackId, ct);
 			return Ok(feedback);
 		}
 

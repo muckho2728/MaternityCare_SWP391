@@ -28,16 +28,16 @@ namespace MaternityCare_Backend.Service.FetusServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<FetusForReturnDto> fetuses, MetaData metaData)> GetFetusesByUserId(FetusParameters fetusParameters, Guid userId, CancellationToken ct = default)
 		{
-			var fetusWithMetaData = await repositoryManager.FetusRepository.GetFetusesByUserId(fetusParameters, userId, trackChange, ct);
+			var fetusWithMetaData = await repositoryManager.FetusRepository.GetFetusesByUserId(fetusParameters, userId, false, ct);
 			var fetusesDto = mapper.Map<IEnumerable<FetusForReturnDto>>(fetusWithMetaData);
 			return (fetusesDto, fetusWithMetaData.MetaData);
 		}
 
-		public async Task UpdateFetus(Guid fetusId, FetusForUpdateDto fetusForUpdateDto, bool trackChange, CancellationToken ct)
+		public async Task UpdateFetus(Guid fetusId, FetusForUpdateDto fetusForUpdateDto, CancellationToken ct)
 		{
-			var fetusEntity = await repositoryManager.FetusRepository.GetFetusById(fetusId, trackChange, ct);
+			var fetusEntity = await repositoryManager.FetusRepository.GetFetusById(fetusId, true, ct);
 			if (fetusEntity is null) throw new FetusNotFoundException();
 			mapper.Map(fetusForUpdateDto, fetusEntity);
 			fetusEntity.UpdatedAt = DateTime.Now;

@@ -19,7 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetReminders(CancellationToken ct)
 		{
-			var reminders = await serviceManager.ReminderService.GetReminders(false, ct);
+			var reminders = await serviceManager.ReminderService.GetReminders(ct);
 			return Ok(reminders);
 		}
 
@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetReminder([FromRoute] int week, CancellationToken ct)
 		{
-			var reminder = await serviceManager.ReminderService.GetReminder(week, false, ct);
+			var reminder = await serviceManager.ReminderService.GetReminder(week, ct);
 			return Ok(reminder);
 		}
 	}

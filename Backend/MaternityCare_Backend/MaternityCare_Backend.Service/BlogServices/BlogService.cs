@@ -53,9 +53,9 @@ namespace MaternityCare_Backend.Service.BlogServices
 			return (blogs, blogsWithMetaData.MetaData);
 		}
 
-		public async Task<BlogForReturnDto> GetBlog(Guid blogId, bool trackChange, CancellationToken ct = default)
+		public async Task<BlogForReturnDto> GetBlog(Guid blogId, CancellationToken ct = default)
 		{
-			var blogEntity = await CheckBlogExist(blogId, trackChange, ct);
+			var blogEntity = await CheckBlogExist(blogId, false, ct);
 			return mapper.Map<BlogForReturnDto>(blogEntity);
 		}
 

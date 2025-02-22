@@ -42,23 +42,24 @@ namespace MaternityCare_Backend.Service.SlotServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteSlot(Guid doctorId, Guid slotId, bool trackChange, CancellationToken ct = default)
+		public async Task DeleteSlot(Guid doctorId, Guid slotId, CancellationToken ct = default)
 		{
-			var slotEntity = await CheckSlotExist(doctorId, slotId, trackChange, ct);
+			var slotEntity = await CheckSlotExist(doctorId, slotId, false, ct);
 			if (slotEntity.IsBooked) throw new SlotConflictException("This slot is already booked");
+			if (slotEntity.Date < DateOnly.FromDateTime(DateTime.Today)) throw new SlotConflictException("This slot is already passed");
 			repositoryManager.SlotRepository.DeleteSlot(slotEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<SlotForReturnDto?> GetSlot(Guid doctorId, Guid slotId, bool trackChange, CancellationToken ct = default)
+		public async Task<SlotForReturnDto?> GetSlot(Guid doctorId, Guid slotId, CancellationToken ct = default)
 		{
-			var slotEntity = await CheckSlotExist(doctorId, slotId, trackChange, ct);
+			var slotEntity = await CheckSlotExist(doctorId, slotId, false, ct);
 			return mapper.Map<SlotForReturnDto>(slotEntity);
 		}
 
-		public async Task<(IEnumerable<SlotForReturnDto> slots, MetaData metaData)> GetSlots(Guid doctorId, SlotParameters slotParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<(IEnumerable<SlotForReturnDto> slots, MetaData metaData)> GetSlots(Guid doctorId, SlotParameters slotParameters, CancellationToken ct = default)
 		{
-			var slotsWithMetaData = await repositoryManager.SlotRepository.GetSlots(doctorId, slotParameters, trackChange, ct);
+			var slotsWithMetaData = await repositoryManager.SlotRepository.GetSlots(doctorId, slotParameters, false, ct);
 			var slotsDto = mapper.Map<IEnumerable<SlotForReturnDto>>(slotsWithMetaData);
 			return (slotsDto, slotsWithMetaData.MetaData);
 

@@ -19,14 +19,14 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetTags(CancellationToken ct)
 		{
-			var tags = await serviceManager.TagService.GetTags(false, ct);
+			var tags = await serviceManager.TagService.GetTags(ct);
 			return Ok(tags);
 		}
 
 		[HttpGet("{tagId:guid}")]
 		public async Task<IActionResult> GetTag(Guid tagId, CancellationToken ct)
 		{
-			var tag = await serviceManager.TagService.GetTag(tagId, false, ct);
+			var tag = await serviceManager.TagService.GetTag(tagId, ct);
 			return Ok(tag);
 		}
 	}

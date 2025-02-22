@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetSlots([FromRoute] Guid doctorId, [FromQuery] SlotParameters slotParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.SlotService.GetSlots(doctorId, slotParameters, false, ct);
+			var pagedResult = await serviceManager.SlotService.GetSlots(doctorId, slotParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.slots);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetSlot([FromRoute] Guid doctorId, [FromRoute] Guid slotId, CancellationToken ct)
 		{
-			var slot = await serviceManager.SlotService.GetSlot(doctorId, slotId, false, ct);
+			var slot = await serviceManager.SlotService.GetSlot(doctorId, slotId, ct);
 			return Ok(slot);
 		}
 
@@ -48,7 +48,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> DeleteSlot([FromRoute] Guid doctorId, [FromRoute] Guid slotId, CancellationToken ct)
 		{
-			await serviceManager.SlotService.DeleteSlot(doctorId, slotId, false, ct);
+			await serviceManager.SlotService.DeleteSlot(doctorId, slotId, ct);
 			return NoContent();
 		}
 	}

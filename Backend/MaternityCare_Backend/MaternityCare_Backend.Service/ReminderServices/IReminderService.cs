@@ -4,7 +4,7 @@ namespace MaternityCare_Backend.Service.ReminderServices
 {
 	public interface IReminderService
 	{
-		Task<IEnumerable<ReminderForReturnDto>> GetReminders(bool trackChange, CancellationToken ct);
-		Task<ReminderForReturnDto?> GetReminder(int week, bool trackChange, CancellationToken ct);
+		Task<IEnumerable<ReminderForReturnDto>> GetReminders(CancellationToken ct);
+		Task<ReminderForReturnDto?> GetReminder(int week, CancellationToken ct);
 	}
 }

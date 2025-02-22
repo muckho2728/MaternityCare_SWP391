@@ -23,7 +23,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetPackages([FromQuery] PackageParameters packageParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, false, ct);
+			var pagedResult = await serviceManager.PackageService.GetPackages(packageParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.packages);
 		}
@@ -32,7 +32,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, false, ct);
+			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.packages);
 		}
@@ -41,7 +41,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetPackageById([FromRoute] Guid packageId, CancellationToken ct)
 		{
-			var package = await serviceManager.PackageService.GetPackageById(packageId, false, ct);
+			var package = await serviceManager.PackageService.GetPackageById(packageId, ct);
 			return Ok(package);
 		}
 
@@ -57,7 +57,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, true, ct);
+			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, ct);
 			return NoContent();
 		}
 
@@ -65,7 +65,7 @@ namespace MaternityCare_Backend.API.Controllers
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> DeletePackage([FromRoute] Guid packageId, CancellationToken ct)
 		{
-			await serviceManager.PackageService.DeletePackage(packageId, true, ct);
+			await serviceManager.PackageService.DeletePackage(packageId, ct);
 			return NoContent();
 		}
 	}

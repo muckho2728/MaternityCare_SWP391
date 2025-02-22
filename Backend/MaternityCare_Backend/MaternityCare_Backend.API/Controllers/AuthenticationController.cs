@@ -43,7 +43,7 @@ namespace MaternityCare_Backend.API.Controllers
 		public async Task<IActionResult> GetCurrentUser(CancellationToken ct)
 		{
 			var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
-			var user = await serviceManager.UserService.GetUserByToken(token, false, ct);
+			var user = await serviceManager.UserService.GetUserByToken(token, ct);
 			return Ok(user);
 		}
 
