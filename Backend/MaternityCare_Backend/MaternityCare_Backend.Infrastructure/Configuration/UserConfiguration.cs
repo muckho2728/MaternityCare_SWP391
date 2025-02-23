@@ -19,7 +19,9 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.FullName).IsRequired().HasMaxLength(100).HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
+			builder.HasIndex(x => x.Email).IsUnique();
 			builder.Property(x => x.Username).IsRequired().HasMaxLength(50);
+			builder.HasIndex(x => x.Username).IsUnique();
 			builder.Property(x => x.Password).IsRequired();
 			builder.Property(x => x.DateOfBirth).IsRequired();
 			builder.Property(x => x.Avatar).IsRequired();

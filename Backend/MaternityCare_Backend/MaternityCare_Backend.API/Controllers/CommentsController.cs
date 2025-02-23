@@ -35,19 +35,19 @@ namespace MaternityCare_Backend.API.Controllers
 			return StatusCode(201);
 		}
 
-		[HttpPut("blogs/{blogId:guid}/users/{userId:guid}/comments/{commentId:guid}")]
+		[HttpPut("users/{userId:guid}/comments/{commentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, [FromBody] CommentForUpdateDto commentForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateComment([FromRoute] Guid userId, [FromRoute] Guid commentId, [FromBody] CommentForUpdateDto commentForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.CommentService.UpdateComment(blogId, userId, commentId, commentForUpdateDto, ct);
+			await serviceManager.CommentService.UpdateComment(userId, commentId, commentForUpdateDto, ct);
 			return NoContent();
 		}
 
-		[HttpDelete("blogs/{blogId:guid}/users/{userId:guid}/comments/{commentId:guid}")]
+		[HttpDelete("users/{userId:guid}/comments/{commentId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> DeleteComment([FromRoute] Guid blogId, [FromRoute] Guid userId, [FromRoute] Guid commentId, CancellationToken ct)
+		public async Task<IActionResult> DeleteComment([FromRoute] Guid userId, [FromRoute] Guid commentId, CancellationToken ct)
 		{
-			await serviceManager.CommentService.DeleteComment(blogId, userId, commentId, ct);
+			await serviceManager.CommentService.DeleteComment(userId, commentId, ct);
 			return NoContent();
 		}
 	}
