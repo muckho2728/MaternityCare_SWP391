@@ -45,5 +45,11 @@ namespace MaternityCare_Backend.Service.LikeServices
 		{
 			return (await repositoryManager.LikeRepository.GetLikesByBlogId(blogId, false, ct)).Count();
 		}
+
+		public async Task<bool> IsLikedByUser(Guid blogId, Guid userId, CancellationToken ct = default)
+		{
+			var likeEntity = await repositoryManager.LikeRepository.GetLikeByBlogIdAndUserId(blogId, userId, false, ct);
+			return likeEntity != null;
+		}
 	}
 }

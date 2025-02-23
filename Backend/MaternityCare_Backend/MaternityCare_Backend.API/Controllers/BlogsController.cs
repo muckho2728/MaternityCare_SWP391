@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/blogs")]
+	[Route("api")]
 	[ApiController]
 	public class BlogsController : ControllerBase
 	{
@@ -19,7 +19,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet]
+		[HttpGet("blogs")]
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
 		{
@@ -36,27 +36,27 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(blog);
 		}
 
-		[HttpPost]
+		[HttpPost("users/{userId:guid}/blogs")]
 		[Authorize]
-		public async Task<IActionResult> CreateBlog([FromBody] BlogForCreationDto blogForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateBlog([FromRoute] Guid userId, [FromBody] BlogForCreationDto blogForCreationDto, CancellationToken ct)
 		{
-			await serviceManager.BlogService.CreateBlog(blogForCreationDto, ct);
+			await serviceManager.BlogService.CreateBlog(userId, blogForCreationDto, ct);
 			return StatusCode(201, "Blog created successfully");
 		}
 
-		[HttpPut("{blogId:guid}")]
+		[HttpPut("users/{userId:guid}/blogs/{blogId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateBlog([FromRoute] Guid blogId, [FromBody] BlogForUpdateDto blogForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateBlog([FromRoute] Guid userId, [FromRoute] Guid blogId, [FromBody] BlogForUpdateDto blogForUpdateDto, CancellationToken ct)
 		{
-			await serviceManager.BlogService.UpdateBlog(blogId, blogForUpdateDto, ct);
+			await serviceManager.BlogService.UpdateBlog(userId, blogId, blogForUpdateDto, ct);
 			return NoContent();
 		}
 
-		[HttpDelete("{blogId:guid}")]
+		[HttpDelete("users/{userId:guid}/blogs/{blogId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> DeleteBlog([FromRoute] Guid blogId, CancellationToken ct)
+		public async Task<IActionResult> DeleteBlog([FromRoute] Guid userId, [FromRoute] Guid blogId, CancellationToken ct)
 		{
-			await serviceManager.BlogService.DeleteBlog(blogId, ct);
+			await serviceManager.BlogService.DeleteBlog(userId, blogId, ct);
 			return NoContent();
 		}
 
@@ -68,7 +68,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return NoContent();
 		}
 
-		[HttpGet("active")]
+		[HttpGet("blogs/active-blogs")]
 		[Authorize]
 		public async Task<IActionResult> GetActiveBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
 		{

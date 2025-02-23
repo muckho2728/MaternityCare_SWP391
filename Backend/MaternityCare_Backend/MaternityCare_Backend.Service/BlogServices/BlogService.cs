@@ -30,18 +30,20 @@ namespace MaternityCare_Backend.Service.BlogServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task CreateBlog(BlogForCreationDto blogForCreationDto, CancellationToken ct = default)
+		public async Task CreateBlog(Guid userId, BlogForCreationDto blogForCreationDto, CancellationToken ct = default)
 		{
 			var blogEntity = mapper.Map<Blog>(blogForCreationDto);
 			blogEntity.IsActive = false;
 			blogEntity.CreatedAt = DateTime.Now;
+			blogEntity.UserId = userId;
 			repositoryManager.BlogRepository.CreateBlog(blogEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task DeleteBlog(Guid blogId, CancellationToken ct = default)
+		public async Task DeleteBlog(Guid userId, Guid blogId, CancellationToken ct = default)
 		{
 			var blogEntity = await CheckBlogExist(blogId, false, ct);
+			if (blogEntity.UserId != userId) throw new BlogConflictException("You cannot delete other people blogs");
 			repositoryManager.BlogRepository.DeleteBlog(blogEntity);
 			await repositoryManager.SaveAsync(ct);
 		}
@@ -66,9 +68,10 @@ namespace MaternityCare_Backend.Service.BlogServices
 			return (blogs, blogsWithMetaData.MetaData);
 		}
 
-		public async Task UpdateBlog(Guid blogId, BlogForUpdateDto blogForUpdateDto, CancellationToken ct = default)
+		public async Task UpdateBlog(Guid userId, Guid blogId, BlogForUpdateDto blogForUpdateDto, CancellationToken ct = default)
 		{
 			var blogEntity = await CheckBlogExist(blogId, true, ct);
+			if (blogEntity.UserId != userId) throw new BlogConflictException("You cannot modify other people blogs");
 			mapper.Map(blogForUpdateDto, blogEntity);
 			blogEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);
