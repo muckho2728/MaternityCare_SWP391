@@ -29,7 +29,6 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("{blogId:guid}")]
-		[Authorize]
 		public async Task<IActionResult> GetBlog([FromRoute] Guid blogId, CancellationToken ct)
 		{
 			var blog = await serviceManager.BlogService.GetBlog(blogId, ct);
@@ -69,7 +68,6 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("blogs/active-blogs")]
-		[Authorize]
 		public async Task<IActionResult> GetActiveBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.BlogService.GetActiveBlogs(blogParameters, ct);

@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/subscriptions")]
+	[Route("api")]
 	[ApiController]
 	public class SubscriptionsController : ControllerBase
 	{
@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet]
+		[HttpGet("subscriptions")]
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptions([FromQuery] SubscriptionParameters subscriptionParameters, CancellationToken ct)
 		{
@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.subscriptions);
 		}
 
-		[HttpGet("users/{userId:guid}")]
+		[HttpGet("users/{userId:guid}/subscriptions")]
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptionByUserId([FromBody] SubscriptionParameters subscriptionParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
@@ -36,7 +36,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.subscriptions);
 		}
 
-		[HttpGet("{subscriptionId:guid}")]
+		[HttpGet("subscriptions/{subscriptionId:guid}")]
 		[Authorize]
 		public async Task<IActionResult> GetSubscriptionById([FromRoute] Guid subscriptionId, CancellationToken ct)
 		{
@@ -44,7 +44,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(subscription);
 		}
 
-		[HttpPost]
+		[HttpPost("subscriptions")]
 		[Authorize]
 		public async Task<IActionResult> CreateSubscription([FromBody] SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct)
 		{
