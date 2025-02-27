@@ -1,6 +1,5 @@
 ﻿using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.IServices;
-using MaternityCare_Backend.Service.SubscriptionServices.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -44,11 +43,11 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(subscription);
 		}
 
-		[HttpPost("subscriptions")]
+		[HttpPost("users/{userId:guid}/packages/{packageId:guid}/subscriptions")]
 		[Authorize]
-		public async Task<IActionResult> CreateSubscription([FromBody] SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateSubscription([FromRoute] Guid userId, [FromRoute] Guid packageId, CancellationToken ct)
 		{
-			var paymentUrl = await serviceManager.SubscriptionService.CreateSubscription(subscriptionForCreationDto, ct);
+			var paymentUrl = await serviceManager.SubscriptionService.CreateSubscription(userId, packageId, ct);
 			return Ok(paymentUrl);
 		}
 	}

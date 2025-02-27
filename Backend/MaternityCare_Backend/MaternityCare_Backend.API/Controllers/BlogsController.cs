@@ -37,7 +37,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPost("users/{userId:guid}/blogs")]
 		[Authorize]
-		public async Task<IActionResult> CreateBlog([FromRoute] Guid userId, [FromBody] BlogForCreationDto blogForCreationDto, CancellationToken ct)
+		public async Task<IActionResult> CreateBlog([FromRoute] Guid userId, [FromForm] BlogForCreationDto blogForCreationDto, CancellationToken ct)
 		{
 			await serviceManager.BlogService.CreateBlog(userId, blogForCreationDto, ct);
 			return StatusCode(201, "Blog created successfully");
@@ -45,7 +45,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("users/{userId:guid}/blogs/{blogId:guid}")]
 		[Authorize]
-		public async Task<IActionResult> UpdateBlog([FromRoute] Guid userId, [FromRoute] Guid blogId, [FromBody] BlogForUpdateDto blogForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdateBlog([FromRoute] Guid userId, [FromRoute] Guid blogId, [FromForm] BlogForUpdateDto blogForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.BlogService.UpdateBlog(userId, blogId, blogForUpdateDto, ct);
 			return NoContent();

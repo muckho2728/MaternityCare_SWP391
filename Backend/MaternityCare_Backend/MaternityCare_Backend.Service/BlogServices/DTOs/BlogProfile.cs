@@ -8,8 +8,8 @@ namespace MaternityCare_Backend.Service.BlogServices.DTOs
 		public BlogProfile()
 		{
 			CreateMap<Blog, BlogForReturnDto>();
-			CreateMap<BlogForCreationDto, Blog>();
-			CreateMap<BlogForUpdateDto, Blog>();
+			CreateMap<BlogForCreationDto, Blog>().ForMember(b => b.Image, opt => opt.Ignore());
+			CreateMap<BlogForUpdateDto, Blog>().ForMember(b => b.Image, opt => opt.Ignore());
 		}
 	}
 }

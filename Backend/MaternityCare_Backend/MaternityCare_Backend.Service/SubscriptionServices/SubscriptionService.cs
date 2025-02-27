@@ -30,10 +30,14 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 			if (subscriptionEntity == null) throw new SubscriptionNotFoundException();
 			return subscriptionEntity;
 		}
-		public async Task<string> CreateSubscription(SubscriptionForCreationDto subscriptionForCreationDto, CancellationToken ct = default)
+		public async Task<string> CreateSubscription(Guid userId, Guid packageId, CancellationToken ct = default)
 		{
-			var subscriptionEntity = mapper.Map<Subscription>(subscriptionForCreationDto);
-			subscriptionEntity.Id = Guid.NewGuid();
+			var subscriptionEntity = new Subscription()
+			{
+				Id = Guid.NewGuid(),
+				UserId = userId,
+				PackageId = packageId,
+			};
 			repositoryManager.SubscriptionRepository.CreateSubscription(subscriptionEntity);
 
 			var package = await repositoryManager.PackageRepository.GetPackageById(subscriptionEntity.PackageId, false, ct);

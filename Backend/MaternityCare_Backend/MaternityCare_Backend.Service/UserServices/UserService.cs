@@ -98,14 +98,14 @@ namespace MaternityCare_Backend.Service.UserServices
 			//emailSender.SendEmail(mail);
 
 			IJobDetail job = JobBuilder.Create<EmailSendingJob>()
-			.WithIdentity("emailJob", "group1")
+			.WithIdentity("emailJob", "emailGroup")
 			.UsingJobData("to", userEntity.Email)
 			.UsingJobData("subject", "Email verification")
 			.UsingJobData("body", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>")
 			.Build();
 
 			ITrigger trigger = TriggerBuilder.Create()
-		   .WithIdentity("emailTrigger", "group1")
+		   .WithIdentity("emailTrigger", "emailGroup")
 		   .StartNow()
 		   .Build();
 

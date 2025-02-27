@@ -1,6 +1,7 @@
 using Azure.Identity;
 using MaternityCare_Backend.API.Extensions;
 using MaternityCare_Backend.Domain.Entities;
+using MaternityCare_Backend.Service.AIServices;
 using MaternityCare_Backend.Service.EmailServices;
 using MaternityCare_Backend.Service.Extensions;
 using MaternityCare_Backend.Service.SignalRServices;
@@ -26,6 +27,8 @@ var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultUrl").Value!
 var azureCredential = new DefaultAzureCredential();
 builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
 
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.ConfigureQuartz();
 builder.Services.ConfigureSwaggerForAuthentication();
 builder.Services.ConfigureDatabase(builder.Configuration);
@@ -37,7 +40,6 @@ builder.Services.ConfigureSignalR(builder.Configuration);
 builder.Services.ConfigureGlobalException();
 builder.Services.ConfigureBlobService(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Utils>();
 //builder.Services.ConfigureRateLimitingOptions();
