@@ -55,7 +55,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpPut("{packageId:guid}")]
 		[Authorize(Roles = nameof(Roles.Admin))]
-		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromForm] PackageForUpdateDto packageForUpdateDto, CancellationToken ct)
+		public async Task<IActionResult> UpdatePackage([FromRoute] Guid packageId, [FromBody] PackageForUpdateDto packageForUpdateDto, CancellationToken ct)
 		{
 			await serviceManager.PackageService.UpdatePackage(packageId, packageForUpdateDto, ct);
 			return NoContent();

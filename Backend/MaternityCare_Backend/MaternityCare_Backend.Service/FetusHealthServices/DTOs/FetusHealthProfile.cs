@@ -8,6 +8,7 @@ namespace MaternityCare_Backend.Service.FetusHealthServices.DTOs
 		public FetusHealthProfile()
 		{
 			CreateMap<FetusHealthForCreationDto, FetusHealth>();
+			CreateMap<FetusHealthForUpdateDto, FetusHealth>();
 			CreateMap<FetusHealth, FetusHealthForReturnDto>();
 		}
 	}
