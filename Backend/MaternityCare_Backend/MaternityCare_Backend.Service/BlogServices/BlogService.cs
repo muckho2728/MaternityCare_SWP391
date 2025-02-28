@@ -75,9 +75,9 @@ namespace MaternityCare_Backend.Service.BlogServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(BlogParameters blogParameters, CancellationToken ct = default)
+		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(ActiveBlogParameters activeBlogParameters, CancellationToken ct = default)
 		{
-			var blogsWithMetaData = await repositoryManager.BlogRepository.GetActiveBlogs(blogParameters, false, ct);
+			var blogsWithMetaData = await repositoryManager.BlogRepository.GetActiveBlogs(activeBlogParameters, false, ct);
 			var blogs = mapper.Map<IEnumerable<BlogForReturnDto>>(blogsWithMetaData);
 			return (blogs, blogsWithMetaData.MetaData);
 		}

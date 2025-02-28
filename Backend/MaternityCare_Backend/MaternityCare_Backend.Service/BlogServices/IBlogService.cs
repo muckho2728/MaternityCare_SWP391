@@ -10,7 +10,7 @@ namespace MaternityCare_Backend.Service.BlogServices
 		Task DeleteBlog(Guid userId, Guid blogId, CancellationToken ct = default);
 		Task<BlogForReturnDto> GetBlog(Guid blogId, CancellationToken ct = default);
 		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogs(BlogParameters blogParameters, CancellationToken ct = default);
-		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(BlogParameters blogParameters, CancellationToken ct = default);
+		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(ActiveBlogParameters activeBlogParameters, CancellationToken ct = default);
 		Task ActivateBlog(Guid blogId, CancellationToken ct = default);
 
 	}

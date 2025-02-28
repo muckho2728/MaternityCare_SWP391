@@ -1,18 +1,21 @@
 ﻿using Azure;
 using Azure.AI.ContentSafety;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace MaternityCare_Backend.Service.AIServices
 {
 	public sealed class AIService : IAIService
 	{
 		private readonly IConfiguration configuration;
+		private readonly ILogger<AIService> logger;
 		private string endpoint;
 		private string key;
 
-		public AIService(IConfiguration configuration)
+		public AIService(IConfiguration configuration, ILogger<AIService> logger)
 		{
 			this.configuration = configuration;
+			this.logger = logger;
 			endpoint = configuration.GetSection("ContentSafetyEndpoint").Value;
 			key = configuration.GetSection("ContentSafetyKey").Value;
 		}
@@ -22,7 +25,7 @@ namespace MaternityCare_Backend.Service.AIServices
 			if (imageUrl == null) return true;
 			ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-			ContentSafetyImageData image = new ContentSafetyImageData(new Uri(imageUrl));
+			ContentSafetyImageData image = new ContentSafetyImageData(new Uri($@"{imageUrl}"));
 
 			var request = new AnalyzeImageOptions(image);
 			Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(request, ct);

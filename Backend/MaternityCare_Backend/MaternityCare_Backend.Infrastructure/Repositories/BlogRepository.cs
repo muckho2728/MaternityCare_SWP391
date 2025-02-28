@@ -17,15 +17,15 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void DeleteBlog(Blog blog) => Delete(blog);
 
-		public async Task<PagedList<Blog>> GetActiveBlogs(BlogParameters blogParameters, bool trackChanges, CancellationToken ct = default)
+		public async Task<PagedList<Blog>> GetActiveBlogs(ActiveBlogParameters activeBlogParameters, bool trackChanges, CancellationToken ct = default)
 		{
 			var blogEntities = FindByCondition(b => b.IsActive, trackChanges)
-				.FilterActive(blogParameters.TagId)
-				.Search(blogParameters.Title)
+				.FilterActive(activeBlogParameters.TagId)
+				.Search(activeBlogParameters.Title)
 				.Sort()
 				.Include(b => b.Tag);
 
-			return await PagedList<Blog>.ToPagedList(blogEntities, blogParameters.PageNumber, blogParameters.PageSize, ct);
+			return await PagedList<Blog>.ToPagedList(blogEntities, activeBlogParameters.PageNumber, activeBlogParameters.PageSize, ct);
 		}
 
 		public async Task<Blog?> GetBlog(Guid blogId, bool trackChanges, CancellationToken ct = default) => await FindByCondition(b => b.Id == blogId, trackChanges).Include(b => b.Tag).SingleOrDefaultAsync(ct);

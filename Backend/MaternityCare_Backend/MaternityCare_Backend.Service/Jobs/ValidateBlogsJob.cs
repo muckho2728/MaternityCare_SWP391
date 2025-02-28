@@ -21,7 +21,7 @@ namespace MaternityCare_Backend.Service.Jobs
 
 			var blog = await repositoryManager.BlogRepository.GetBlog(blogId, true);
 
-			if (await aIService.AnalyzeText(blog.Title) && await aIService.AnalyzeText(blog.Content))
+			if (await aIService.AnalyzeText(blog.Title) && await aIService.AnalyzeText(blog.Content) && await aIService.AnalyzeImage(blog.Image))
 			{
 				blog.IsActive = true;
 				await repositoryManager.SaveAsync();

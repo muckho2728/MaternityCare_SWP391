@@ -68,9 +68,9 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("blogs/active-blogs")]
-		public async Task<IActionResult> GetActiveBlogs([FromQuery] BlogParameters blogParameters, CancellationToken ct)
+		public async Task<IActionResult> GetActiveBlogs([FromQuery] ActiveBlogParameters activeBlogParameters, CancellationToken ct)
 		{
-			var pagedResult = await serviceManager.BlogService.GetActiveBlogs(blogParameters, ct);
+			var pagedResult = await serviceManager.BlogService.GetActiveBlogs(activeBlogParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 			return Ok(pagedResult.blogs);
 		}
