@@ -10,5 +10,6 @@ namespace MaternityCare_Backend.Domain.Repositories
 		Task<Appointment?> GetAppointment(Guid userId, Guid slotId, bool trackChanges, CancellationToken ct = default);
 		Task<PagedList<Appointment>> GetAppointments(Guid userId, AppointmentParameters appointmentParameters, bool trackChanges, CancellationToken ct = default);
 		Task<IEnumerable<Appointment>> GetAppointmentsByDoctorIdAndDate(Guid doctorId, DateOnly date, bool trackChanges, CancellationToken ct = default);
+		Task<IEnumerable<Appointment>> GetAppointmentsAfterToday(bool trackChanges, CancellationToken ct = default);
 	}
 }

@@ -15,10 +15,13 @@ namespace MaternityCare_Backend.Service.Jobs
 			this.repositoryManager = repositoryManager;
 			this.hubContext = hubContext;
 		}
-		public Task Execute(IJobExecutionContext context)
+		public async Task Execute(IJobExecutionContext context)
 		{
-
-			return Task.CompletedTask;
+			var appointments = await repositoryManager.AppointmentRepository.GetAppointmentsAfterToday(false);
+			foreach (var appointment in appointments)
+			{
+				await hubContext.Clients.User(appointment.User.Id.ToString()).SendAsync("ReceiveNotification", $"You have an appointment on {appointment.Slot.Date} at {appointment.Slot.StartTime}");
+			}
 		}
 	}
 }

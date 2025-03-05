@@ -4,7 +4,6 @@ using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.SlotServices.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaternityCare_Backend.Service.SlotServices
@@ -29,7 +28,7 @@ namespace MaternityCare_Backend.Service.SlotServices
 			return slot;
 		}
 
-		public async Task CreateSlot([FromRoute] Guid doctorId, SlotForCreationDto slotForCreationDto, CancellationToken ct = default)
+		public async Task CreateSlot(Guid doctorId, SlotForCreationDto slotForCreationDto, CancellationToken ct = default)
 		{
 			var slotEntity = mapper.Map<Slot>(slotForCreationDto);
 			var isOverlapped = await repositoryManager.SlotRepository.GetSlotsByDoctorId(slotEntity.DoctorId)
