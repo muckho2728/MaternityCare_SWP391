@@ -15,6 +15,13 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateDoctor(Doctor doctor) => Create(doctor);
 
+		public async Task<PagedList<Doctor>> GetActiveDoctors(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default)
+		{
+			var doctors = FindByCondition(d => d.IsDeleted == false, trackChange)
+				.Sort();
+			return await PagedList<Doctor>.ToPagedList(doctors, doctorParameters.PageNumber, doctorParameters.PageSize, ct);
+		}
+
 		public Task<Doctor?> GetDoctor(Guid doctorId, bool trackChange, CancellationToken ct = default) => FindByCondition(d => d.Id.Equals(doctorId), trackChange).SingleOrDefaultAsync(ct);
 
 		public async Task<PagedList<Doctor>> GetDoctors(DoctorParameters doctorParameters, bool trackChange, CancellationToken ct = default)

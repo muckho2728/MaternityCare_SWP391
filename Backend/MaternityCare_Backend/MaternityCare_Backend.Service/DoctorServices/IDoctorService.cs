@@ -5,7 +5,8 @@ namespace MaternityCare_Backend.Service.DoctorServices
 {
 	public interface IDoctorService
 	{
-		Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, CancellationToken ct = default);
+		Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctors(DoctorParameters doctorParameters, CancellationToken ct = default);
+		Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetActiveDoctors(DoctorParameters doctorParameters, CancellationToken ct = default);
 		Task<DoctorForReturnDto> GetDoctorById(Guid doctorId, CancellationToken ct = default);
 		Task CreateDoctor(DoctorForCreationDto doctorForCreationDto, CancellationToken ct = default);
 		Task UpdateDoctor(Guid doctorId, DoctorForUpdateDto doctorForUpdateDto, CancellationToken ct = default);

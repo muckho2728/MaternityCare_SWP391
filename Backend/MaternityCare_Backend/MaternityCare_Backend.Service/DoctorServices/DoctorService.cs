@@ -52,7 +52,7 @@ namespace MaternityCare_Backend.Service.DoctorServices
 			await repositoryManager.SaveAsync(ct);
 		}
 
-		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctor(DoctorParameters doctorParameters, CancellationToken ct = default)
+		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetDoctors(DoctorParameters doctorParameters, CancellationToken ct = default)
 		{
 			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetDoctors(doctorParameters, false, ct);
 			var doctors = mapper.Map<IEnumerable<DoctorForReturnDto>>(doctorWithMetaData);
@@ -77,6 +77,13 @@ namespace MaternityCare_Backend.Service.DoctorServices
 			}
 			doctorEntity.UpdatedAt = DateTime.Now;
 			await repositoryManager.SaveAsync(ct);
+		}
+
+		public async Task<(IEnumerable<DoctorForReturnDto> doctors, MetaData metaData)> GetActiveDoctors(DoctorParameters doctorParameters, CancellationToken ct = default)
+		{
+			var doctorWithMetaData = await repositoryManager.DoctorRepository.GetActiveDoctors(doctorParameters, false, ct);
+			var doctors = mapper.Map<IEnumerable<DoctorForReturnDto>>(doctorWithMetaData);
+			return (doctors, doctorWithMetaData.MetaData);
 		}
 	}
 }
