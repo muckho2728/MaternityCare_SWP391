@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MaternityCare_Backend.Domain.Entities;
+using MaternityCare_Backend.Domain.Exceptions;
 using MaternityCare_Backend.Domain.Repositories;
 using MaternityCare_Backend.Domain.RequestFeatures;
 using MaternityCare_Backend.Service.FetusHealthServices.DTOs;
@@ -21,6 +22,8 @@ namespace MaternityCare_Backend.Service.FetusHealthServices
 
 		public async Task<(FetusHealthForReturnDto fetusHealth, StandardFetusHealthForReturnDto standardFetusHealth, ReminderForReturnDto reminder)> CreateFetusHealth(Guid fetusId, FetusHealthForCreationDto fetusHealthForCreationDto, CancellationToken ct = default)
 		{
+			var fetusHealthy = await repositoryManager.FetusHealthRepository.GetFetusHealthByFetusIdAndWeek(fetusId, fetusHealthForCreationDto.Week, false, ct);
+			if (fetusHealthy != null) throw new FetusHealthConflictException("Fetus health already exists for this week");
 			var fetusHealthEntity = mapper.Map<FetusHealth>(fetusHealthForCreationDto);
 			fetusHealthEntity.FetusId = fetusId;
 			repositoryManager.FetusHealthRepository.CreateFetusHealth(fetusHealthEntity);
