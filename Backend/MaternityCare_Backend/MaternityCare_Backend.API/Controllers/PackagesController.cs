@@ -28,9 +28,9 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.packages);
 		}
 
-		[HttpGet("active")]
+		[HttpGet("active-packages")]
 		[Authorize]
-		public async Task<IActionResult> GetActivePackages([FromQuery] PackageParameters packageParameters, CancellationToken ct)
+		public async Task<IActionResult> GetActivePackages([FromQuery] ActivePackageParameters packageParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));

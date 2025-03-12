@@ -10,5 +10,6 @@ namespace MaternityCare_Backend.Service.TransactionServices
 		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, CancellationToken ct = default);
 		Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, CancellationToken ct = default);
 		Task<IActionResult> IPNAsync(IQueryCollection query, CancellationToken ct = default);
+		Task<string> DisplayResultAsync(IQueryCollection query, CancellationToken ct = default);
 	}
 }

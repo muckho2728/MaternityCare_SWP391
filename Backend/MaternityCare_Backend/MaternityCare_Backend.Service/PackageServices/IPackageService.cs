@@ -10,7 +10,7 @@ namespace MaternityCare_Backend.Service.PackageServices
 		Task DeletePackage(Guid id, CancellationToken ct = default);
 		Task<PackageForReturnDto?> GetPackageById(Guid id, CancellationToken ct = default);
 		Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetPackages(PackageParameters packageParameters, CancellationToken ct = default);
-		Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(PackageParameters packageParameters, CancellationToken ct = default);
+		Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(ActivePackageParameters packageParameters, CancellationToken ct = default);
 
 	}
 }

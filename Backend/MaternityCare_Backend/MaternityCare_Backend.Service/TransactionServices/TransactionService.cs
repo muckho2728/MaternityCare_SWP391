@@ -24,6 +24,45 @@ namespace MaternityCare_Backend.Service.TransactionServices
 			this.configuration = configuration;
 		}
 
+		public async Task<string> DisplayResultAsync(IQueryCollection query, CancellationToken ct = default)
+		{
+			var vnpay = new VnPayLibrary();
+			foreach (var key in query.Keys)
+			{
+				if (key.StartsWith("vnp_"))
+				{
+					vnpay.AddResponseData(key, query[key]);
+				}
+			}
+
+			var vnpSecureHash = query["vnp_SecureHash"];
+			var isValid = vnpay.ValidateSignature(vnpSecureHash, configuration.GetSection("VNPay").GetSection("HashSecret").Value);
+
+			if (!isValid)
+			{
+				return "Invalid signature";
+			}
+
+			var responseCode = vnpay.GetResponseData("vnp_ResponseCode");
+			var transactionId = Guid.Parse(vnpay.GetResponseData("vnp_TxnRef"));
+			var transaction = await repositoryManager.TransactionRepository.GetTransaction(transactionId, false, ct);
+
+			if (transaction == null)
+			{
+				return "Order not found";
+			}
+
+			// Update transaction status based on response code
+			if (responseCode == "00")
+			{
+				return "Order successfully";
+			}
+			else
+			{
+				return "Order failed";
+			}
+		}
+
 		public async Task<(IEnumerable<TransactionForReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, CancellationToken ct = default)
 		{
 			var transactionsWithMetaData = await repositoryManager.TransactionRepository.GetTransactions(transactionParameters, false, ct);

@@ -255,7 +255,7 @@ namespace MaternityCare_Backend.Service.UserServices
 		{
 			var userEntity = await CheckUserExistById(userId, false, ct);
 			var subscription = await repositoryManager.SubscriptionRepository.GetSubscriptionsByUserId(userId, false, ct);
-			var isPremium = subscription.Any(sub => sub.EndDate < DateOnly.FromDateTime(DateTime.Now) && sub.Package.Type == "Premium");
+			var isPremium = subscription.Any(sub => sub.EndDate >= DateOnly.FromDateTime(DateTime.Now) && sub.Package.Id == Guid.Parse("e401f557-307a-4b1d-b65b-d7c26f3aac61"));
 			var userReturnDto = mapper.Map<UserForReturnDto>(userEntity);
 			userReturnDto.Subscription = isPremium ? "Premium" : "Free";
 			return userReturnDto;

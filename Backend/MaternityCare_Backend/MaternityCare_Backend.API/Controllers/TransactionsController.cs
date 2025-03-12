@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace MaternityCare_Backend.API.Controllers
 {
-	[Route("api/transactions")]
+	[Route("api")]
 	[ApiController]
 	public class TransactionsController : ControllerBase
 	{
@@ -18,7 +18,7 @@ namespace MaternityCare_Backend.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 
-		[HttpGet]
+		[HttpGet("transactions")]
 		[Authorize(Roles = nameof(Roles.Admin))]
 		public async Task<IActionResult> GetTransactions([FromQuery] TransactionParameters transactionParameters, CancellationToken ct)
 		{
@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.transactions);
 		}
 
-		[HttpGet("{userId:guid}")]
+		[HttpGet("users/{userId:guid}/transactions")]
 		[Authorize]
 		public async Task<IActionResult> GetTransactionsByUserId([FromRoute] Guid userId, [FromQuery] TransactionParameters transactionParameters, CancellationToken ct)
 		{
@@ -36,10 +36,17 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.transactions);
 		}
 
-		[HttpGet("ipn")]
+		[HttpGet("transactions/ipn")]
 		public async Task<IActionResult> IPN(CancellationToken ct)
 		{
 			var result = await serviceManager.TransactionService.IPNAsync(Request.Query, ct);
+			return Ok(result);
+		}
+
+		[HttpGet("transactions/results")]
+		public async Task<IActionResult> DisplayResult(CancellationToken ct)
+		{
+			var result = await serviceManager.TransactionService.DisplayResultAsync(Request.Query, ct);
 			return Ok(result);
 		}
 	}

@@ -42,7 +42,7 @@ namespace MaternityCare_Backend.Service.PackageServices
 			await repositoryManager.SaveAsync();
 		}
 
-		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(PackageParameters packageParameters, CancellationToken ct = default)
+		public async Task<(IEnumerable<PackageForReturnDto> packages, MetaData metaData)> GetActivePackages(ActivePackageParameters packageParameters, CancellationToken ct = default)
 		{
 			var packageWithMetaData = await repositoryManager.PackageRepository.GetActivePackages(packageParameters, false, ct);
 			var packageDto = mapper.Map<IEnumerable<PackageForReturnDto>>(packageWithMetaData);

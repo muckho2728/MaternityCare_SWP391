@@ -15,7 +15,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreatePackage(Package package) => Create(package);
 
-		public async Task<PagedList<Package>> GetActivePackages(PackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
+		public async Task<PagedList<Package>> GetActivePackages(ActivePackageParameters packageParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var packageEntities = FindByCondition(p => !p.IsDeleted, trackChange);
 			return await PagedList<Package>.ToPagedList(packageEntities, packageParameters.PageNumber, packageParameters.PageSize, ct);
