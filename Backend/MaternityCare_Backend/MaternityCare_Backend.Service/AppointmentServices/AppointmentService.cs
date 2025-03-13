@@ -28,7 +28,9 @@ namespace MaternityCare_Backend.Service.AppointmentServices
 
 		public async Task CreateAppointment(Guid userId, Guid slotId, CancellationToken ct = default)
 		{
+			var appointment = await repositoryManager.AppointmentRepository.GetAppointmentsByUserId(userId, false, ct);
 			var slotEntity = await repositoryManager.SlotRepository.GetSlot(slotId, false, ct);
+			if (appointment.Any(a => a.Slot.Date == slotEntity.Date)) throw new AppointmentConflictException("You have already booked an appointment today");
 			if (slotEntity.IsBooked) throw new SlotConflictException("This slot is already booked");
 			var appointmentEntity = new Appointment()
 			{

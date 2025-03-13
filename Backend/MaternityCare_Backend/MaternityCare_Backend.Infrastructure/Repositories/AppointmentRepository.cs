@@ -36,5 +36,9 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 			.AsSplitQuery().Include(a => a.Slot).Where(a => a.Slot.DoctorId.Equals(doctorId) && a.Slot.Date == date)
 			.AsSplitQuery().Include(a => a.User)
 			.ToListAsync(ct);
+
+		public async Task<IEnumerable<Appointment>> GetAppointmentsByUserId(Guid userId, bool trackChanges, CancellationToken ct = default) => await FindByCondition(a => a.UserId == userId, trackChanges)
+			.AsSplitQuery().Include(a => a.Slot)
+			.ToListAsync(ct);
 	}
 }

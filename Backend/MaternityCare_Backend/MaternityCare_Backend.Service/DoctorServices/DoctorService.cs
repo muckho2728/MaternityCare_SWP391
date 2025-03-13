@@ -32,12 +32,8 @@ namespace MaternityCare_Backend.Service.DoctorServices
 		public async Task CreateDoctor(DoctorForCreationDto doctorForCreationDto, CancellationToken ct = default)
 		{
 			var doctorEntity = mapper.Map<Doctor>(doctorForCreationDto);
-			if (doctorForCreationDto.Avatar is not null && doctorForCreationDto.Avatar.Length > 0)
-			{
-				await blobService.DeleteBlob(doctorEntity.Avatar.Split('/').Last(), StorageContainer.STORAGE_CONTAINER);
-				string filename = $"{Guid.NewGuid()}{Path.GetExtension(doctorForCreationDto.Avatar.FileName)}";
-				doctorEntity.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, doctorForCreationDto.Avatar);
-			}
+			string filename = $"{Guid.NewGuid()}{Path.GetExtension(doctorForCreationDto.Avatar.FileName)}";
+			doctorEntity.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, doctorForCreationDto.Avatar);
 			doctorEntity.CreatedAt = DateTime.Now;
 			doctorEntity.IsDeleted = false;
 			repositoryManager.DoctorRepository.CreateDoctor(doctorEntity);
