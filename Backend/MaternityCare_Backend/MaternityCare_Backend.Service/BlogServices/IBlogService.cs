@@ -12,6 +12,7 @@ namespace MaternityCare_Backend.Service.BlogServices
 		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogs(BlogParameters blogParameters, CancellationToken ct = default);
 		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetActiveBlogs(ActiveBlogParameters activeBlogParameters, CancellationToken ct = default);
 		Task ActivateBlog(Guid blogId, CancellationToken ct = default);
+		Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogsByUserId(BlogParameters blogParameters, Guid userId, CancellationToken ct = default);
 
 	}
 }

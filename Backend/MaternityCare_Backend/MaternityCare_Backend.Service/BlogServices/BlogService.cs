@@ -124,5 +124,12 @@ namespace MaternityCare_Backend.Service.BlogServices
 
 			await scheduler.ScheduleJob(job, trigger, ct);
 		}
+
+		public async Task<(IEnumerable<BlogForReturnDto> blogs, MetaData metaData)> GetBlogsByUserId(BlogParameters blogParameters, Guid userId, CancellationToken ct = default)
+		{
+			var blogsWithMetaData = await repositoryManager.BlogRepository.GetBlogsByUserId(blogParameters, userId, false, ct);
+			var blogs = mapper.Map<IEnumerable<BlogForReturnDto>>(blogsWithMetaData);
+			return (blogs, blogsWithMetaData.MetaData);
+		}
 	}
 }

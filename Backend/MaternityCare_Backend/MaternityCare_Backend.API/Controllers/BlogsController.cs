@@ -28,6 +28,15 @@ namespace MaternityCare_Backend.API.Controllers
 			return Ok(pagedResult.blogs);
 		}
 
+		[HttpGet("users/{userId:guid}/blogs")]
+		[Authorize]
+		public async Task<IActionResult> GetBlogsByUserId([FromRoute] Guid userId, [FromQuery] BlogParameters blogParameters, CancellationToken ct)
+		{
+			var pagedResult = await serviceManager.BlogService.GetBlogsByUserId(blogParameters, userId, ct);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+			return Ok(pagedResult.blogs);
+		}
+
 		[HttpGet("blogs/{blogId:guid}")]
 		public async Task<IActionResult> GetBlog([FromRoute] Guid blogId, CancellationToken ct)
 		{

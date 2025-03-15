@@ -40,5 +40,14 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 			return await PagedList<Blog>.ToPagedList(blogEntities, blogParameters.PageNumber, blogParameters.PageSize, ct);
 		}
+
+		public async Task<PagedList<Blog>> GetBlogsByUserId(BlogParameters blogParameters, Guid userId, bool trackChanges, CancellationToken ct = default)
+		{
+			var blogEntities = FindByCondition(b => b.UserId == userId, trackChanges)
+				.Sort()
+				.Include(b => b.Tag);
+
+			return await PagedList<Blog>.ToPagedList(blogEntities, blogParameters.PageNumber, blogParameters.PageSize, ct);
+		}
 	}
 }

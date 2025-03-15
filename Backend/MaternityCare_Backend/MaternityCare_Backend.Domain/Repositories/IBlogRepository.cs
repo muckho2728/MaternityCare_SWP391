@@ -7,6 +7,7 @@ namespace MaternityCare_Backend.Domain.Repositories
 	{
 		Task<PagedList<Blog>> GetBlogs(BlogParameters blogParameters, bool trackChanges, CancellationToken ct = default);
 		Task<PagedList<Blog>> GetActiveBlogs(ActiveBlogParameters activeBlogParameters, bool trackChanges, CancellationToken ct = default);
+		Task<PagedList<Blog>> GetBlogsByUserId(BlogParameters blogParameters, Guid userId, bool trackChanges, CancellationToken ct = default);
 		Task<Blog?> GetBlog(Guid blogId, bool trackChanges, CancellationToken ct = default);
 		void CreateBlog(Blog blog);
 		void DeleteBlog(Blog blog);

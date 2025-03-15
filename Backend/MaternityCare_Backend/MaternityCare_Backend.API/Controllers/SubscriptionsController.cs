@@ -28,7 +28,7 @@ namespace MaternityCare_Backend.API.Controllers
 
 		[HttpGet("users/{userId:guid}/subscriptions")]
 		[Authorize]
-		public async Task<IActionResult> GetSubscriptionByUserId([FromBody] SubscriptionParameters subscriptionParameters, [FromRoute] Guid userId, CancellationToken ct)
+		public async Task<IActionResult> GetSubscriptionByUserId([FromQuery] SubscriptionParameters subscriptionParameters, [FromRoute] Guid userId, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.SubscriptionService.GetSubscriptionsByUserId(subscriptionParameters, userId, ct);
 			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
