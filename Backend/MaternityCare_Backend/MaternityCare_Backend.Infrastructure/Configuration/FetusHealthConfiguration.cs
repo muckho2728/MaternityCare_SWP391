@@ -20,6 +20,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.AbdominalCircumference);
 			builder.Property(x => x.GestationalSacDiameter);
 			builder.HasOne(x => x.Fetus).WithMany(x => x.FetusHealths).HasForeignKey(x => x.FetusId).OnDelete(DeleteBehavior.NoAction);
+			builder.HasIndex(x => new { x.FetusId, x.Week }).IsUnique();
 		}
 	}
 }

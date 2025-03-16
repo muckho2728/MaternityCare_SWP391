@@ -25,7 +25,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				{
 					Id = Guid.Parse("595a4777-de2b-4c8a-a45f-3ddba55dddee"),
 					Type = "Free",
-					Feature = "Like and comment blogs;Update fetus health record",
+					Feature = "Like and comment blogs",
 					Price = 0,
 					Duration = 10,
 					IsDeleted = false,
@@ -35,7 +35,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				{
 					Id = Guid.Parse("e401f557-307a-4b1d-b65b-d7c26f3aac61"),
 					Type = "Premium",
-					Feature = "All the free features;Generate chart;Book doctor in advance",
+					Feature = "All the free features;Generate chart;Book doctor in advance;Leave Feedback",
 					Price = 200000,
 					Duration = 10,
 					IsDeleted = false,
