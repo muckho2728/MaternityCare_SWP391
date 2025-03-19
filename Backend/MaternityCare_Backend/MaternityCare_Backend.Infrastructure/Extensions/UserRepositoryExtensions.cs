@@ -11,8 +11,6 @@ namespace MaternityCare_Backend.Infrastructure.Extensions
 			return users.Where(u => u.FullName.ToLower().Contains(lowerCaseSearchTerm));
 		}
 
-		public static IQueryable<User> Filter(this IQueryable<User> users, bool isActive) => users.Where(u => u.IsActive == isActive);
-
 		public static IQueryable<User> Sort(this IQueryable<User> users)
 		{
 			return users.OrderBy(u => u.FullName);

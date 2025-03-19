@@ -56,7 +56,7 @@ namespace MaternityCare_Backend.API.Controllers
 		public async Task<IActionResult> GenerateExcel([FromQuery] DateOnly date, CancellationToken ct = default)
 		{
 			var fileContents = await serviceManager.AppointmentService.GenerateExcel(date, ct);
-			return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{DateOnly.FromDateTime(DateTime.Now)}.xlsx");
+			return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{date}.xlsx");
 		}
 	}
 }

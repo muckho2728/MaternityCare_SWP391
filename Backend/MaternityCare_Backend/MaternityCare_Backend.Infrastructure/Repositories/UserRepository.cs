@@ -18,7 +18,6 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<PagedList<User>> GetUsers(UserParameters userParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var userEntities = FindByCondition(u => u.Role.Name != Roles.Admin.ToString(), trackChange)
-				.Filter(userParameters.IsActive)
 				.Search(userParameters.SearchName)
 				.Sort()
 				.Include(u => u.Role);
