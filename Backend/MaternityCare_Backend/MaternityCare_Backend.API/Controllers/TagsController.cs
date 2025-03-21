@@ -1,5 +1,4 @@
 ﻿using MaternityCare_Backend.Service.IServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaternityCare_Backend.API.Controllers
@@ -16,7 +15,6 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		public async Task<IActionResult> GetTags(CancellationToken ct)
 		{
 			var tags = await serviceManager.TagService.GetTags(ct);

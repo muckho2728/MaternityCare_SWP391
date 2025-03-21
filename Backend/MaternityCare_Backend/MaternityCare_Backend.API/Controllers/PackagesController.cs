@@ -29,7 +29,6 @@ namespace MaternityCare_Backend.API.Controllers
 		}
 
 		[HttpGet("active-packages")]
-		[Authorize]
 		public async Task<IActionResult> GetActivePackages([FromQuery] ActivePackageParameters packageParameters, CancellationToken ct)
 		{
 			var pagedResult = await serviceManager.PackageService.GetActivePackages(packageParameters, ct);

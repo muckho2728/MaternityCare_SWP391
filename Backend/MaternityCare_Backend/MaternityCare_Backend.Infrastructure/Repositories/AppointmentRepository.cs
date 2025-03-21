@@ -23,7 +23,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		{
 			var appointmentEntities = FindByCondition(a => a.UserId.Equals(userId), trackChanges)
 				.Sort()
-				.Include(a => a.Slot);
+				.Include(a => a.Slot)
+				.Include(a => a.User);
 			return await PagedList<Appointment>.ToPagedList(appointmentEntities, appointmentParameters.PageNumber, appointmentParameters.PageSize, ct);
 		}
 
