@@ -10,8 +10,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 		{
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
-			builder.Property(x => x.Type).IsRequired().HasMaxLength(50);
-			builder.Property(x => x.Feature).IsRequired().HasMaxLength(100);
+			builder.Property(x => x.Type).IsRequired().HasMaxLength(50).HasColumnType("NVARCHAR(MAX)");
+			builder.Property(x => x.Feature).IsRequired().HasMaxLength(100).HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.Price).IsRequired();
 			builder.Property(x => x.Duration).IsRequired();
 			builder.Property(x => x.IsDeleted).IsRequired();
@@ -24,10 +24,10 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				new Package
 				{
 					Id = Guid.Parse("595a4777-de2b-4c8a-a45f-3ddba55dddee"),
-					Type = "Free",
-					Feature = "Like and comment blogs",
+					Type = "Miễn phí",
+					Feature = "Thích và bình luận các bài đăng",
 					Price = 0,
-					Duration = 10,
+					Duration = 0,
 					IsDeleted = false,
 					CreatedAt = DateTime.Now
 				},
@@ -35,7 +35,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				{
 					Id = Guid.Parse("e401f557-307a-4b1d-b65b-d7c26f3aac61"),
 					Type = "Premium",
-					Feature = "All the free features;Generate chart;Book doctor in advance;Leave Feedback",
+					Feature = "Tất cả chức năng của miễn phí;Tạo biểu đồ;Đặt lịch hẹn với bác sĩ;Thêm nhận xét về trang",
 					Price = 200000,
 					Duration = 10,
 					IsDeleted = false,

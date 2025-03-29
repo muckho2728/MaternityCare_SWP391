@@ -11,62 +11,62 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Week).IsRequired();
-			builder.Property(x => x.Description).IsRequired();
+			builder.Property(x => x.Description).IsRequired().HasColumnType("NVARCHAR(MAX)");
 
 			builder.HasData(
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 5,
-					Description = "You should have your first prenatal visit and have an ultrasound or blood tests to confirm the pregnancy."
+					Description = "Bạn nên đi khám thai lần đầu và siêu âm hoặc xét nghiệm máu để xác nhận tình trạng mang thai."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 9,
-					Description = "You should have your first-trimester screening to check for chromosomal conditions."
+					Description = "Bạn nên sàng lọc trong tam cá nguyệt đầu tiên để kiểm tra tình trạng nhiễm sắc thể."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 13,
-					Description = "This is the beginning of the second trimester. A routine check-up is a must to check if the pregnancy is progressing normally"
+					Description = "Đây là thời điểm bắt đầu của tam cá nguyệt thứ hai. Kiểm tra sức khỏe định kỳ là điều cần thiết để kiểm tra xem thai kỳ có tiến triển bình thường không"
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 18,
-					Description = "You should have an anomaly scan to examine fetal anatomy."
+					Description = "Bạn nên siêu âm dị tật để kiểm tra giải phẫu thai nhi."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 20,
-					Description = "You should have the mid-pregnancy ultrasound to check the baby’s development."
+					Description = "Bạn nên siêu âm vào giữa thai kỳ để kiểm tra sự phát triển của thai nhi."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 25,
-					Description = "This is the beginning of the third trimester. You should have schedule for additional tests or screenings (such as for anemia or gestational diabetes)"
+					Description = "Đây là thời điểm bắt đầu của tam cá nguyệt thứ ba. Bạn nên có lịch trình xét nghiệm hoặc sàng lọc bổ sung (như thiếu máu hoặc tiểu đường thai kỳ)"
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 31,
-					Description = "From now on, you have schedule an appointment with your doctor once a week to make sure the baby is developing weel."
+					Description = "Từ bây giờ, bạn phải lên lịch hẹn khám với bác sĩ một lần mỗi tuần để đảm bảo em bé phát triển khỏe mạnh."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 37,
-					Description = "You’re now considered early term. You should have regular monitoring."
+					Description = "Bây giờ bạn được coi là thai kỳ sớm. Bạn nên được theo dõi thường xuyên."
 				},
 				new Reminder
 				{
 					Id = Guid.NewGuid(),
 					Week = 39,
-					Description = "You’re now considered full term. You should attend all scheduled prenatal appointments and contact your provider if you experience any changes or discomfort."
+					Description = "Bây giờ bạn được coi là đủ tháng. Bạn nên tham dự tất cả các cuộc hẹn khám thai theo lịch trình và liên hệ với bác sĩ nếu bạn gặp bất kỳ thay đổi hoặc khó chịu nào."
 				}
 			);
 		}

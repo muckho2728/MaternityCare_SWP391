@@ -14,11 +14,12 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void CreateFeedback(Feedback feedback) => Create(feedback);
 
-		public async Task<Feedback?> GetFeedbackById(Guid id, bool trackChange, CancellationToken ct = default) => await FindByCondition(f => f.Id == id, trackChange).SingleOrDefaultAsync(ct);
+		public async Task<Feedback?> GetFeedbackById(Guid id, bool trackChange, CancellationToken ct = default) => await FindByCondition(f => f.Id == id, trackChange).Include(f => f.User).SingleOrDefaultAsync(ct);
 
 		public async Task<PagedList<Feedback>> GetFeedbacks(FeedbackParameters feedbackParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var feedbackEntities = FindAll(trackChange)
+				.Include(f => f.User)
 				.OrderByDescending(c => c.CreatedAt);
 			return await PagedList<Feedback>.ToPagedList(feedbackEntities, feedbackParameters.PageNumber, feedbackParameters.PageSize, ct);
 		}

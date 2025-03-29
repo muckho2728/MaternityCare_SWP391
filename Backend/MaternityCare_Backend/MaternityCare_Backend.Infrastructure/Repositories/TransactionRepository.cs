@@ -20,6 +20,8 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var transactionEntities = FindAll(trackChange)
+				.Include(t => t.Subscription)
+				.ThenInclude(t => t.User)
 				.Filter(transactionParameters.Status)
 				.Sort();
 
@@ -29,8 +31,9 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 		public async Task<PagedList<Transaction>> GetTransactionsByUserId(Guid userId, TransactionParameters transactionParameters, bool trackChange, CancellationToken ct = default)
 		{
 			var transactionEntities = FindAll(trackChange)
-				.Include(t => t.Subscription)
 				.Where(t => t.Subscription.UserId == userId)
+				.Include(t => t.Subscription)
+				.ThenInclude(t => t.User)
 				.Filter(transactionParameters.Status)
 				.Sort();
 

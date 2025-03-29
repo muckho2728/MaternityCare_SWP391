@@ -14,7 +14,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.Property(x => x.FullName).IsRequired().HasMaxLength(100).HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
 			builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(12);
-			builder.Property(x => x.Specialization).IsRequired().HasMaxLength(100);
+			builder.Property(x => x.Specialization).IsRequired().HasMaxLength(100).HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.YearsOfExperience).IsRequired();
 			builder.Property(x => x.IsDeleted).IsRequired();
 			builder.Property(x => x.CreatedAt).IsRequired();
@@ -30,7 +30,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 					FullName = "Lam Viet Trung",
 					Email = "lamviettrung@gmail.com",
 					PhoneNumber = "0457009809",
-					Specialization = "Obstetrician",
+					Specialization = "Bác sĩ sản khoa",
 					YearsOfExperience = 5,
 					IsDeleted = false,
 					CreatedAt = DateTime.Now,
@@ -42,7 +42,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 					FullName = "Le Thi Minh Hong",
 					Email = "lethiminhhong@gmail.com",
 					PhoneNumber = "0862605697",
-					Specialization = "Obstetrician",
+					Specialization = "Bác sĩ sản khoa",
 					YearsOfExperience = 3,
 					IsDeleted = false,
 					CreatedAt = DateTime.Now,
@@ -54,7 +54,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 					FullName = "Nguyen Thi Thu Ha",
 					Email = "nguyenthithuha@gmail.com",
 					PhoneNumber = "0137746881",
-					Specialization = "Obstetrician",
+					Specialization = "Bác sĩ sản khoa",
 					YearsOfExperience = 7,
 					IsDeleted = false,
 					CreatedAt = DateTime.Now,
@@ -66,7 +66,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 					FullName = "Vo Duc Hieu",
 					Email = "voduchieu@gmail.com",
 					PhoneNumber = "0754559328",
-					Specialization = "Obstetrician",
+					Specialization = "Bác sĩ sản khoa",
 					YearsOfExperience = 8,
 					IsDeleted = false,
 					CreatedAt = DateTime.Now,

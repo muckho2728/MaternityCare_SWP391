@@ -2,6 +2,5 @@
 {
 	public class SlotParameters : RequestParameters
 	{
-		public DateOnly? Date { get; init; }
 	}
 }

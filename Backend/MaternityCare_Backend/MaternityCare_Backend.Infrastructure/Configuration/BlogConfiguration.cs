@@ -26,8 +26,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				new Blog
 				{
 					Id = Guid.Parse("525be099-6b93-4889-9384-e986fcd8595a"),
-					Title = "26 week already lactating",
-					Content = "I’m 26 weeks exactly tomorrow but I started lactating probably 3 weeks ago. It was small spots at first but now I wake up with both nipples soaked through my shirts. My obgyn says not to worry but I would like to understand why so much so early. Any ideas?",
+					Title = "26 tuần cho con bú",
+					Content = "Tôi sẽ bước sang tuần thứ 26 vào đúng ngày mai nhưng tôi đã bắt đầu cho con bú có lẽ là 3 tuần trước. Lúc đầu chỉ là những đốm nhỏ nhưng giờ tôi thức dậy với cả hai núm vú ướt đẫm áo. Bác sĩ sản phụ khoa của tôi nói rằng đừng lo lắng nhưng tôi muốn hiểu tại sao lại sớm như vậy. Bạn có ý tưởng nào không?",
 					CreatedAt = DateTime.Now,
 					UserId = Guid.Parse("12c1b9d8-dd0d-4edf-8aec-dbcf8d0aca16"),
 					IsActive = true,
@@ -37,8 +37,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				new Blog
 				{
 					Id = Guid.Parse("d53abcd4-5ad4-42cd-b5ac-c00bdbd5191c"),
-					Title = "Could it be a sign of early pregnancy or pms?",
-					Content = "I reached my peak of ovulation on the 8th and BD twice a day alllll month. The day after I’ve had hard super tender nips. (Which I know is usual after ovulation) ever since than my breast have my sore and my nips hurt just as bad. I don’t start my period till the 23rd and I usually pms 5 days prior. Is it possible it’s a symptom? \r\n-ive been taking vitamins and eating as healthy as possible while avoiding caffeine as well",
+					Title = "Đây có thể là dấu hiệu của việc mang thai sớm?",
+					Content = "Tôi đạt đỉnh rụng trứng vào ngày 8 và BD hai lần một ngày trong suốt tháng. Ngày hôm sau, tôi bị đau núm vú cứng và siêu mềm. (Tôi biết là bình thường sau khi rụng trứng) kể từ đó ngực tôi bị đau và núm vú của tôi cũng đau như vậy. Tôi không bắt đầu kỳ kinh nguyệt cho đến ngày 23 và tôi thường có PMS 5 ngày trước đó. Có thể đó là một triệu chứng không? \r\n-tôi đã uống vitamin và ăn uống lành mạnh nhất có thể trong khi cũng tránh xa caffeine",
 					CreatedAt = DateTime.Now,
 					UserId = Guid.Parse("12c1b9d8-dd0d-4edf-8aec-dbcf8d0aca16"),
 					IsActive = true,
@@ -47,8 +47,8 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				new Blog
 				{
 					Id = Guid.Parse("8081a98b-ec3a-4bd2-965d-063617722541"),
-					Title = "Could be implantation bleeding? anyone have a similar cycle?",
-					Content = "My peak was on February 18th, and I ovulated on the 19th. My period was supposed to start on the 1st of this month. Today is March 4th, and I still haven’t gotten my period. However, I have brownish spotting when I pee and wipe, but not every time. I took a pregnancy test this morning, and it came back negative. My BBT has been at 98°F since the 28th. I had white discharge on the 2nd and 3rd. I started the brownish spotting on the morning of 12 DPO.\"",
+					Title = "Đây có thể là chảy máu do cấy ghép tử cung? Có ai gặp phải chu kỳ tương tự không?",
+					Content = "Đỉnh điểm của tôi là vào ngày 18 tháng 2 và tôi rụng trứng vào ngày 19. Kỳ kinh của tôi được cho là bắt đầu vào ngày 1 tháng này. Hôm nay là ngày 4 tháng 3 và tôi vẫn chưa có kinh. Tuy nhiên, tôi bị ra máu nâu khi đi tiểu và lau, nhưng không phải lúc nào cũng vậy. Tôi đã thử thai vào sáng nay và kết quả là âm tính. Nhiệt độ cơ thể của tôi là 98°F kể từ ngày 28. Tôi bị ra dịch trắng vào ngày 2 và ngày 3. Tôi bắt đầu ra máu nâu vào buổi sáng",
 					CreatedAt = DateTime.Now,
 					UserId = Guid.Parse("12c1b9d8-dd0d-4edf-8aec-dbcf8d0aca16"),
 					IsActive = true,

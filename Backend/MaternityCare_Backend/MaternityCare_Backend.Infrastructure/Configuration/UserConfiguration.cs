@@ -59,23 +59,23 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 				CreatedAt = DateTime.Now,
 				IsEmailConfirmed = true
 			};
-			admin.Password = passwordHasher.HashPassword(admin, "admin");
+			admin.Password = passwordHasher.HashPassword(admin, "1admin@");
 
 			var user = new User
 			{
 				Id = Guid.Parse("12c1b9d8-dd0d-4edf-8aec-dbcf8d0aca16"),
-				FullName = "Nguyen Le Tan Nghiep",
-				Email = "tannghiepnguyen123@gmail.com",
-				Username = "tannghiep",
+				FullName = "Trần Thị Thu Hương",
+				Email = "thuhuong@gmail.com",
+				Username = "thuhuong",
 				DateOfBirth = new DateOnly(2002, 1, 23),
 				Avatar = "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=",
-				CCCD = "082202000012",
+				CCCD = "082202000011",
 				RoleId = Guid.Parse("416b6528-8c94-4ddc-8413-012b8ee38ae4"),
 				IsActive = true,
 				CreatedAt = DateTime.Now,
 				IsEmailConfirmed = true
 			};
-			user.Password = passwordHasher.HashPassword(user, "tannghiep");
+			user.Password = passwordHasher.HashPassword(user, "thuhuong");
 			builder.HasData(admin, user);
 		}
 	}
