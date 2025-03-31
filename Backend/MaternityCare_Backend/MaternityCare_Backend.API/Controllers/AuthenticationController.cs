@@ -51,7 +51,7 @@ namespace MaternityCare_Backend.API.Controllers
 		public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string email, CancellationToken ct)
 		{
 			await serviceManager.UserService.ConfirmEmail(token, email, ct);
-			return Ok("Email verified successfully");
+			return Ok("Xác thực email thành công");
 		}
 
 		[HttpPost("password-forgeting")]

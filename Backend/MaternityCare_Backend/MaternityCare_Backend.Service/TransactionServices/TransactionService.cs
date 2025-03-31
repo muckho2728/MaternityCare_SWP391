@@ -49,17 +49,17 @@ namespace MaternityCare_Backend.Service.TransactionServices
 
 			if (transaction == null)
 			{
-				return "Order not found";
+				return "Không tìm thấy thông tin thanh toán";
 			}
 
 			// Update transaction status based on response code
 			if (responseCode == "00")
 			{
-				return "Order successfully";
+				return "Thanh toán thành công";
 			}
 			else
 			{
-				return "Order failed";
+				return "Thanh toán thất bại";
 			}
 		}
 

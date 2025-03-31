@@ -46,7 +46,7 @@ namespace MaternityCare_Backend.Service.SubscriptionServices
 			{
 				Id = Guid.NewGuid(),
 				Amount = package.Price,
-				Description = $"Payment for {package.Type} package",
+				Description = $"Thanh toán cho gói {package.Type}",
 				CreatedAt = DateTime.Now,
 				Status = TransactionStatus.Pending,
 				SubscriptionId = subscriptionEntity.Id

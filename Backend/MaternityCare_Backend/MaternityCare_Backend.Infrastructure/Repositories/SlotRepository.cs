@@ -17,7 +17,7 @@ namespace MaternityCare_Backend.Infrastructure.Repositories
 
 		public void DeleteSlot(Slot slot) => Delete(slot);
 
-		public Task<Slot?> GetSlot(Guid doctorId, Guid slotId, bool trackChange, CancellationToken ct = default) => FindByCondition(s => s.Id.Equals(slotId) && s.DoctorId.Equals(doctorId), trackChange).SingleOrDefaultAsync(ct);
+		public Task<Slot?> GetSlot(Guid doctorId, Guid slotId, bool trackChange, CancellationToken ct = default) => FindByCondition(s => s.Id.Equals(slotId) && s.DoctorId.Equals(doctorId), trackChange).Sort().SingleOrDefaultAsync(ct);
 
 		public Task<Slot?> GetSlot(Guid slotId, bool trackChange, CancellationToken ct = default) => FindByCondition(s => s.Id.Equals(slotId), trackChange).SingleOrDefaultAsync(ct);
 

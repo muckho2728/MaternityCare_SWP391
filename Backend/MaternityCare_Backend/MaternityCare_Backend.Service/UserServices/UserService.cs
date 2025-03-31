@@ -100,8 +100,26 @@ namespace MaternityCare_Backend.Service.UserServices
 			IJobDetail job = JobBuilder.Create<EmailSendingJob>()
 			.WithIdentity("emailJob", "emailGroup")
 			.UsingJobData("to", userEntity.Email)
-			.UsingJobData("subject", "Email verification")
-			.UsingJobData("body", $"<p>Please click <a href='{callback}'>here</a> to verify your email</p>")
+			.UsingJobData("subject", "Verify Your Email – Welcome to Maternity Care!")
+			.UsingJobData("body", $@"
+    <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;'>
+        <div style='max-width: 600px; background: #ffffff; padding: 20px; border-radius: 8px; 
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center;'>
+            <h2>Welcome to Maternity Care!</h2>
+            <p>We're excited to have you on board. Please verify your email address to activate your account and get started.</p>
+            <p>Click the button below to complete your verification:</p>
+            <a href='{callback}' style='background-color: #ff6f61; color: #ffffff; padding: 12px 20px; 
+                                       border-radius: 5px; text-decoration: none; font-size: 16px; 
+                                       display: inline-block; margin-top: 15px;'>
+                Verify My Email
+            </a>
+            <p>If you didn’t sign up for Maternity Care, please ignore this email.</p>
+            <p style='margin-top: 20px; font-size: 12px; color: #777;'>Need help? Contact our support team at 
+                <a href='mailto:support@maternitycare.com'>support@maternitycare.com</a>
+            </p>
+            <p style='font-size: 12px; color: #777;'>&copy; 2025 Maternity Care. All rights reserved.</p>
+        </div>
+    </div>")
 			.Build();
 
 			ITrigger trigger = TriggerBuilder.Create()
@@ -317,7 +335,20 @@ namespace MaternityCare_Backend.Service.UserServices
 			userEntity.PasswordResetTokenExpiryTime = DateTime.Now.AddHours(1);
 			await repositoryManager.SaveAsync(ct);
 
-			var mail = new Mail(userEntity.Email, "Reset password token", $"<p>Your reset password token is: <i>{userEntity.PasswordResetToken}</i></p>");
+			var mail = new Mail(userEntity.Email, "Reset password OTP", $@"
+    <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;'>
+        <div style='max-width: 600px; background: #ffffff; padding: 20px; border-radius: 8px; 
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center;'>
+            <h2 style='color: #333;'>Reset Your Password</h2>
+            <p style='font-size: 16px; color: #555;'>We received a request to reset your password. Use the code below to complete the process:</p>
+            <p style='font-size: 24px; font-weight: bold; color: #ff6f61; margin: 20px 0;'>{userEntity.PasswordResetToken}</p>
+            <p style='font-size: 14px; color: #777;'>If you didn’t request a password reset, you can ignore this email.</p>
+            <p style='font-size: 14px; color: #777;'>For assistance, contact our support team at 
+                <a href='mailto:support@maternitycare.com' style='color: #ff6f61;'>support@maternitycare.com</a>
+            </p>
+            <p style='font-size: 12px; color: #777;'>&copy; 2025 Maternity Care. All rights reserved.</p>
+        </div>
+    </div>");
 			emailSender.SendEmail(mail);
 		}
 

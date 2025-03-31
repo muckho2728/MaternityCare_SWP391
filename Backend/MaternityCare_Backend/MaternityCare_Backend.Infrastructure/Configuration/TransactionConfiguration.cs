@@ -11,7 +11,7 @@ namespace MaternityCare_Backend.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id).ValueGeneratedOnAdd();
 			builder.Property(x => x.Amount).IsRequired();
-			builder.Property(x => x.Description).IsRequired();
+			builder.Property(x => x.Description).IsRequired().HasColumnType("NVARCHAR(MAX)");
 			builder.Property(x => x.CreatedAt);
 			builder.Property(x => x.Status).HasConversion<string>().IsRequired();
 			builder.Property(x => x.SubscriptionId).IsRequired();

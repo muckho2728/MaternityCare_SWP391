@@ -44,7 +44,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Blog", b =>
@@ -86,7 +86,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
 
                     b.HasData(
                         new
@@ -149,7 +149,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Doctor", b =>
@@ -199,7 +199,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
 
                     b.HasData(
                         new
@@ -275,7 +275,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Fetus", b =>
@@ -303,7 +303,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Fetuses");
+                    b.ToTable("Fetuses", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.FetusHealth", b =>
@@ -347,7 +347,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasIndex("FetusId", "Week")
                         .IsUnique();
 
-                    b.ToTable("FetusHealths");
+                    b.ToTable("FetusHealths", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Like", b =>
@@ -372,7 +372,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasIndex("BlogId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Package", b =>
@@ -411,7 +411,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Packages");
+                    b.ToTable("Packages", (string)null);
 
                     b.HasData(
                         new
@@ -451,7 +451,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reminders");
+                    b.ToTable("Reminders", (string)null);
 
                     b.HasData(
                         new
@@ -523,7 +523,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -563,7 +563,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("Slots");
+                    b.ToTable("Slots", (string)null);
 
                     b.HasData(
                         new
@@ -1187,7 +1187,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StandardFetusHealths");
+                    b.ToTable("StandardFetusHealths", (string)null);
 
                     b.HasData(
                         new
@@ -1617,7 +1617,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.Tag", b =>
@@ -1633,7 +1633,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
 
                     b.HasData(
                         new
@@ -1701,7 +1701,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasIndex("SubscriptionId")
                         .IsUnique();
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("MaternityCare_Backend.Domain.Entities.User", b =>
@@ -1781,7 +1781,7 @@ namespace MaternityCare_Backend.Infrastructure.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
