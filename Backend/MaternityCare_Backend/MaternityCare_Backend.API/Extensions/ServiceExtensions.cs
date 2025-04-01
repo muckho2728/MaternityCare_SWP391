@@ -27,7 +27,7 @@ namespace MaternityCare_Backend.API.Extensions
 				q.ScheduleJob<NotificationJob>(trigger => trigger
 					.WithIdentity("notificationTrigger", "group1")
 					.StartNow()
-					.WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
+					.WithSimpleSchedule(schedule => schedule.WithIntervalInHours(24)
 					.RepeatForever()));
 			});
 			services.AddQuartzHostedService(opt =>
