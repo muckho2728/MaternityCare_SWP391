@@ -34,13 +34,25 @@ namespace MaternityCare_Backend.Service.AIServices
 
 			await blocklistClient.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(data));
 
-			string blockListItemString = "giết;chết;địt;lồn;đụ;đéo;địt mẹ;địt con mẹ;địt con mẹ mày";
-			var blocklistItems = new List<TextBlocklistItem>();
-			foreach (var item in blockListItemString.Split(';'))
-			{
-				blocklistItems.Add(new TextBlocklistItem(item));
-			}
+			//string blocklistItemText1 = "giet";
+			//string blocklistItemText2 = "chet";
+			//string blocklistItemText3 = "dit";
+			//string blocklistItemText4 = "lon";
+			//string blocklistItemText5 = "du";
+			//string blocklistItemText6 = "deo";
+			//string blocklistItemText7 = "dit";
+			//var blocklistItems = new TextBlocklistItem[]{
+			//	new TextBlocklistItem(blocklistItemText1),
+			//	new TextBlocklistItem(blocklistItemText2),
+			//	new TextBlocklistItem(blocklistItemText3),
+			//	new TextBlocklistItem(blocklistItemText4),
+			//	new TextBlocklistItem(blocklistItemText5),
+			//	new TextBlocklistItem(blocklistItemText6),
+			//	new TextBlocklistItem(blocklistItemText7),
+			//};
 
+			string blockListItemString = "giết,chết,địt,lồn,đụ,đéo,Giết,Chết,Địt,Lồn,Đụ,Đéo";
+			var blocklistItems = blockListItemString.Split(',').Select(s => new TextBlocklistItem(s)).ToList();
 			await blocklistClient.AddOrUpdateBlocklistItemsAsync(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(blocklistItems));
 
 		}
@@ -64,12 +76,10 @@ namespace MaternityCare_Backend.Service.AIServices
 
 		public async Task<bool> AnalyzeText(string text, CancellationToken ct = default)
 		{
+			await AddOrUpdateBlockList(ct);
 			ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
-			var blocklistName = "Vietnamese blocklist";
 
 			var request = new AnalyzeTextOptions(text);
-			request.BlocklistNames.Add(blocklistName);
-			request.HaltOnBlocklistHit = true;
 
 
 			Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(request, ct);
